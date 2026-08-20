@@ -1,0 +1,16 @@
+node_modules/
+.next/
+
+# Anmeldungen für die Start-Benachrichtigung — enthält E-Mail-Adressen,
+# gehört niemals ins Repository
+.data/
+
+out/
+build/
+.DS_Store
+*.pem
+npm-debug.log*
+.env*.local
+next-env.d.ts
+.vercel
+*.tsbuildinfo

@@ -1,0 +1,963 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="design_doc_mode" content="canvas">
+<style>
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body { background: #26282c; -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
+  a { color: inherit; text-decoration: none; }
+  a:hover { text-decoration: underline; text-underline-offset: 3px; }
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;500;600;700;800&family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+</helmet>
+
+<div style="min-height:100vh; background:#26282c; padding:72px; font-family:-apple-system,'Helvetica Neue',Helvetica,Arial,sans-serif;">
+
+  <header style="max-width:1400px; margin:0 0 64px;">
+    <div style="font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace; font-size:12px; letter-spacing:.18em; text-transform:uppercase; color:#7c7f86; margin-bottom:14px;">Design-Leinwand · Landingpage</div>
+    <h1 style="margin:0 0 12px; font-size:34px; font-weight:700; letter-spacing:-.02em; color:#f4f4f6;">Studytab — Landingpage</h1>
+    <p style="margin:0; max-width:760px; font-size:15px; line-height:1.55; color:#a9abb2;">Pflicht-, QR-, Link-in-Bio- und Presse-Ziel für eine iPhone-App. Mobil ist maßgeblich, Desktop (1440 × 1024) ist die Ableitung.<br><a href="#3a">3a</a> ist der aktuelle Stand: 2a weiterentwickelt, mit Scan-Moment, gezeichneten App-Screens und einer Animation.<br>Runde 2 (<a href="#2a">2a</a> · <a href="#2b">2b</a> · <a href="#2c">2c</a>) liegt im Design-System der App: Baloo 2 / Nunito, Ozeanblau #0b6d9e, Aktionsblau #2563eb, Noten-Ampel, Radius 8/14/22. Runde 1 (<a href="#1a">1a</a> · <a href="#1b">1b</a> · <a href="#1c">1c</a>) darunter, ohne Repo-Bezug. Im Repo heißt das Xcode-Projekt intern noch „Studyo".</p>
+  </header>
+
+  <div style="margin-bottom:34px; padding-bottom:18px; border-bottom:1px solid #3a3d43; font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace; font-size:12px; letter-spacing:.16em; text-transform:uppercase; color:#8f9299;">Runde 3 · 2a weiterentwickelt · Scan-Moment, App-Screens, eine Animation</div>
+
+  <div style="display:flex; gap:96px; align-items:flex-start; flex-wrap:nowrap; margin-bottom:96px;">
+    <section id="3a" style="display:flex; flex-direction:column; gap:30px; width:1440px; flex:0 0 auto;">
+      <div style="display:flex; align-items:baseline; gap:14px;">
+        <span style="font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace; font-size:12px; font-weight:600; color:#0f1115; background:#e8e9ec; padding:3px 8px; border-radius:5px;">3a</span>
+        <div>
+          <div style="font-size:18px; font-weight:700; color:#f4f4f6;">Studytab — Downloadseite</div>
+          <div style="font-size:13px; color:#9a9ca2; margin-top:2px;">Scan-Moment als Einstieg · App-Screens nach dem echten Code gezeichnet · eine Animation: die Karteikarte dreht sich · Lautstärke 4</div>
+        </div>
+      </div>
+
+      <!-- 3a mobile -->
+      <div>
+        <div style="font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace; font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:#7c7f86; margin-bottom:10px;">Mobil · 390 breit · scrollt · erster Bildschirm markiert</div>
+        <div style="width:390px; background:#fff; color:#1c1f29; font-family:Nunito,-apple-system,sans-serif; box-shadow:0 24px 70px rgba(0,0,0,.4); display:flex; flex-direction:column; padding:20px 20px 0;">
+
+          <div style="display:flex; align-items:center; gap:11px; margin-bottom:22px;">
+            <img src="assets/studytab-logo.png" alt="Studytab" style="width:38px; height:38px; border-radius:11px; display:block;">
+            <div style="font-family:'Baloo 2',sans-serif; font-weight:700; font-size:21px;">Studytab</div>
+          </div>
+
+          <sc-if value="{{ scanZeile }}" hint-placeholder-val="{{ true }}">
+            <div style="display:flex; align-items:center; gap:9px; background:#f5f7fa; border-radius:999px; padding:8px 14px; align-self:flex-start; margin-bottom:18px;">
+              <span style="width:7px; height:7px; border-radius:999px; background:#12a877; flex:0 0 7px;"></span>
+              <span style="font-size:12.5px; color:#4e5563;">Aus dem Schulhaus hergekommen? Dann bist du richtig.</span>
+            </div>
+          </sc-if>
+
+          <h2 style="margin:0 0 12px; font-family:'Baloo 2',sans-serif; font-weight:700; font-size:35px; line-height:1.05; letter-spacing:-.02em;">Du trägst die Note ein. Den Schnitt hast du schon.</h2>
+          <p style="margin:0 0 22px; font-size:15.5px; line-height:1.5; color:#4e5563;">Studytab ist die App für Noten, Mitschriften und Karteikarten — gemacht für die Schule in Österreich. Ohne Konto, auch offline.</p>
+
+          <div style="border-radius:22px; background:linear-gradient(135deg,#12a877,#0b6b52); box-shadow:0 10px 22px rgba(18,168,119,.4); padding:20px; display:flex; align-items:center; gap:18px; margin-bottom:24px;">
+            <div style="flex:0 0 auto; text-align:left;">
+              <div style="font-size:12.5px; color:rgba(255,255,255,.88); margin-bottom:2px;">Dein Schnitt</div>
+              <div style="font-family:'Baloo 2',sans-serif; font-weight:800; font-size:54px; line-height:.9; color:#fff;">1,7</div>
+            </div>
+            <div style="flex:1; border-left:1px solid rgba(255,255,255,.28); padding-left:16px;">
+              <div style="font-size:13.5px; color:#fff; font-weight:700; margin-bottom:3px;">1. Halbjahr · 7 Fächer</div>
+              <div style="font-size:13px; color:rgba(255,255,255,.86); line-height:1.4;">Neu gerechnet, sobald eine Note dazukommt.</div>
+            </div>
+          </div>
+
+          <div style="display:flex; flex-direction:column; gap:14px; margin-bottom:14px;">
+            <div>
+              <div style="font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace; font-size:10px; letter-spacing:.14em; text-transform:uppercase; color:#9aa1af; margin-bottom:8px;">vor dem Release</div>
+              <div style="display:flex; align-items:center; gap:12px;">
+                <div style="flex:1; text-align:center; background:#2563eb; color:#e6eefe; font-family:'Baloo 2',sans-serif; font-weight:700; font-size:18px; padding:15px 20px; border-radius:999px; opacity:.45; cursor:not-allowed;">Download now</div>
+                <span style="font-size:13px; color:#6f7686; flex:0 0 auto;">Bald im App&nbsp;Store</span>
+              </div>
+            </div>
+            <div>
+              <div style="font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace; font-size:10px; letter-spacing:.14em; text-transform:uppercase; color:#9aa1af; margin-bottom:8px;">nach dem Release</div>
+              <div style="display:flex; align-items:center; gap:12px;">
+                <div style="flex:1; text-align:center; background:#2563eb; color:#e6eefe; font-family:'Baloo 2',sans-serif; font-weight:700; font-size:18px; padding:15px 20px; border-radius:999px; box-shadow:0 4px 14px rgba(37,99,235,.35);">Download now</div>
+                <div style="flex:0 0 auto; width:112px; height:46px; border-radius:8px; background:#dde0e8; border:1px dashed #c1c6d0; display:flex; align-items:center; justify-content:center; text-align:center; font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace; font-size:8px; line-height:1.25; color:#6f7686; padding:0 6px;">Platzhalter<br>App-Store-Badge</div>
+              </div>
+            </div>
+          </div>
+
+          <div style="font-size:12.5px; color:#6f7686; margin-bottom:26px;">Kein Tracking, keine Werbung, keine Weitergabe deiner Daten.</div>
+
+          <div style="position:relative; margin:0 -20px 0; padding:0 20px 4px; border-top:1px dashed #c1c6d0;">
+            <div style="position:absolute; top:-9px; right:20px; background:#fff; padding:0 8px; font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace; font-size:9px; letter-spacing:.1em; text-transform:uppercase; color:#9aa1af;">Ende erster Bildschirm</div>
+          </div>
+
+          <div style="padding-top:30px;">
+            <div style="font-family:'Baloo 2',sans-serif; font-weight:700; font-size:24px; margin-bottom:4px;">So sieht's aus</div>
+            <div style="font-size:13.5px; color:#4e5563; line-height:1.45; margin-bottom:16px;">Drei Bildschirme, mehr braucht die App nicht.</div>
+            <div style="display:flex; gap:12px; align-items:flex-start; overflow:hidden;">
+              <!-- Screenshot 1 · Platzhalter — später ersetzen durch: <img src="assets/screenshot-start.png" alt="Startseite" style="width:100%; display:block; border-radius:20px;"> -->
+              <div style="flex:0 0 200px; padding:7px; background:#0f1115; border-radius:26px; box-shadow:0 10px 26px rgba(28,31,41,.28);">
+                <div style="height:403px; border-radius:20px; border:1px dashed #b9bfcb; background:repeating-linear-gradient(45deg,#e8ebf0 0 9px,#e0e4ea 9px 18px); display:flex; flex-direction:column; align-items:center; justify-content:center; gap:6px; text-align:center; padding:0 14px;">
+                  <div style="font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace; font-size:9px; letter-spacing:.16em; text-transform:uppercase; color:#8a91a0;">Screenshot 1</div>
+                  <div style="font-family:'Baloo 2',sans-serif; font-weight:700; font-size:15px; line-height:1.15; color:#4e5563;">Startseite</div>
+                  <div style="font-size:10.5px; line-height:1.35; color:#7d8492;">Schnitt, Suche,<br>neueste Mitschriften</div>
+                  <div style="font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace; font-size:8.5px; color:#9aa1af; margin-top:4px;">1290 × 2796</div>
+                </div>
+              </div>
+              <!-- Screenshot 2 · Platzhalter — später ersetzen durch: <img src="assets/screenshot-fach.png" alt="Fach mit Noten" style="width:100%; display:block; border-radius:20px;"> -->
+              <div style="flex:0 0 200px; padding:7px; background:#0f1115; border-radius:26px; box-shadow:0 10px 26px rgba(28,31,41,.28);">
+                <div style="height:403px; border-radius:20px; border:1px dashed #b9bfcb; background:repeating-linear-gradient(45deg,#e8ebf0 0 9px,#e0e4ea 9px 18px); display:flex; flex-direction:column; align-items:center; justify-content:center; gap:6px; text-align:center; padding:0 14px;">
+                  <div style="font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace; font-size:9px; letter-spacing:.16em; text-transform:uppercase; color:#8a91a0;">Screenshot 2</div>
+                  <div style="font-family:'Baloo 2',sans-serif; font-weight:700; font-size:15px; line-height:1.15; color:#4e5563;">Fach</div>
+                  <div style="font-size:10.5px; line-height:1.35; color:#7d8492;">Notenliste und<br>Schnitt pro Fach</div>
+                  <div style="font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace; font-size:8.5px; color:#9aa1af; margin-top:4px;">1290 × 2796</div>
+                </div>
+              </div>
+            </div>
+            <div style="font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace; font-size:11px; color:#6f7686; margin-top:12px;">Platzhalter — echte Screenshots aus der App (1290 × 2796) kommen hier hinein</div>
+          </div>
+
+          <div style="padding-top:34px;">
+            <div style="display:flex; flex-direction:column; gap:22px;">
+              <div>
+                <div style="display:flex; align-items:baseline; gap:9px; margin-bottom:5px;"><span style="font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace; font-size:11px; color:#9aa1af;">01</span><div style="font-family:'Baloo 2',sans-serif; font-weight:700; font-size:21px;">Noten</div></div>
+                <div style="font-size:14px; color:#4e5563; line-height:1.5;">Trag eine Note ein und sieh sofort deinen Schnitt — pro Fach und pro Halbjahr.</div>
+              </div>
+              <div>
+                <div style="display:flex; align-items:baseline; gap:9px; margin-bottom:5px;"><span style="font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace; font-size:11px; color:#9aa1af;">02</span><div style="font-family:'Baloo 2',sans-serif; font-weight:700; font-size:21px;">Mitschriften</div></div>
+                <div style="font-size:14px; color:#4e5563; line-height:1.5;">Fotografier deine Hefteinträge ab und finde sie wieder, wenn du sie brauchst.</div>
+              </div>
+              <div>
+                <div style="display:flex; align-items:baseline; gap:9px; margin-bottom:5px;"><span style="font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace; font-size:11px; color:#9aa1af;">03</span><div style="font-family:'Baloo 2',sans-serif; font-weight:700; font-size:21px;">Karteikarten</div></div>
+                <div style="font-size:14px; color:#4e5563; line-height:1.5; margin-bottom:14px;">Leg dir Sets an und lern damit, wann du Zeit hast.</div>
+                <div style="perspective:900px;">
+                  <div style="position:relative; height:132px; transform-style:preserve-3d; transition:transform .85s cubic-bezier(.4,0,.2,1); transform:{{ flipT }};">
+                    <div style="position:absolute; inset:0; backface-visibility:hidden; background:#fff; border:1px solid #e4e7ec; border-radius:14px; box-shadow:0 4px 14px rgba(28,31,41,.12); padding:16px; display:flex; flex-direction:column; justify-content:space-between;">
+                      <div style="font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace; font-size:10px; letter-spacing:.12em; text-transform:uppercase; color:#9aa1af;">Geschichte · Frage</div>
+                      <div style="font-family:'Baloo 2',sans-serif; font-weight:700; font-size:19px; line-height:1.2;">Wann war der Wiener Kongress?</div>
+                      <div style="font-size:11.5px; color:#9aa1af;">Tippen zum Umdrehen</div>
+                    </div>
+                    <div style="position:absolute; inset:0; backface-visibility:hidden; transform:rotateY(180deg); background:#0b6d9e; border-radius:14px; box-shadow:0 4px 14px rgba(11,109,158,.3); padding:16px; display:flex; flex-direction:column; justify-content:space-between;">
+                      <div style="font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace; font-size:10px; letter-spacing:.12em; text-transform:uppercase; color:#96cfe9;">Geschichte · Antwort</div>
+                      <div style="font-family:'Baloo 2',sans-serif; font-weight:700; font-size:26px; line-height:1.15; color:#fff;">1814 / 15</div>
+                      <div style="font-size:11.5px; color:#c0e2f4;">Gewusst? Dann kommt sie später wieder.</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div style="margin-top:36px; padding:0 20px 24px; margin-left:-20px; margin-right:-20px; background:#f5f7fa;">
+            <div style="padding-top:22px;">
+              <!-- reserviert: "Ein Projekt von drei Schülern" — bewusst leer -->
+              <div style="height:20px;"></div>
+              <div style="display:flex; flex-wrap:wrap; gap:8px 12px; align-items:center; font-size:13px; color:#4e5563; padding-top:16px; border-top:1px solid #dde0e8;"><a href="#3a">Impressum</a><span style="color:#c1c6d0;">·</span><a href="#3a">Datenschutz</a><span style="color:#c1c6d0;">·</span><a href="#3a">Kontakt</a><span style="margin-left:auto; color:#9aa1af;">© 2026 Studytab</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3a desktop -->
+      <div>
+        <div style="font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace; font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:#7c7f86; margin-bottom:10px;">Desktop · 1440 × 1024</div>
+        <div style="width:1440px; min-height:1024px; background:#fff; color:#1c1f29; font-family:Nunito,-apple-system,sans-serif; box-shadow:0 24px 70px rgba(0,0,0,.4); display:flex; flex-direction:column; padding:34px 80px 34px;">
+          <div style="display:flex; align-items:center; gap:12px; margin-bottom:52px;">
+            <img src="assets/studytab-logo.png" alt="Studytab" style="width:44px; height:44px; border-radius:12px; display:block;">
+            <div style="font-family:'Baloo 2',sans-serif; font-weight:700; font-size:25px;">Studytab</div>
+          </div>
+
+          <div style="display:flex; gap:72px; align-items:flex-start;">
+            <div style="flex:1; padding-top:8px;">
+              <sc-if value="{{ scanZeile }}" hint-placeholder-val="{{ true }}">
+                <div style="display:inline-flex; align-items:center; gap:10px; background:#f5f7fa; border-radius:999px; padding:9px 17px; margin-bottom:22px;">
+                  <span style="width:8px; height:8px; border-radius:999px; background:#12a877; flex:0 0 8px;"></span>
+                  <span style="font-size:14px; color:#4e5563;">Aus dem Schulhaus hergekommen? Dann bist du richtig.</span>
+                </div>
+              </sc-if>
+              <h2 style="margin:0 0 20px; font-family:'Baloo 2',sans-serif; font-weight:700; font-size:64px; line-height:1.02; letter-spacing:-.025em;">Du trägst die Note ein. Den Schnitt hast du schon.</h2>
+              <p style="margin:0 0 34px; font-size:20px; line-height:1.5; color:#4e5563; max-width:540px;">Studytab ist die App für Noten, Mitschriften und Karteikarten — gemacht für die Schule in Österreich. Ohne Konto, auch offline.</p>
+
+              <div style="border-radius:22px; background:linear-gradient(135deg,#12a877,#0b6b52); box-shadow:0 12px 28px rgba(18,168,119,.4); padding:22px 26px; display:flex; align-items:center; gap:24px; max-width:540px; margin-bottom:32px;">
+                <div><div style="font-size:14px; color:rgba(255,255,255,.88); margin-bottom:2px;">Dein Schnitt</div><div style="font-family:'Baloo 2',sans-serif; font-weight:800; font-size:66px; line-height:.88; color:#fff;">1,7</div></div>
+                <div style="flex:1; border-left:1px solid rgba(255,255,255,.28); padding-left:22px;"><div style="font-size:16px; color:#fff; font-weight:700; margin-bottom:4px;">1. Halbjahr · 7 Fächer</div><div style="font-size:15px; color:rgba(255,255,255,.86); line-height:1.4;">Neu gerechnet, sobald eine Note dazukommt.</div></div>
+              </div>
+
+              <div style="display:flex; flex-direction:column; gap:18px; margin-bottom:16px;">
+                <div>
+                  <div style="font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace; font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:#9aa1af; margin-bottom:9px;">vor dem Release</div>
+                  <div style="display:flex; align-items:center; gap:16px;"><div style="background:#2563eb; color:#e6eefe; font-family:'Baloo 2',sans-serif; font-weight:700; font-size:20px; padding:16px 44px; border-radius:999px; opacity:.45; cursor:not-allowed;">Download now</div><span style="font-size:15px; color:#6f7686;">Bald im App Store</span></div>
+                </div>
+                <div>
+                  <div style="font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace; font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:#9aa1af; margin-bottom:9px;">nach dem Release</div>
+                  <div style="display:flex; align-items:center; gap:16px;"><div style="background:#2563eb; color:#e6eefe; font-family:'Baloo 2',sans-serif; font-weight:700; font-size:20px; padding:16px 44px; border-radius:999px; box-shadow:0 4px 14px rgba(37,99,235,.35);">Download now</div><div style="width:150px; height:52px; border-radius:9px; background:#dde0e8; border:1px dashed #c1c6d0; display:flex; align-items:center; justify-content:center; text-align:center; font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace; font-size:9px; line-height:1.3; color:#6f7686;">Platzhalter<br>App-Store-Badge</div></div>
+                </div>
+              </div>
+              <div style="font-size:15px; color:#6f7686;">Kein Tracking, keine Werbung, keine Weitergabe deiner Daten.</div>
+            </div>
+
+            <div style="flex:0 0 560px;">
+              <div style="display:flex; gap:16px; align-items:flex-start;">
+                <!-- Screenshot 1 · Platzhalter — später ersetzen durch: <img src="assets/screenshot-start.png" alt="Startseite" style="width:100%; display:block; border-radius:26px;"> -->
+                <div style="flex:0 0 250px; padding:9px; background:#0f1115; border-radius:34px; box-shadow:0 18px 44px rgba(28,31,41,.3); margin-top:26px;">
+                  <div style="height:503px; border-radius:26px; border:1px dashed #b9bfcb; background:repeating-linear-gradient(45deg,#e8ebf0 0 11px,#e0e4ea 11px 22px); display:flex; flex-direction:column; align-items:center; justify-content:center; gap:8px; text-align:center; padding:0 18px;">
+                    <div style="font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace; font-size:10px; letter-spacing:.16em; text-transform:uppercase; color:#8a91a0;">Screenshot 1</div>
+                    <div style="font-family:'Baloo 2',sans-serif; font-weight:700; font-size:19px; line-height:1.15; color:#4e5563;">Startseite</div>
+                    <div style="font-size:12.5px; line-height:1.4; color:#7d8492;">Schnitt, Suche,<br>neueste Mitschriften</div>
+                    <div style="font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace; font-size:10px; color:#9aa1af; margin-top:6px;">1290 × 2796</div>
+                  </div>
+                </div>
+                <!-- Screenshot 2 · Platzhalter — später ersetzen durch: <img src="assets/screenshot-fach.png" alt="Fach mit Noten" style="width:100%; display:block; border-radius:26px;"> -->
+                <div style="flex:0 0 250px; padding:9px; background:#0f1115; border-radius:34px; box-shadow:0 18px 44px rgba(28,31,41,.3);">
+                  <div style="height:503px; border-radius:26px; border:1px dashed #b9bfcb; background:repeating-linear-gradient(45deg,#e8ebf0 0 11px,#e0e4ea 11px 22px); display:flex; flex-direction:column; align-items:center; justify-content:center; gap:8px; text-align:center; padding:0 18px;">
+                    <div style="font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace; font-size:10px; letter-spacing:.16em; text-transform:uppercase; color:#8a91a0;">Screenshot 2</div>
+                    <div style="font-family:'Baloo 2',sans-serif; font-weight:700; font-size:19px; line-height:1.15; color:#4e5563;">Fach</div>
+                    <div style="font-size:12.5px; line-height:1.4; color:#7d8492;">Notenliste und<br>Schnitt pro Fach</div>
+                    <div style="font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace; font-size:10px; color:#9aa1af; margin-top:6px;">1290 × 2796</div>
+                  </div>
+                </div>
+              </div>
+              <div style="font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace; font-size:12px; color:#6f7686; margin-top:16px;">Platzhalter — echte Screenshots aus der App (1290 × 2796) kommen hier hinein</div>
+            </div>
+          </div>
+
+          <div style="display:grid; grid-template-columns:1fr 1fr 1.15fr; gap:0; margin-top:64px; border-top:1px solid #dde0e8;">
+            <div style="padding:28px 34px 28px 0; border-right:1px solid #dde0e8;">
+              <div style="display:flex; align-items:baseline; gap:10px; margin-bottom:6px;"><span style="font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace; font-size:12px; color:#9aa1af;">01</span><div style="font-family:'Baloo 2',sans-serif; font-weight:700; font-size:25px;">Noten</div></div>
+              <div style="font-size:16px; color:#4e5563; line-height:1.5;">Trag eine Note ein und sieh sofort deinen Schnitt — pro Fach und pro Halbjahr.</div>
+            </div>
+            <div style="padding:28px 34px; border-right:1px solid #dde0e8;">
+              <div style="display:flex; align-items:baseline; gap:10px; margin-bottom:6px;"><span style="font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace; font-size:12px; color:#9aa1af;">02</span><div style="font-family:'Baloo 2',sans-serif; font-weight:700; font-size:25px;">Mitschriften</div></div>
+              <div style="font-size:16px; color:#4e5563; line-height:1.5;">Fotografier deine Hefteinträge ab und finde sie wieder, wenn du sie brauchst.</div>
+            </div>
+            <div style="padding:28px 0 28px 34px; display:flex; gap:26px; align-items:flex-start;">
+              <div style="flex:1;">
+                <div style="display:flex; align-items:baseline; gap:10px; margin-bottom:6px;"><span style="font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace; font-size:12px; color:#9aa1af;">03</span><div style="font-family:'Baloo 2',sans-serif; font-weight:700; font-size:25px;">Karteikarten</div></div>
+                <div style="font-size:16px; color:#4e5563; line-height:1.5;">Leg dir Sets an und lern damit, wann du Zeit hast.</div>
+              </div>
+              <div style="flex:0 0 218px; perspective:900px;">
+                <div style="position:relative; height:132px; transform-style:preserve-3d; transition:transform .85s cubic-bezier(.4,0,.2,1); transform:{{ flipT }};">
+                  <div style="position:absolute; inset:0; backface-visibility:hidden; background:#fff; border:1px solid #e4e7ec; border-radius:14px; box-shadow:0 4px 14px rgba(28,31,41,.12); padding:15px; display:flex; flex-direction:column; justify-content:space-between;">
+                    <div style="font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace; font-size:9.5px; letter-spacing:.12em; text-transform:uppercase; color:#9aa1af;">Geschichte · Frage</div>
+                    <div style="font-family:'Baloo 2',sans-serif; font-weight:700; font-size:17px; line-height:1.2;">Wann war der Wiener Kongress?</div>
+                    <div style="font-size:11px; color:#9aa1af;">Tippen zum Umdrehen</div>
+                  </div>
+                  <div style="position:absolute; inset:0; backface-visibility:hidden; transform:rotateY(180deg); background:#0b6d9e; border-radius:14px; box-shadow:0 4px 14px rgba(11,109,158,.3); padding:15px; display:flex; flex-direction:column; justify-content:space-between;">
+                    <div style="font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace; font-size:9.5px; letter-spacing:.12em; text-transform:uppercase; color:#96cfe9;">Geschichte · Antwort</div>
+                    <div style="font-family:'Baloo 2',sans-serif; font-weight:700; font-size:24px; line-height:1.15; color:#fff;">1814 / 15</div>
+                    <div style="font-size:11px; color:#c0e2f4;">Gewusst? Dann kommt sie später wieder.</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div style="margin-top:auto; padding-top:40px;">
+            <!-- reserviert: "Ein Projekt von drei Schülern" — bewusst leer -->
+            <div style="height:22px;"></div>
+            <div style="display:flex; gap:16px; align-items:center; font-size:14px; color:#4e5563; padding-top:18px; border-top:1px solid #dde0e8;"><a href="#3a">Impressum</a><span style="color:#c1c6d0;">·</span><a href="#3a">Datenschutz</a><span style="color:#c1c6d0;">·</span><a href="#3a">Kontakt</a><span style="margin-left:auto; color:#9aa1af;">© 2026 Studytab</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <div style="margin-bottom:34px; padding-bottom:18px; border-bottom:1px solid #3a3d43; font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace; font-size:12px; letter-spacing:.16em; text-transform:uppercase; color:#8f9299;">Runde 2 · im Design-System der App</div>
+
+  <div style="display:flex; gap:96px; align-items:flex-start; flex-wrap:nowrap; margin-bottom:96px;">
+
+    <!-- ============================ 2a — APP-OBERFLÄCHE ============================ -->
+    <section id="2a" style="display:flex; flex-direction:column; gap:30px; width:1440px; flex:0 0 auto;">
+      <div style="display:flex; align-items:baseline; gap:14px;">
+        <span style="font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace; font-size:12px; font-weight:600; color:#0f1115; background:#e8e9ec; padding:3px 8px; border-radius:5px;">2a</span>
+        <div>
+          <div style="font-size:18px; font-weight:700; color:#f4f4f6;">A — App-Oberfläche</div>
+          <div style="font-size:13px; color:#9a9ca2; margin-top:2px;">#f5f7fa, weiße Karten, Schnitt-Banner als Held. Die Seite sieht aus wie der Start-Screen.</div>
+        </div>
+      </div>
+
+      <!-- 2a mobile -->
+      <div>
+        <div style="font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace; font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:#7c7f86; margin-bottom:10px;">Mobil · 390 × 844</div>
+        <div style="width:390px; min-height:844px; background:#f5f7fa; color:#1c1f29; font-family:Nunito,-apple-system,sans-serif; box-shadow:0 24px 70px rgba(0,0,0,.4); display:flex; flex-direction:column; padding:20px 20px 24px;">
+          <div style="display:flex; align-items:center; gap:11px; margin-bottom:26px;">
+            <img src="assets/studytab-logo.png" alt="Studytab" style="width:42px; height:42px; border-radius:12px; box-shadow:0 4px 14px rgba(28,31,41,.12); display:block;">
+            <div style="font-family:'Baloo 2',sans-serif; font-weight:700; font-size:23px;">Studytab</div>
+          </div>
+
+          <h2 style="margin:0 0 10px; font-family:'Baloo 2',sans-serif; font-weight:700; font-size:31px; line-height:1.08; letter-spacing:-.01em;">Notenschnitt sofort. Mitschriften griffbereit.</h2>
+          <p style="margin:0 0 20px; font-size:15px; line-height:1.5; color:#4e5563;">Studytab rechnet deinen Schnitt aus, sammelt deine Hefteinträge und hält deine Karteikarten bereit.</p>
+
+          <div style="border-radius:22px; background:linear-gradient(135deg,#12a877,#0b6b52); box-shadow:0 10px 22px rgba(18,168,119,.42); padding:18px 20px; display:flex; align-items:center; gap:16px;">
+            <div style="width:60px; height:60px; flex:0 0 60px; border-radius:999px; background:#fff; box-shadow:0 3px 8px rgba(0,0,0,.16); display:flex; align-items:center; justify-content:center; font-family:'Baloo 2',sans-serif; font-weight:700; font-size:24px; color:#12a877;">1,7</div>
+            <div>
+              <div style="font-weight:700; font-size:15px; color:#fff;">Aktueller Schnitt · 1. Halbjahr</div>
+              <div style="font-size:14px; color:rgba(255,255,255,.9);">Über alle Fächer gerechnet</div>
+            </div>
+          </div>
+          <div style="font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace; font-size:12px; color:#6f7686; margin:8px 0 22px;">gezeichneter Platzhalter — kein echter Screenshot</div>
+
+          <div style="display:flex; flex-direction:column; gap:14px; margin-bottom:24px;">
+            <div>
+              <div style="font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace; font-size:10px; letter-spacing:.14em; text-transform:uppercase; color:#9aa1af; margin-bottom:8px;">vor dem Release</div>
+              <div style="display:flex; align-items:center; gap:12px;">
+                <div style="flex:1; text-align:center; background:#2563eb; color:#e6eefe; font-family:'Baloo 2',sans-serif; font-weight:700; font-size:18px; padding:14px 20px; border-radius:999px; opacity:.45; cursor:not-allowed;">Download now</div>
+                <span style="font-size:13px; color:#6f7686; flex:0 0 auto;">Bald im App&nbsp;Store</span>
+              </div>
+            </div>
+            <div>
+              <div style="font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace; font-size:10px; letter-spacing:.14em; text-transform:uppercase; color:#9aa1af; margin-bottom:8px;">nach dem Release</div>
+              <div style="display:flex; align-items:center; gap:12px;">
+                <div style="flex:1; text-align:center; background:#2563eb; color:#e6eefe; font-family:'Baloo 2',sans-serif; font-weight:700; font-size:18px; padding:14px 20px; border-radius:999px; box-shadow:0 4px 14px rgba(37,99,235,.35);">Download now</div>
+                <div style="flex:0 0 auto; width:112px; height:44px; border-radius:8px; background:#dde0e8; border:1px dashed #c1c6d0; display:flex; align-items:center; justify-content:center; text-align:center; font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace; font-size:8px; line-height:1.25; color:#6f7686; padding:0 6px;">Platzhalter<br>App-Store-Badge</div>
+              </div>
+            </div>
+          </div>
+
+          <div style="display:flex; flex-direction:column; gap:12px;">
+            <div style="background:#fff; border-radius:14px; box-shadow:0 4px 14px rgba(28,31,41,.12); padding:16px; display:flex; gap:13px; align-items:flex-start;">
+              <div style="flex:0 0 36px; width:36px; height:36px; border-radius:999px; background:#d0e0fd; display:flex; align-items:center; justify-content:center;"><span style="width:15px; height:15px; border-radius:999px; background:#2563eb; display:block;"></span></div>
+              <div><div style="font-family:'Baloo 2',sans-serif; font-weight:700; font-size:17px; margin-bottom:2px;">Noten</div><div style="font-size:13.5px; color:#4e5563; line-height:1.45;">Trag eine Note ein und sieh sofort deinen Schnitt — pro Fach und pro Halbjahr.</div></div>
+            </div>
+            <div style="background:#fff; border-radius:14px; box-shadow:0 4px 14px rgba(28,31,41,.12); padding:16px; display:flex; gap:13px; align-items:flex-start;">
+              <div style="flex:0 0 36px; width:36px; height:36px; border-radius:999px; background:#d0e0fd; display:flex; align-items:center; justify-content:center;"><span style="width:15px; height:15px; border-radius:4px; background:#2563eb; display:block;"></span></div>
+              <div><div style="font-family:'Baloo 2',sans-serif; font-weight:700; font-size:17px; margin-bottom:2px;">Mitschriften</div><div style="font-size:13.5px; color:#4e5563; line-height:1.45;">Fotografier deine Hefteinträge ab und finde sie wieder, wenn du sie brauchst.</div></div>
+            </div>
+            <div style="background:#fff; border-radius:14px; box-shadow:0 4px 14px rgba(28,31,41,.12); padding:16px; display:flex; gap:13px; align-items:flex-start;">
+              <div style="flex:0 0 36px; width:36px; height:36px; border-radius:999px; background:#d0e0fd; display:flex; align-items:center; justify-content:center;"><span style="width:17px; height:17px; background:#2563eb; display:block; clip-path:polygon(50% 0%,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%);"></span></div>
+              <div><div style="font-family:'Baloo 2',sans-serif; font-weight:700; font-size:17px; margin-bottom:2px;">Karteikarten</div><div style="font-size:13.5px; color:#4e5563; line-height:1.45;">Leg dir Sets an und lern damit, wann du Zeit hast.</div></div>
+            </div>
+          </div>
+
+          <div style="margin-top:20px; font-size:13.5px; color:#4e5563;">Kein Tracking, keine Werbung, keine Weitergabe deiner Daten.</div>
+
+          <div style="margin-top:auto; padding-top:26px;">
+            <!-- reserviert: "Ein Projekt von drei Schülern" — bewusst leer -->
+            <div style="height:20px;"></div>
+            <div style="display:flex; flex-wrap:wrap; gap:8px 12px; align-items:center; font-size:13px; color:#6f7686; padding-top:16px; border-top:1px solid rgba(28,31,41,.12);"><a href="#2a">Impressum</a><span style="color:#c1c6d0;">·</span><a href="#2a">Datenschutz</a><span style="color:#c1c6d0;">·</span><a href="#2a">Kontakt</a><span style="margin-left:auto; color:#9aa1af;">© 2026 Studytab</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2a desktop -->
+      <div>
+        <div style="font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace; font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:#7c7f86; margin-bottom:10px;">Desktop · 1440 × 1024</div>
+        <div style="width:1440px; min-height:1024px; background:#f5f7fa; color:#1c1f29; font-family:Nunito,-apple-system,sans-serif; box-shadow:0 24px 70px rgba(0,0,0,.4); display:flex; flex-direction:column; padding:36px 80px 36px;">
+          <div style="display:flex; align-items:center; gap:12px; margin-bottom:64px;">
+            <img src="assets/studytab-logo.png" alt="Studytab" style="width:46px; height:46px; border-radius:13px; box-shadow:0 4px 14px rgba(28,31,41,.12); display:block;">
+            <div style="font-family:'Baloo 2',sans-serif; font-weight:700; font-size:26px;">Studytab</div>
+          </div>
+
+          <div style="display:flex; gap:80px; align-items:center;">
+            <div style="flex:1;">
+              <h2 style="margin:0 0 16px; font-family:'Baloo 2',sans-serif; font-weight:700; font-size:62px; line-height:1.04; letter-spacing:-.015em;">Notenschnitt sofort. Mitschriften griffbereit.</h2>
+              <p style="margin:0 0 36px; font-size:19px; line-height:1.5; color:#4e5563; max-width:520px;">Studytab rechnet deinen Schnitt aus, sammelt deine Hefteinträge und hält deine Karteikarten bereit.</p>
+              <div style="display:flex; flex-direction:column; gap:18px;">
+                <div>
+                  <div style="font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace; font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:#9aa1af; margin-bottom:9px;">vor dem Release</div>
+                  <div style="display:flex; align-items:center; gap:16px;"><div style="background:#2563eb; color:#e6eefe; font-family:'Baloo 2',sans-serif; font-weight:700; font-size:20px; padding:15px 42px; border-radius:999px; opacity:.45; cursor:not-allowed;">Download now</div><span style="font-size:15px; color:#6f7686;">Bald im App Store</span></div>
+                </div>
+                <div>
+                  <div style="font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace; font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:#9aa1af; margin-bottom:9px;">nach dem Release</div>
+                  <div style="display:flex; align-items:center; gap:16px;"><div style="background:#2563eb; color:#e6eefe; font-family:'Baloo 2',sans-serif; font-weight:700; font-size:20px; padding:15px 42px; border-radius:999px; box-shadow:0 4px 14px rgba(37,99,235,.35);">Download now</div><div style="width:150px; height:50px; border-radius:9px; background:#dde0e8; border:1px dashed #c1c6d0; display:flex; align-items:center; justify-content:center; text-align:center; font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace; font-size:9px; line-height:1.3; color:#6f7686;">Platzhalter<br>App-Store-Badge</div></div>
+                </div>
+              </div>
+            </div>
+            <div style="flex:0 0 440px;">
+              <div style="border-radius:22px; background:linear-gradient(135deg,#12a877,#0b6b52); box-shadow:0 14px 34px rgba(18,168,119,.42); padding:22px 24px; display:flex; align-items:center; gap:18px; margin-bottom:12px;">
+                <div style="width:68px; height:68px; flex:0 0 68px; border-radius:999px; background:#fff; box-shadow:0 3px 8px rgba(0,0,0,.16); display:flex; align-items:center; justify-content:center; font-family:'Baloo 2',sans-serif; font-weight:700; font-size:27px; color:#12a877;">1,7</div>
+                <div><div style="font-weight:700; font-size:17px; color:#fff;">Aktueller Schnitt · 1. Halbjahr</div><div style="font-size:15px; color:rgba(255,255,255,.9);">Über alle Fächer gerechnet</div></div>
+              </div>
+              <div style="background:#fff; border-radius:22px; box-shadow:0 4px 14px rgba(28,31,41,.12); padding:8px 20px;">
+                <div style="display:flex; align-items:center; justify-content:space-between; padding:13px 0; border-bottom:1px solid rgba(28,31,41,.12);"><span style="font-size:15px; color:#333846;">Mathematik</span><span style="font-family:'Baloo 2',sans-serif; font-weight:700; font-size:15px; color:#4c7a17; background:#e0f2c9; border-radius:999px; padding:2px 11px;">2</span></div>
+                <div style="display:flex; align-items:center; justify-content:space-between; padding:13px 0; border-bottom:1px solid rgba(28,31,41,.12);"><span style="font-size:15px; color:#333846;">Deutsch</span><span style="font-family:'Baloo 2',sans-serif; font-weight:700; font-size:15px; color:#0b6b52; background:#c3efe0; border-radius:999px; padding:2px 11px;">1</span></div>
+                <div style="display:flex; align-items:center; justify-content:space-between; padding:13px 0; border-bottom:1px solid rgba(28,31,41,.12);"><span style="font-size:15px; color:#333846;">Englisch</span><span style="font-family:'Baloo 2',sans-serif; font-weight:700; font-size:15px; color:#4c7a17; background:#e0f2c9; border-radius:999px; padding:2px 11px;">2</span></div>
+                <div style="display:flex; align-items:center; justify-content:space-between; padding:13px 0;"><span style="font-size:15px; color:#333846;">Biologie</span><span style="font-family:'Baloo 2',sans-serif; font-weight:700; font-size:15px; color:#0b6b52; background:#c3efe0; border-radius:999px; padding:2px 11px;">1</span></div>
+              </div>
+              <div style="font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace; font-size:12px; color:#6f7686; margin-top:10px; text-align:center;">gezeichneter Platzhalter — kein echter Screenshot</div>
+            </div>
+          </div>
+
+          <div style="display:flex; gap:16px; margin-top:56px;">
+            <div style="flex:1; background:#fff; border-radius:22px; box-shadow:0 4px 14px rgba(28,31,41,.12); padding:24px;">
+              <div style="width:44px; height:44px; border-radius:999px; background:#d0e0fd; display:flex; align-items:center; justify-content:center; margin-bottom:14px;"><span style="width:18px; height:18px; border-radius:999px; background:#2563eb; display:block;"></span></div>
+              <div style="font-family:'Baloo 2',sans-serif; font-weight:700; font-size:22px; margin-bottom:5px;">Noten</div><div style="font-size:16px; color:#4e5563; line-height:1.45;">Trag eine Note ein und sieh sofort deinen Schnitt — pro Fach und pro Halbjahr.</div>
+            </div>
+            <div style="flex:1; background:#fff; border-radius:22px; box-shadow:0 4px 14px rgba(28,31,41,.12); padding:24px;">
+              <div style="width:44px; height:44px; border-radius:999px; background:#d0e0fd; display:flex; align-items:center; justify-content:center; margin-bottom:14px;"><span style="width:18px; height:18px; border-radius:5px; background:#2563eb; display:block;"></span></div>
+              <div style="font-family:'Baloo 2',sans-serif; font-weight:700; font-size:22px; margin-bottom:5px;">Mitschriften</div><div style="font-size:16px; color:#4e5563; line-height:1.45;">Fotografier deine Hefteinträge ab und finde sie wieder, wenn du sie brauchst.</div>
+            </div>
+            <div style="flex:1; background:#fff; border-radius:22px; box-shadow:0 4px 14px rgba(28,31,41,.12); padding:24px;">
+              <div style="width:44px; height:44px; border-radius:999px; background:#d0e0fd; display:flex; align-items:center; justify-content:center; margin-bottom:14px;"><span style="width:20px; height:20px; background:#2563eb; display:block; clip-path:polygon(50% 0%,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%);"></span></div>
+              <div style="font-family:'Baloo 2',sans-serif; font-weight:700; font-size:22px; margin-bottom:5px;">Karteikarten</div><div style="font-size:16px; color:#4e5563; line-height:1.45;">Leg dir Sets an und lern damit, wann du Zeit hast.</div>
+            </div>
+          </div>
+
+          <div style="margin-top:auto; padding-top:44px;">
+            <div style="font-size:16px; color:#4e5563; margin-bottom:22px;">Kein Tracking, keine Werbung, keine Weitergabe deiner Daten.</div>
+            <!-- reserviert: "Ein Projekt von drei Schülern" — bewusst leer -->
+            <div style="height:22px;"></div>
+            <div style="display:flex; gap:16px; align-items:center; font-size:14px; color:#6f7686; padding-top:18px; border-top:1px solid rgba(28,31,41,.12);"><a href="#2a">Impressum</a><span style="color:#c1c6d0;">·</span><a href="#2a">Datenschutz</a><span style="color:#c1c6d0;">·</span><a href="#2a">Kontakt</a><span style="margin-left:auto; color:#9aa1af;">© 2026 Studytab</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================ 2b — OZEAN ============================ -->
+    <section id="2b" style="display:flex; flex-direction:column; gap:30px; width:1440px; flex:0 0 auto;">
+      <div style="display:flex; align-items:baseline; gap:14px;">
+        <span style="font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace; font-size:12px; font-weight:600; color:#0f1115; background:#e8e9ec; padding:3px 8px; border-radius:5px;">2b</span>
+        <div>
+          <div style="font-size:18px; font-weight:700; color:#f4f4f6;">B — Ozean</div>
+          <div style="font-size:13px; color:#9a9ca2; margin-top:2px;">Ozeanblauer Vollflächen-Kopf mit dem Sternenmuster der Fach-Kacheln, weiße Karten darunter.</div>
+        </div>
+      </div>
+
+      <!-- 2b mobile -->
+      <div>
+        <div style="font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace; font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:#7c7f86; margin-bottom:10px;">Mobil · 390 × 844</div>
+        <div style="width:390px; min-height:844px; background:#f5f7fa; color:#1c1f29; font-family:Nunito,-apple-system,sans-serif; box-shadow:0 24px 70px rgba(0,0,0,.4); display:flex; flex-direction:column;">
+          <div style="position:relative; overflow:hidden; background:linear-gradient(150deg,#1c8fc4,#0b6d9e 42%,#064565); padding:22px 20px 30px; border-radius:0 0 26px 26px;">
+            <span style="position:absolute; width:150px; height:150px; right:-34px; top:14px; background:rgba(255,255,255,.20); clip-path:polygon(50% 0%,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%); transform:rotate(12deg);"></span>
+            <span style="position:absolute; width:74px; height:74px; left:52%; bottom:96px; background:rgba(255,255,255,.15); clip-path:polygon(50% 0%,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%); transform:rotate(-18deg);"></span>
+            <span style="position:absolute; width:46px; height:46px; left:16px; bottom:20px; background:rgba(255,255,255,.13); clip-path:polygon(50% 0%,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%); transform:rotate(24deg);"></span>
+            <div style="position:relative;">
+              <div style="display:flex; align-items:center; gap:11px; margin-bottom:30px;">
+                <img src="assets/studytab-logo.png" alt="Studytab" style="width:40px; height:40px; border-radius:12px; display:block;">
+                <div style="font-family:'Baloo 2',sans-serif; font-weight:700; font-size:22px; color:#fff;">Studytab</div>
+              </div>
+              <h2 style="margin:0 0 12px; font-family:'Baloo 2',sans-serif; font-weight:700; font-size:34px; line-height:1.06; letter-spacing:-.015em; color:#fff;">Notenschnitt sofort. Mitschriften griffbereit.</h2>
+              <p style="margin:0 0 24px; font-size:15px; line-height:1.5; color:#c0e2f4;">Studytab rechnet deinen Schnitt aus, sammelt deine Hefteinträge und hält deine Karteikarten bereit.</p>
+              <div style="display:flex; flex-direction:column; gap:14px;">
+                <div>
+                  <div style="font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace; font-size:10px; letter-spacing:.14em; text-transform:uppercase; color:#96cfe9; margin-bottom:8px;">vor dem Release</div>
+                  <div style="display:flex; align-items:center; gap:12px;"><div style="flex:1; text-align:center; background:#fff; color:#085880; font-family:'Baloo 2',sans-serif; font-weight:700; font-size:18px; padding:14px 20px; border-radius:999px; opacity:.42; cursor:not-allowed;">Download now</div><span style="font-size:13px; color:#c0e2f4; flex:0 0 auto;">Bald im App&nbsp;Store</span></div>
+                </div>
+                <div>
+                  <div style="font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace; font-size:10px; letter-spacing:.14em; text-transform:uppercase; color:#96cfe9; margin-bottom:8px;">nach dem Release</div>
+                  <div style="display:flex; align-items:center; gap:12px;"><div style="flex:1; text-align:center; background:#fff; color:#085880; font-family:'Baloo 2',sans-serif; font-weight:700; font-size:18px; padding:14px 20px; border-radius:999px; box-shadow:0 6px 18px rgba(4,50,74,.35);">Download now</div><div style="flex:0 0 auto; width:112px; height:44px; border-radius:8px; background:rgba(255,255,255,.22); border:1px dashed rgba(255,255,255,.5); display:flex; align-items:center; justify-content:center; text-align:center; font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace; font-size:8px; line-height:1.25; color:#ddeff9; padding:0 6px;">Platzhalter<br>App-Store-Badge</div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div style="padding:24px 20px 24px; display:flex; flex-direction:column; flex:1;">
+            <div style="display:flex; flex-direction:column; gap:12px;">
+              <div style="background:#fff; border-radius:14px; box-shadow:0 4px 14px rgba(28,31,41,.12); padding:16px;">
+                <div style="font-family:'Baloo 2',sans-serif; font-weight:700; font-size:17px; color:#085880; margin-bottom:3px;">Noten</div><div style="font-size:13.5px; color:#4e5563; line-height:1.45;">Trag eine Note ein und sieh sofort deinen Schnitt — pro Fach und pro Halbjahr.</div>
+              </div>
+              <div style="background:#fff; border-radius:14px; box-shadow:0 4px 14px rgba(28,31,41,.12); padding:16px;">
+                <div style="font-family:'Baloo 2',sans-serif; font-weight:700; font-size:17px; color:#085880; margin-bottom:3px;">Mitschriften</div><div style="font-size:13.5px; color:#4e5563; line-height:1.45;">Fotografier deine Hefteinträge ab und finde sie wieder, wenn du sie brauchst.</div>
+              </div>
+              <div style="background:#fff; border-radius:14px; box-shadow:0 4px 14px rgba(28,31,41,.12); padding:16px;">
+                <div style="font-family:'Baloo 2',sans-serif; font-weight:700; font-size:17px; color:#085880; margin-bottom:3px;">Karteikarten</div><div style="font-size:13.5px; color:#4e5563; line-height:1.45;">Leg dir Sets an und lern damit, wann du Zeit hast.</div>
+              </div>
+            </div>
+
+            <div style="margin-top:20px; background:#ddeff9; border-radius:14px; padding:14px 16px; font-size:13.5px; color:#064565; line-height:1.45;">Kein Tracking, keine Werbung, keine Weitergabe deiner Daten.</div>
+
+            <div style="margin-top:auto; padding-top:26px;">
+              <!-- reserviert: "Ein Projekt von drei Schülern" — bewusst leer -->
+              <div style="height:20px;"></div>
+              <div style="display:flex; flex-wrap:wrap; gap:8px 12px; align-items:center; font-size:13px; color:#6f7686; padding-top:16px; border-top:1px solid rgba(28,31,41,.12);"><a href="#2b">Impressum</a><span style="color:#c1c6d0;">·</span><a href="#2b">Datenschutz</a><span style="color:#c1c6d0;">·</span><a href="#2b">Kontakt</a><span style="margin-left:auto; color:#9aa1af;">© 2026 Studytab</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2b desktop -->
+      <div>
+        <div style="font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace; font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:#7c7f86; margin-bottom:10px;">Desktop · 1440 × 1024</div>
+        <div style="width:1440px; min-height:1024px; background:#f5f7fa; color:#1c1f29; font-family:Nunito,-apple-system,sans-serif; box-shadow:0 24px 70px rgba(0,0,0,.4); display:flex; flex-direction:column;">
+          <div style="position:relative; overflow:hidden; background:linear-gradient(150deg,#1c8fc4,#0b6d9e 45%,#064565); padding:36px 80px 64px; border-radius:0 0 34px 34px;">
+            <span style="position:absolute; width:420px; height:420px; right:-90px; top:-40px; background:rgba(255,255,255,.16); clip-path:polygon(50% 0%,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%); transform:rotate(12deg);"></span>
+            <span style="position:absolute; width:170px; height:170px; right:330px; bottom:-30px; background:rgba(255,255,255,.13); clip-path:polygon(50% 0%,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%); transform:rotate(-18deg);"></span>
+            <div style="position:relative;">
+              <div style="display:flex; align-items:center; gap:12px; margin-bottom:72px;">
+                <img src="assets/studytab-logo.png" alt="Studytab" style="width:46px; height:46px; border-radius:13px; display:block;">
+                <div style="font-family:'Baloo 2',sans-serif; font-weight:700; font-size:26px; color:#fff;">Studytab</div>
+              </div>
+              <div style="display:flex; gap:80px; align-items:flex-end;">
+                <div style="flex:1;">
+                  <h2 style="margin:0 0 18px; font-family:'Baloo 2',sans-serif; font-weight:700; font-size:66px; line-height:1.03; letter-spacing:-.02em; color:#fff; max-width:760px;">Notenschnitt sofort. Mitschriften griffbereit.</h2>
+                  <p style="margin:0; font-size:20px; line-height:1.5; color:#c0e2f4; max-width:560px;">Studytab rechnet deinen Schnitt aus, sammelt deine Hefteinträge und hält deine Karteikarten bereit.</p>
+                </div>
+                <div style="flex:0 0 auto; display:flex; flex-direction:column; gap:18px;">
+                  <div>
+                    <div style="font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace; font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:#96cfe9; margin-bottom:9px;">vor dem Release</div>
+                    <div style="display:flex; align-items:center; gap:16px;"><div style="background:#fff; color:#085880; font-family:'Baloo 2',sans-serif; font-weight:700; font-size:20px; padding:15px 42px; border-radius:999px; opacity:.42; cursor:not-allowed;">Download now</div><span style="font-size:15px; color:#c0e2f4;">Bald im App Store</span></div>
+                  </div>
+                  <div>
+                    <div style="font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace; font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:#96cfe9; margin-bottom:9px;">nach dem Release</div>
+                    <div style="display:flex; align-items:center; gap:16px;"><div style="background:#fff; color:#085880; font-family:'Baloo 2',sans-serif; font-weight:700; font-size:20px; padding:15px 42px; border-radius:999px; box-shadow:0 8px 24px rgba(4,50,74,.4);">Download now</div><div style="width:150px; height:50px; border-radius:9px; background:rgba(255,255,255,.22); border:1px dashed rgba(255,255,255,.5); display:flex; align-items:center; justify-content:center; text-align:center; font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace; font-size:9px; line-height:1.3; color:#ddeff9;">Platzhalter<br>App-Store-Badge</div></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div style="padding:56px 80px 36px; display:flex; flex-direction:column; flex:1;">
+            <div style="display:flex; gap:16px;">
+              <div style="flex:1; background:#fff; border-radius:22px; box-shadow:0 4px 14px rgba(28,31,41,.12); padding:26px;">
+                <div style="font-family:'Baloo 2',sans-serif; font-weight:700; font-size:24px; color:#085880; margin-bottom:6px;">Noten</div><div style="font-size:16px; color:#4e5563; line-height:1.45;">Trag eine Note ein und sieh sofort deinen Schnitt — pro Fach und pro Halbjahr.</div>
+              </div>
+              <div style="flex:1; background:#fff; border-radius:22px; box-shadow:0 4px 14px rgba(28,31,41,.12); padding:26px;">
+                <div style="font-family:'Baloo 2',sans-serif; font-weight:700; font-size:24px; color:#085880; margin-bottom:6px;">Mitschriften</div><div style="font-size:16px; color:#4e5563; line-height:1.45;">Fotografier deine Hefteinträge ab und finde sie wieder, wenn du sie brauchst.</div>
+              </div>
+              <div style="flex:1; background:#fff; border-radius:22px; box-shadow:0 4px 14px rgba(28,31,41,.12); padding:26px;">
+                <div style="font-family:'Baloo 2',sans-serif; font-weight:700; font-size:24px; color:#085880; margin-bottom:6px;">Karteikarten</div><div style="font-size:16px; color:#4e5563; line-height:1.45;">Leg dir Sets an und lern damit, wann du Zeit hast.</div>
+              </div>
+            </div>
+
+            <div style="margin-top:22px; background:#ddeff9; border-radius:22px; padding:20px 26px; font-size:16px; color:#064565;">Kein Tracking, keine Werbung, keine Weitergabe deiner Daten.</div>
+
+            <div style="margin-top:auto; padding-top:44px;">
+              <!-- reserviert: "Ein Projekt von drei Schülern" — bewusst leer -->
+              <div style="height:22px;"></div>
+              <div style="display:flex; gap:16px; align-items:center; font-size:14px; color:#6f7686; padding-top:18px; border-top:1px solid rgba(28,31,41,.12);"><a href="#2b">Impressum</a><span style="color:#c1c6d0;">·</span><a href="#2b">Datenschutz</a><span style="color:#c1c6d0;">·</span><a href="#2b">Kontakt</a><span style="margin-left:auto; color:#9aa1af;">© 2026 Studytab</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================ 2c — NOTENAMPEL ============================ -->
+    <section id="2c" style="display:flex; flex-direction:column; gap:30px; width:1440px; flex:0 0 auto;">
+      <div style="display:flex; align-items:baseline; gap:14px;">
+        <span style="font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace; font-size:12px; font-weight:600; color:#0f1115; background:#e8e9ec; padding:3px 8px; border-radius:5px;">2c</span>
+        <div>
+          <div style="font-size:18px; font-weight:700; color:#f4f4f6;">C — Notenampel</div>
+          <div style="font-size:13px; color:#9a9ca2; margin-top:2px;">Weiß, große Überschrift, als Bild die Ampelfarben der App. Funktionen als geteilte Liste.</div>
+        </div>
+      </div>
+
+      <!-- 2c mobile -->
+      <div>
+        <div style="font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace; font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:#7c7f86; margin-bottom:10px;">Mobil · 390 × 844</div>
+        <div style="width:390px; min-height:844px; background:#fff; color:#1c1f29; font-family:Nunito,-apple-system,sans-serif; box-shadow:0 24px 70px rgba(0,0,0,.4); display:flex; flex-direction:column; padding:20px 20px 24px;">
+          <div style="display:flex; align-items:center; gap:11px; margin-bottom:30px;">
+            <img src="assets/studytab-logo.png" alt="Studytab" style="width:40px; height:40px; border-radius:12px; box-shadow:0 1px 2px rgba(28,31,41,.10); display:block;">
+            <div style="font-family:'Baloo 2',sans-serif; font-weight:700; font-size:22px;">Studytab</div>
+          </div>
+
+          <h2 style="margin:0 0 14px; font-family:'Baloo 2',sans-serif; font-weight:800; font-size:38px; line-height:1.02; letter-spacing:-.02em;">Notenschnitt sofort. Mitschriften griffbereit.</h2>
+          <p style="margin:0 0 24px; font-size:15px; line-height:1.5; color:#4e5563;">Studytab rechnet deinen Schnitt aus, sammelt deine Hefteinträge und hält deine Karteikarten bereit.</p>
+
+          <div style="display:flex; gap:7px; margin-bottom:8px;">
+            <div style="flex:1; aspect-ratio:1; border-radius:14px; background:#12a877; display:flex; align-items:center; justify-content:center; font-family:'Baloo 2',sans-serif; font-weight:700; font-size:26px; color:#fff;">1</div>
+            <div style="flex:1; aspect-ratio:1; border-radius:14px; background:#7cc23a; display:flex; align-items:center; justify-content:center; font-family:'Baloo 2',sans-serif; font-weight:700; font-size:26px; color:#fff;">2</div>
+            <div style="flex:1; aspect-ratio:1; border-radius:14px; background:#e6b325; display:flex; align-items:center; justify-content:center; font-family:'Baloo 2',sans-serif; font-weight:700; font-size:26px; color:#fff;">3</div>
+            <div style="flex:1; aspect-ratio:1; border-radius:14px; background:#ef8a3c; display:flex; align-items:center; justify-content:center; font-family:'Baloo 2',sans-serif; font-weight:700; font-size:26px; color:#fff;">4</div>
+            <div style="flex:1; aspect-ratio:1; border-radius:14px; background:#e5623d; display:flex; align-items:center; justify-content:center; font-family:'Baloo 2',sans-serif; font-weight:700; font-size:26px; color:#fff;">5</div>
+          </div>
+          <div style="font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace; font-size:12px; color:#6f7686; margin-bottom:24px;">die Ampelfarben der App — gezeichnet, kein Screenshot</div>
+
+          <div style="display:flex; flex-direction:column; gap:14px; margin-bottom:26px;">
+            <div>
+              <div style="font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace; font-size:10px; letter-spacing:.14em; text-transform:uppercase; color:#9aa1af; margin-bottom:8px;">vor dem Release</div>
+              <div style="display:flex; align-items:center; gap:12px;"><div style="flex:1; text-align:center; background:#2563eb; color:#e6eefe; font-family:'Baloo 2',sans-serif; font-weight:700; font-size:18px; padding:15px 20px; border-radius:999px; opacity:.45; cursor:not-allowed;">Download now</div><span style="font-size:13px; color:#6f7686; flex:0 0 auto;">Bald im App&nbsp;Store</span></div>
+            </div>
+            <div>
+              <div style="font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace; font-size:10px; letter-spacing:.14em; text-transform:uppercase; color:#9aa1af; margin-bottom:8px;">nach dem Release</div>
+              <div style="display:flex; align-items:center; gap:12px;"><div style="flex:1; text-align:center; background:#2563eb; color:#e6eefe; font-family:'Baloo 2',sans-serif; font-weight:700; font-size:18px; padding:15px 20px; border-radius:999px; box-shadow:0 4px 14px rgba(37,99,235,.35);">Download now</div><div style="flex:0 0 auto; width:112px; height:46px; border-radius:8px; background:#dde0e8; border:1px dashed #c1c6d0; display:flex; align-items:center; justify-content:center; text-align:center; font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace; font-size:8px; line-height:1.25; color:#6f7686; padding:0 6px;">Platzhalter<br>App-Store-Badge</div></div>
+            </div>
+          </div>
+
+          <div style="display:flex; flex-direction:column; border-top:1px solid rgba(28,31,41,.12);">
+            <div style="padding:16px 0; border-bottom:1px solid rgba(28,31,41,.12); display:flex; gap:12px;"><span style="flex:0 0 8px; width:8px; height:8px; border-radius:999px; background:#12a877; margin-top:8px;"></span><div><div style="font-family:'Baloo 2',sans-serif; font-weight:700; font-size:19px;">Noten</div><div style="font-size:13.5px; color:#4e5563; line-height:1.45; margin-top:2px;">Trag eine Note ein und sieh sofort deinen Schnitt — pro Fach und pro Halbjahr.</div></div></div>
+            <div style="padding:16px 0; border-bottom:1px solid rgba(28,31,41,.12); display:flex; gap:12px;"><span style="flex:0 0 8px; width:8px; height:8px; border-radius:999px; background:#0b6d9e; margin-top:8px;"></span><div><div style="font-family:'Baloo 2',sans-serif; font-weight:700; font-size:19px;">Mitschriften</div><div style="font-size:13.5px; color:#4e5563; line-height:1.45; margin-top:2px;">Fotografier deine Hefteinträge ab und finde sie wieder, wenn du sie brauchst.</div></div></div>
+            <div style="padding:16px 0; display:flex; gap:12px;"><span style="flex:0 0 8px; width:8px; height:8px; border-radius:999px; background:#e0a012; margin-top:8px;"></span><div><div style="font-family:'Baloo 2',sans-serif; font-weight:700; font-size:19px;">Karteikarten</div><div style="font-size:13.5px; color:#4e5563; line-height:1.45; margin-top:2px;">Leg dir Sets an und lern damit, wann du Zeit hast.</div></div></div>
+          </div>
+
+          <div style="margin-top:18px; font-size:13.5px; color:#4e5563;">Kein Tracking, keine Werbung, keine Weitergabe deiner Daten.</div>
+
+          <div style="margin-top:auto; padding-top:26px;">
+            <!-- reserviert: "Ein Projekt von drei Schülern" — bewusst leer -->
+            <div style="height:20px;"></div>
+            <div style="display:flex; flex-wrap:wrap; gap:8px 12px; align-items:center; font-size:13px; color:#6f7686; padding-top:16px; border-top:1px solid rgba(28,31,41,.12);"><a href="#2c">Impressum</a><span style="color:#c1c6d0;">·</span><a href="#2c">Datenschutz</a><span style="color:#c1c6d0;">·</span><a href="#2c">Kontakt</a><span style="margin-left:auto; color:#9aa1af;">© 2026 Studytab</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2c desktop -->
+      <div>
+        <div style="font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace; font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:#7c7f86; margin-bottom:10px;">Desktop · 1440 × 1024</div>
+        <div style="width:1440px; min-height:1024px; background:#fff; color:#1c1f29; font-family:Nunito,-apple-system,sans-serif; box-shadow:0 24px 70px rgba(0,0,0,.4); display:flex; flex-direction:column; padding:36px 80px 36px;">
+          <div style="display:flex; align-items:center; gap:12px; margin-bottom:58px;">
+            <img src="assets/studytab-logo.png" alt="Studytab" style="width:46px; height:46px; border-radius:13px; box-shadow:0 1px 2px rgba(28,31,41,.10); display:block;">
+            <div style="font-family:'Baloo 2',sans-serif; font-weight:700; font-size:26px;">Studytab</div>
+          </div>
+
+          <div style="display:flex; gap:70px; align-items:flex-start;">
+            <div style="flex:1;">
+              <h2 style="margin:0 0 20px; font-family:'Baloo 2',sans-serif; font-weight:800; font-size:78px; line-height:.99; letter-spacing:-.025em;">Notenschnitt sofort. Mitschriften griffbereit.</h2>
+              <p style="margin:0 0 40px; font-size:21px; line-height:1.5; color:#4e5563; max-width:620px;">Studytab rechnet deinen Schnitt aus, sammelt deine Hefteinträge und hält deine Karteikarten bereit.</p>
+              <div style="display:flex; flex-direction:column; gap:18px;">
+                <div>
+                  <div style="font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace; font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:#9aa1af; margin-bottom:9px;">vor dem Release</div>
+                  <div style="display:flex; align-items:center; gap:16px;"><div style="background:#2563eb; color:#e6eefe; font-family:'Baloo 2',sans-serif; font-weight:700; font-size:20px; padding:16px 44px; border-radius:999px; opacity:.45; cursor:not-allowed;">Download now</div><span style="font-size:15px; color:#6f7686;">Bald im App Store</span></div>
+                </div>
+                <div>
+                  <div style="font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace; font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:#9aa1af; margin-bottom:9px;">nach dem Release</div>
+                  <div style="display:flex; align-items:center; gap:16px;"><div style="background:#2563eb; color:#e6eefe; font-family:'Baloo 2',sans-serif; font-weight:700; font-size:20px; padding:16px 44px; border-radius:999px; box-shadow:0 4px 14px rgba(37,99,235,.35);">Download now</div><div style="width:150px; height:52px; border-radius:9px; background:#dde0e8; border:1px dashed #c1c6d0; display:flex; align-items:center; justify-content:center; text-align:center; font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace; font-size:9px; line-height:1.3; color:#6f7686;">Platzhalter<br>App-Store-Badge</div></div>
+                </div>
+              </div>
+            </div>
+            <div style="flex:0 0 300px;">
+              <div style="display:grid; grid-template-columns:repeat(2,1fr); gap:10px;">
+                <div style="aspect-ratio:1; border-radius:22px; background:#12a877; display:flex; align-items:center; justify-content:center; font-family:'Baloo 2',sans-serif; font-weight:700; font-size:52px; color:#fff;">1</div>
+                <div style="aspect-ratio:1; border-radius:22px; background:#7cc23a; display:flex; align-items:center; justify-content:center; font-family:'Baloo 2',sans-serif; font-weight:700; font-size:52px; color:#fff;">2</div>
+                <div style="aspect-ratio:1; border-radius:22px; background:#e6b325; display:flex; align-items:center; justify-content:center; font-family:'Baloo 2',sans-serif; font-weight:700; font-size:52px; color:#fff;">3</div>
+                <div style="aspect-ratio:1; border-radius:22px; background:#ef8a3c; display:flex; align-items:center; justify-content:center; font-family:'Baloo 2',sans-serif; font-weight:700; font-size:52px; color:#fff;">4</div>
+              </div>
+              <div style="font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace; font-size:12px; color:#6f7686; margin-top:12px;">die Ampelfarben der App — gezeichnet, kein Screenshot</div>
+            </div>
+          </div>
+
+          <div style="display:grid; grid-template-columns:repeat(3,1fr); margin-top:56px; border-top:1px solid rgba(28,31,41,.12);">
+            <div style="padding:28px 32px 28px 0; border-right:1px solid rgba(28,31,41,.12);"><span style="display:block; width:10px; height:10px; border-radius:999px; background:#12a877; margin-bottom:14px;"></span><div style="font-family:'Baloo 2',sans-serif; font-weight:700; font-size:26px;">Noten</div><div style="font-size:16px; color:#4e5563; line-height:1.45; margin-top:6px;">Trag eine Note ein und sieh sofort deinen Schnitt — pro Fach und pro Halbjahr.</div></div>
+            <div style="padding:28px 32px; border-right:1px solid rgba(28,31,41,.12);"><span style="display:block; width:10px; height:10px; border-radius:999px; background:#0b6d9e; margin-bottom:14px;"></span><div style="font-family:'Baloo 2',sans-serif; font-weight:700; font-size:26px;">Mitschriften</div><div style="font-size:16px; color:#4e5563; line-height:1.45; margin-top:6px;">Fotografier deine Hefteinträge ab und finde sie wieder, wenn du sie brauchst.</div></div>
+            <div style="padding:28px 0 28px 32px;"><span style="display:block; width:10px; height:10px; border-radius:999px; background:#e0a012; margin-bottom:14px;"></span><div style="font-family:'Baloo 2',sans-serif; font-weight:700; font-size:26px;">Karteikarten</div><div style="font-size:16px; color:#4e5563; line-height:1.45; margin-top:6px;">Leg dir Sets an und lern damit, wann du Zeit hast.</div></div>
+          </div>
+
+          <div style="margin-top:auto; padding-top:40px;">
+            <div style="font-size:16px; color:#4e5563; margin-bottom:22px;">Kein Tracking, keine Werbung, keine Weitergabe deiner Daten.</div>
+            <!-- reserviert: "Ein Projekt von drei Schülern" — bewusst leer -->
+            <div style="height:22px;"></div>
+            <div style="display:flex; gap:16px; align-items:center; font-size:14px; color:#6f7686; padding-top:18px; border-top:1px solid rgba(28,31,41,.12);"><a href="#2c">Impressum</a><span style="color:#c1c6d0;">·</span><a href="#2c">Datenschutz</a><span style="color:#c1c6d0;">·</span><a href="#2c">Kontakt</a><span style="margin-left:auto; color:#9aa1af;">© 2026 Studytab</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <div style="margin:0 0 34px; padding-bottom:18px; border-bottom:1px solid #3a3d43; font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace; font-size:12px; letter-spacing:.16em; text-transform:uppercase; color:#8f9299;">Runde 1 · freie Richtungen (vor dem Repo)</div>
+
+  <div style="display:flex; gap:96px; align-items:flex-start; flex-wrap:nowrap;">
+
+    <!-- ============================ 1a — SCHULHEFT ============================ -->
+    <section id="1a" style="display:flex; flex-direction:column; gap:30px; width:1440px; flex:0 0 auto;">
+      <div style="display:flex; align-items:baseline; gap:14px;">
+        <span style="font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace; font-size:12px; font-weight:600; color:#0f1115; background:#e8e9ec; padding:3px 8px; border-radius:5px;">1a</span>
+        <div>
+          <div style="font-size:18px; font-weight:700; color:#f4f4f6;">1 — Schulheft</div>
+          <div style="font-size:13px; color:#9a9ca2; margin-top:2px;">Kühles Papierweiß, angedeutetes Linienraster, klare Groteske, viel Weißraum.</div>
+        </div>
+      </div>
+
+      <!-- 1a mobile -->
+      <div>
+        <div style="font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace; font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:#7c7f86; margin-bottom:10px;">Mobil · 390 × 844</div>
+        <div style="width:390px; min-height:844px; background:linear-gradient(to right, transparent 46px, rgba(196,64,64,.14) 46px 47px, transparent 47px), repeating-linear-gradient(to bottom, transparent 0 31px, rgba(56,86,140,.09) 31px 32px), #f5f7f9; color:#262b36; box-shadow:0 24px 70px rgba(0,0,0,.4); display:flex; flex-direction:column; padding:44px 30px 26px 58px;">
+          <div style="font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace; font-size:13px; font-weight:600; letter-spacing:.02em; color:#262b36; margin-bottom:44px;">Studytab</div>
+          <h2 style="margin:0 0 16px; font-size:33px; font-weight:700; line-height:1.08; letter-spacing:-.02em;">Notenschnitt sofort. Mitschriften griffbereit.</h2>
+          <p style="margin:0 0 28px; font-size:15px; line-height:1.5; color:#4a5262;">Studytab rechnet deinen Schnitt aus, sammelt deine Hefteinträge und hält deine Karteikarten bereit.</p>
+
+          <div style="display:flex; flex-direction:column; gap:16px; margin-bottom:32px;">
+            <div>
+              <div style="font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace; font-size:10px; letter-spacing:.14em; text-transform:uppercase; color:#98a0ad; margin-bottom:8px;">vor dem Release</div>
+              <div style="display:flex; align-items:center; gap:14px;">
+                <div style="background:#e0e4e9; color:#a2abb7; font-size:15px; font-weight:600; padding:13px 26px; border-radius:11px; cursor:not-allowed;">Download now</div>
+                <span style="font-size:13px; color:#6b7280;">Bald im App Store</span>
+              </div>
+            </div>
+            <div>
+              <div style="font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace; font-size:10px; letter-spacing:.14em; text-transform:uppercase; color:#98a0ad; margin-bottom:8px;">nach dem Release</div>
+              <div style="display:flex; align-items:center; gap:14px;">
+                <div style="background:#262b36; color:#fff; font-size:15px; font-weight:600; padding:13px 26px; border-radius:11px;">Download now</div>
+                <div style="width:120px; height:44px; border-radius:8px; background:#d5d8dd; border:1px dashed #b3b8c0; display:flex; align-items:center; justify-content:center; text-align:center; font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace; font-size:8px; line-height:1.25; color:#7a8290; padding:0 6px;">Platzhalter<br>App-Store-Badge</div>
+              </div>
+            </div>
+          </div>
+
+          <div style="display:flex; flex-direction:column;">
+            <div style="display:flex; gap:14px; padding:15px 0; border-top:1px solid rgba(38,43,54,.13);">
+              <div style="font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace; font-size:12px; color:#98a0ad; padding-top:2px;">01</div>
+              <div><div style="font-weight:700; font-size:15px; margin-bottom:4px;">Noten</div><div style="font-size:13.5px; color:#4a5262; line-height:1.42;">Trag eine Note ein und sieh sofort deinen Schnitt — pro Fach und pro Halbjahr.</div></div>
+            </div>
+            <div style="display:flex; gap:14px; padding:15px 0; border-top:1px solid rgba(38,43,54,.13);">
+              <div style="font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace; font-size:12px; color:#98a0ad; padding-top:2px;">02</div>
+              <div><div style="font-weight:700; font-size:15px; margin-bottom:4px;">Mitschriften</div><div style="font-size:13.5px; color:#4a5262; line-height:1.42;">Fotografier deine Hefteinträge ab und finde sie wieder, wenn du sie brauchst.</div></div>
+            </div>
+            <div style="display:flex; gap:14px; padding:15px 0; border-top:1px solid rgba(38,43,54,.13); border-bottom:1px solid rgba(38,43,54,.13);">
+              <div style="font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace; font-size:12px; color:#98a0ad; padding-top:2px;">03</div>
+              <div><div style="font-weight:700; font-size:15px; margin-bottom:4px;">Karteikarten</div><div style="font-size:13.5px; color:#4a5262; line-height:1.42;">Leg dir Sets an und lern damit, wann du Zeit hast.</div></div>
+            </div>
+          </div>
+
+          <div style="margin-top:24px; font-size:13px; color:#5b6472;">Kein Tracking, keine Werbung, keine Weitergabe deiner Daten.</div>
+
+          <div style="margin-top:auto; padding-top:28px;">
+            <!-- reserviert: "Ein Projekt von drei Schülern" — bewusst leer -->
+            <div style="height:20px;"></div>
+            <div style="display:flex; flex-wrap:wrap; gap:8px 12px; align-items:center; font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace; font-size:12px; color:#6b7280; padding-top:16px; border-top:1px solid rgba(38,43,54,.13);">
+              <a href="#1a">Impressum</a><span style="color:#b7bcc4;">·</span><a href="#1a">Datenschutz</a><span style="color:#b7bcc4;">·</span><a href="#1a">Kontakt</a>
+              <span style="margin-left:auto; color:#98a0ad;">© 2026 Studytab</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 1a desktop -->
+      <div>
+        <div style="font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace; font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:#7c7f86; margin-bottom:10px;">Desktop · 1440 × 1024</div>
+        <div style="width:1440px; min-height:1024px; background:linear-gradient(to right, transparent 119px, rgba(196,64,64,.13) 119px 120px, transparent 120px), repeating-linear-gradient(to bottom, transparent 0 33px, rgba(56,86,140,.08) 33px 34px), #f5f7f9; color:#262b36; box-shadow:0 24px 70px rgba(0,0,0,.4); display:flex; flex-direction:column; padding:56px 96px 40px 120px;">
+          <div style="font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace; font-size:15px; font-weight:600; margin-bottom:80px;">Studytab</div>
+          <div style="display:flex; gap:88px; flex:1;">
+            <div style="flex:0 0 620px;">
+              <h2 style="margin:0 0 22px; font-size:62px; font-weight:700; line-height:1.04; letter-spacing:-.025em;">Notenschnitt sofort. Mitschriften griffbereit.</h2>
+              <p style="margin:0 0 44px; font-size:19px; line-height:1.5; color:#4a5262; max-width:520px;">Studytab rechnet deinen Schnitt aus, sammelt deine Hefteinträge und hält deine Karteikarten bereit.</p>
+              <div style="display:flex; flex-direction:column; gap:22px;">
+                <div>
+                  <div style="font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace; font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:#98a0ad; margin-bottom:10px;">vor dem Release</div>
+                  <div style="display:flex; align-items:center; gap:16px;"><div style="background:#e0e4e9; color:#a2abb7; font-size:17px; font-weight:600; padding:15px 34px; border-radius:12px; cursor:not-allowed;">Download now</div><span style="font-size:15px; color:#6b7280;">Bald im App Store</span></div>
+                </div>
+                <div>
+                  <div style="font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace; font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:#98a0ad; margin-bottom:10px;">nach dem Release</div>
+                  <div style="display:flex; align-items:center; gap:16px;"><div style="background:#262b36; color:#fff; font-size:17px; font-weight:600; padding:15px 34px; border-radius:12px;">Download now</div><div style="width:150px; height:50px; border-radius:9px; background:#d5d8dd; border:1px dashed #b3b8c0; display:flex; align-items:center; justify-content:center; text-align:center; font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace; font-size:9px; line-height:1.3; color:#7a8290;">Platzhalter<br>App-Store-Badge</div></div>
+                </div>
+              </div>
+            </div>
+            <div style="flex:1; padding-top:6px;">
+              <div style="display:flex; flex-direction:column;">
+                <div style="display:flex; gap:18px; padding:24px 0; border-top:1px solid rgba(38,43,54,.13);"><div style="font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace; font-size:13px; color:#98a0ad; padding-top:3px;">01</div><div><div style="font-weight:700; font-size:20px; margin-bottom:6px;">Noten</div><div style="font-size:16px; color:#4a5262; line-height:1.45;">Trag eine Note ein und sieh sofort deinen Schnitt — pro Fach und pro Halbjahr.</div></div></div>
+                <div style="display:flex; gap:18px; padding:24px 0; border-top:1px solid rgba(38,43,54,.13);"><div style="font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace; font-size:13px; color:#98a0ad; padding-top:3px;">02</div><div><div style="font-weight:700; font-size:20px; margin-bottom:6px;">Mitschriften</div><div style="font-size:16px; color:#4a5262; line-height:1.45;">Fotografier deine Hefteinträge ab und finde sie wieder, wenn du sie brauchst.</div></div></div>
+                <div style="display:flex; gap:18px; padding:24px 0; border-top:1px solid rgba(38,43,54,.13); border-bottom:1px solid rgba(38,43,54,.13);"><div style="font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace; font-size:13px; color:#98a0ad; padding-top:3px;">03</div><div><div style="font-weight:700; font-size:20px; margin-bottom:6px;">Karteikarten</div><div style="font-size:16px; color:#4a5262; line-height:1.45;">Leg dir Sets an und lern damit, wann du Zeit hast.</div></div></div>
+              </div>
+              <div style="margin-top:26px; font-size:15px; color:#5b6472;">Kein Tracking, keine Werbung, keine Weitergabe deiner Daten.</div>
+            </div>
+          </div>
+          <div style="margin-top:56px;">
+            <!-- reserviert: "Ein Projekt von drei Schülern" — bewusst leer -->
+            <div style="height:22px;"></div>
+            <div style="display:flex; gap:16px; align-items:center; font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace; font-size:14px; color:#6b7280; padding-top:18px; border-top:1px solid rgba(38,43,54,.13);"><a href="#1a">Impressum</a><span style="color:#b7bcc4;">·</span><a href="#1a">Datenschutz</a><span style="color:#b7bcc4;">·</span><a href="#1a">Kontakt</a><span style="margin-left:auto; color:#98a0ad;">© 2026 Studytab</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================ 1b — PRODUKTBÜHNE ============================ -->
+    <section id="1b" style="display:flex; flex-direction:column; gap:30px; width:1440px; flex:0 0 auto;">
+      <div style="display:flex; align-items:baseline; gap:14px;">
+        <span style="font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace; font-size:12px; font-weight:600; color:#0f1115; background:#e8e9ec; padding:3px 8px; border-radius:5px;">1b</span>
+        <div>
+          <div style="font-size:18px; font-weight:700; color:#f4f4f6;">2 — Produktbühne</div>
+          <div style="font-size:13px; color:#9a9ca2; margin-top:2px;">Dunkler Grund, iPhone-Rahmen mit gezeichneter Notenliste, Button als einziger heller Block.</div>
+        </div>
+      </div>
+
+      <!-- 1b mobile -->
+      <div>
+        <div style="font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace; font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:#7c7f86; margin-bottom:10px;">Mobil · 390 × 844</div>
+        <div style="width:390px; min-height:844px; background:radial-gradient(120% 60% at 50% 0%, #1b1f2a 0%, #14161b 55%); color:#f2f3f5; font-family:-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif; box-shadow:0 24px 70px rgba(0,0,0,.5); display:flex; flex-direction:column; padding:40px 26px 26px; align-items:center; text-align:center;">
+          <div style="font-size:14px; font-weight:600; letter-spacing:.04em; align-self:flex-start; margin-bottom:26px;">Studytab</div>
+          <h2 style="margin:0 0 14px; font-size:29px; font-weight:700; line-height:1.1; letter-spacing:-.02em;">Notenschnitt sofort. Mitschriften griffbereit.</h2>
+          <p style="margin:0 0 24px; font-size:14.5px; line-height:1.5; color:#a3a8b2; max-width:320px;">Studytab rechnet deinen Schnitt aus, sammelt deine Hefteinträge und hält deine Karteikarten bereit.</p>
+
+          <!-- gezeichnetes iPhone -->
+          <div style="width:190px; padding:9px; background:#05060a; border-radius:34px; box-shadow:0 18px 40px rgba(0,0,0,.55), inset 0 0 0 1.5px #2a2e39; margin-bottom:12px;">
+            <div style="background:#eef0f3; border-radius:26px; padding:16px 14px 18px; position:relative;">
+              <div style="position:absolute; top:9px; left:50%; transform:translateX(-50%); width:56px; height:15px; background:#05060a; border-radius:9px;"></div>
+              <div style="margin-top:20px; text-align:left;">
+                <div style="font-size:10px; letter-spacing:.1em; text-transform:uppercase; color:#8a92a0;">Schnitt · 1. Halbjahr</div>
+                <div style="font-size:44px; font-weight:800; letter-spacing:-.03em; color:#191d24; line-height:1; margin:2px 0 14px;">1,7</div>
+                <div style="display:flex; flex-direction:column; gap:9px;">
+                  <div style="display:flex; align-items:center; justify-content:space-between;"><div style="display:flex; align-items:center; gap:8px;"><span style="width:9px; height:9px; border-radius:2px; background:#5fd08a;"></span><span style="font-size:12px; color:#3a414c;">Mathematik</span></div><span style="font-size:12px; font-weight:700; color:#191d24;">2</span></div>
+                  <div style="display:flex; align-items:center; justify-content:space-between;"><div style="display:flex; align-items:center; gap:8px;"><span style="width:9px; height:9px; border-radius:2px; background:#5fd08a;"></span><span style="font-size:12px; color:#3a414c;">Deutsch</span></div><span style="font-size:12px; font-weight:700; color:#191d24;">1</span></div>
+                  <div style="display:flex; align-items:center; justify-content:space-between;"><div style="display:flex; align-items:center; gap:8px;"><span style="width:9px; height:9px; border-radius:2px; background:#5fd08a;"></span><span style="font-size:12px; color:#3a414c;">Englisch</span></div><span style="font-size:12px; font-weight:700; color:#191d24;">2</span></div>
+                  <div style="display:flex; align-items:center; justify-content:space-between;"><div style="display:flex; align-items:center; gap:8px;"><span style="width:9px; height:9px; border-radius:2px; background:#5fd08a;"></span><span style="font-size:12px; color:#3a414c;">Biologie</span></div><span style="font-size:12px; font-weight:700; color:#191d24;">1</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div style="font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace; font-size:12px; color:#a3a8b2; margin-bottom:26px;">gezeichneter Platzhalter — kein echter Screenshot</div>
+
+          <div style="width:100%; display:flex; flex-direction:column; gap:16px; margin-bottom:28px;">
+            <div>
+              <div style="font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace; font-size:10px; letter-spacing:.14em; text-transform:uppercase; color:#6f7683; margin-bottom:8px; text-align:left;">vor dem Release</div>
+              <div style="display:flex; align-items:center; gap:14px;"><div style="background:#2a2e39; color:#6f7683; font-size:15px; font-weight:600; padding:13px 26px; border-radius:11px; cursor:not-allowed;">Download now</div><span style="font-size:13px; color:#9298a3;">Bald im App Store</span></div>
+            </div>
+            <div>
+              <div style="font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace; font-size:10px; letter-spacing:.14em; text-transform:uppercase; color:#6f7683; margin-bottom:8px; text-align:left;">nach dem Release</div>
+              <div style="display:flex; align-items:center; gap:14px;"><div style="background:#5fd08a; color:#0d1f14; font-size:15px; font-weight:700; padding:13px 26px; border-radius:11px; box-shadow:0 8px 24px rgba(95,208,138,.35);">Download now</div><div style="width:120px; height:44px; border-radius:8px; background:#3a3f4b; border:1px dashed #565c6a; display:flex; align-items:center; justify-content:center; text-align:center; font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace; font-size:8px; line-height:1.25; color:#9298a3; padding:0 6px;">Platzhalter<br>App-Store-Badge</div></div>
+            </div>
+          </div>
+
+          <div style="width:100%; display:flex; flex-direction:column; gap:10px; text-align:left;">
+            <div style="background:#1c2029; border:1px solid #262b36; border-radius:13px; padding:14px 16px;"><div style="font-weight:700; font-size:15px; margin-bottom:4px;">Noten</div><div style="font-size:13px; color:#a3a8b2; line-height:1.42;">Trag eine Note ein und sieh sofort deinen Schnitt — pro Fach und pro Halbjahr.</div></div>
+            <div style="background:#1c2029; border:1px solid #262b36; border-radius:13px; padding:14px 16px;"><div style="font-weight:700; font-size:15px; margin-bottom:4px;">Mitschriften</div><div style="font-size:13px; color:#a3a8b2; line-height:1.42;">Fotografier deine Hefteinträge ab und finde sie wieder, wenn du sie brauchst.</div></div>
+            <div style="background:#1c2029; border:1px solid #262b36; border-radius:13px; padding:14px 16px;"><div style="font-weight:700; font-size:15px; margin-bottom:4px;">Karteikarten</div><div style="font-size:13px; color:#a3a8b2; line-height:1.42;">Leg dir Sets an und lern damit, wann du Zeit hast.</div></div>
+          </div>
+
+          <div style="width:100%; text-align:left; margin-top:22px; font-size:13px; color:#8b919c;">Kein Tracking, keine Werbung, keine Weitergabe deiner Daten.</div>
+
+          <div style="width:100%; margin-top:auto; padding-top:26px;">
+            <!-- reserviert: "Ein Projekt von drei Schülern" — bewusst leer -->
+            <div style="height:20px;"></div>
+            <div style="display:flex; flex-wrap:wrap; gap:8px 12px; align-items:center; font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace; font-size:12px; color:#8b919c; padding-top:16px; border-top:1px solid #262b36;"><a href="#1b">Impressum</a><span style="color:#41464f;">·</span><a href="#1b">Datenschutz</a><span style="color:#41464f;">·</span><a href="#1b">Kontakt</a><span style="margin-left:auto; color:#6f7683;">© 2026 Studytab</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 1b desktop -->
+      <div>
+        <div style="font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace; font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:#7c7f86; margin-bottom:10px;">Desktop · 1440 × 1024</div>
+        <div style="width:1440px; min-height:1024px; background:radial-gradient(90% 70% at 72% 20%, #1c2130 0%, #14161b 60%); color:#f2f3f5; font-family:-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif; box-shadow:0 24px 70px rgba(0,0,0,.5); display:flex; flex-direction:column; padding:52px 96px 40px;">
+          <div style="font-size:16px; font-weight:600; letter-spacing:.04em; margin-bottom:64px;">Studytab</div>
+          <div style="display:flex; gap:80px; align-items:center; flex:1;">
+            <div style="flex:1;">
+              <h2 style="margin:0 0 22px; font-size:58px; font-weight:700; line-height:1.05; letter-spacing:-.025em;">Notenschnitt sofort. Mitschriften griffbereit.</h2>
+              <p style="margin:0 0 40px; font-size:19px; line-height:1.5; color:#a3a8b2; max-width:500px;">Studytab rechnet deinen Schnitt aus, sammelt deine Hefteinträge und hält deine Karteikarten bereit.</p>
+              <div style="display:flex; flex-direction:column; gap:22px; margin-bottom:44px;">
+                <div><div style="font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace; font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:#6f7683; margin-bottom:10px;">vor dem Release</div><div style="display:flex; align-items:center; gap:16px;"><div style="background:#2a2e39; color:#6f7683; font-size:17px; font-weight:600; padding:15px 34px; border-radius:12px; cursor:not-allowed;">Download now</div><span style="font-size:15px; color:#9298a3;">Bald im App Store</span></div></div>
+                <div><div style="font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace; font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:#6f7683; margin-bottom:10px;">nach dem Release</div><div style="display:flex; align-items:center; gap:16px;"><div style="background:#5fd08a; color:#0d1f14; font-size:17px; font-weight:700; padding:15px 34px; border-radius:12px; box-shadow:0 10px 30px rgba(95,208,138,.35);">Download now</div><div style="width:150px; height:50px; border-radius:9px; background:#3a3f4b; border:1px dashed #565c6a; display:flex; align-items:center; justify-content:center; text-align:center; font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace; font-size:9px; line-height:1.3; color:#9298a3;">Platzhalter<br>App-Store-Badge</div></div></div>
+              </div>
+              <div style="display:flex; gap:14px;">
+                <div style="flex:1; background:#1c2029; border:1px solid #262b36; border-radius:14px; padding:18px;"><div style="font-weight:700; font-size:16px; margin-bottom:6px;">Noten</div><div style="font-size:13.5px; color:#a3a8b2; line-height:1.45;">Trag eine Note ein und sieh sofort deinen Schnitt — pro Fach und pro Halbjahr.</div></div>
+                <div style="flex:1; background:#1c2029; border:1px solid #262b36; border-radius:14px; padding:18px;"><div style="font-weight:700; font-size:16px; margin-bottom:6px;">Mitschriften</div><div style="font-size:13.5px; color:#a3a8b2; line-height:1.45;">Fotografier deine Hefteinträge ab und finde sie wieder, wenn du sie brauchst.</div></div>
+                <div style="flex:1; background:#1c2029; border:1px solid #262b36; border-radius:14px; padding:18px;"><div style="font-weight:700; font-size:16px; margin-bottom:6px;">Karteikarten</div><div style="font-size:13.5px; color:#a3a8b2; line-height:1.45;">Leg dir Sets an und lern damit, wann du Zeit hast.</div></div>
+              </div>
+            </div>
+            <div style="flex:0 0 auto; display:flex; flex-direction:column; align-items:center;">
+              <div style="width:300px; padding:12px; background:#05060a; border-radius:50px; box-shadow:0 30px 70px rgba(0,0,0,.6), inset 0 0 0 2px #2a2e39;">
+                <div style="background:#eef0f3; border-radius:40px; padding:26px 22px 30px; position:relative;">
+                  <div style="position:absolute; top:14px; left:50%; transform:translateX(-50%); width:86px; height:22px; background:#05060a; border-radius:13px;"></div>
+                  <div style="margin-top:34px;">
+                    <div style="font-size:12px; letter-spacing:.1em; text-transform:uppercase; color:#8a92a0;">Schnitt · 1. Halbjahr</div>
+                    <div style="font-size:68px; font-weight:800; letter-spacing:-.03em; color:#191d24; line-height:1; margin:4px 0 22px;">1,7</div>
+                    <div style="display:flex; flex-direction:column; gap:14px;">
+                      <div style="display:flex; align-items:center; justify-content:space-between;"><div style="display:flex; align-items:center; gap:10px;"><span style="width:11px; height:11px; border-radius:3px; background:#5fd08a;"></span><span style="font-size:14px; color:#3a414c;">Mathematik</span></div><span style="font-size:14px; font-weight:700; color:#191d24;">2</span></div>
+                      <div style="display:flex; align-items:center; justify-content:space-between;"><div style="display:flex; align-items:center; gap:10px;"><span style="width:11px; height:11px; border-radius:3px; background:#5fd08a;"></span><span style="font-size:14px; color:#3a414c;">Deutsch</span></div><span style="font-size:14px; font-weight:700; color:#191d24;">1</span></div>
+                      <div style="display:flex; align-items:center; justify-content:space-between;"><div style="display:flex; align-items:center; gap:10px;"><span style="width:11px; height:11px; border-radius:3px; background:#5fd08a;"></span><span style="font-size:14px; color:#3a414c;">Englisch</span></div><span style="font-size:14px; font-weight:700; color:#191d24;">2</span></div>
+                      <div style="display:flex; align-items:center; justify-content:space-between;"><div style="display:flex; align-items:center; gap:10px;"><span style="width:11px; height:11px; border-radius:3px; background:#5fd08a;"></span><span style="font-size:14px; color:#3a414c;">Geschichte</span></div><span style="font-size:14px; font-weight:700; color:#191d24;">2</span></div>
+                      <div style="display:flex; align-items:center; justify-content:space-between;"><div style="display:flex; align-items:center; gap:10px;"><span style="width:11px; height:11px; border-radius:3px; background:#5fd08a;"></span><span style="font-size:14px; color:#3a414c;">Biologie</span></div><span style="font-size:14px; font-weight:700; color:#191d24;">1</span></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div style="font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace; font-size:12px; color:#a3a8b2; margin-top:16px;">gezeichneter Platzhalter — kein echter Screenshot</div>
+            </div>
+          </div>
+          <div style="margin-top:40px;">
+            <div style="font-size:15px; color:#8b919c; margin-bottom:20px;">Kein Tracking, keine Werbung, keine Weitergabe deiner Daten.</div>
+            <!-- reserviert: "Ein Projekt von drei Schülern" — bewusst leer -->
+            <div style="height:22px;"></div>
+            <div style="display:flex; gap:16px; align-items:center; font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace; font-size:14px; color:#8b919c; padding-top:18px; border-top:1px solid #262b36;"><a href="#1b">Impressum</a><span style="color:#41464f;">·</span><a href="#1b">Datenschutz</a><span style="color:#41464f;">·</span><a href="#1b">Kontakt</a><span style="margin-left:auto; color:#6f7683;">© 2026 Studytab</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================ 1c — PLAKAT ============================ -->
+    <section id="1c" style="display:flex; flex-direction:column; gap:30px; width:1440px; flex:0 0 auto;">
+      <div style="display:flex; align-items:baseline; gap:14px;">
+        <span style="font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace; font-size:12px; font-weight:600; color:#0f1115; background:#e8e9ec; padding:3px 8px; border-radius:5px;">1c</span>
+        <div>
+          <div style="font-size:18px; font-weight:700; color:#f4f4f6;">3 — Plakat</div>
+          <div style="font-size:13px; color:#9a9ca2; margin-top:2px;">Überschrift füllt die erste Bildschirmhöhe, Button in kräftiger Akzentfarbe, Funktionen direkt darunter.</div>
+        </div>
+      </div>
+
+      <!-- 1c mobile -->
+      <div>
+        <div style="font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace; font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:#7c7f86; margin-bottom:10px;">Mobil · 390 × 844</div>
+        <div style="width:390px; min-height:844px; background:#f7f4ef; color:#17130f; font-family:Georgia,'Times New Roman',serif; box-shadow:0 24px 70px rgba(0,0,0,.4); display:flex; flex-direction:column; padding:34px 28px 26px;">
+          <!-- erste Bildschirmhöhe: 844 minus padding -->
+          <div style="min-height:744px; display:flex; flex-direction:column;">
+            <div style="font-family:-apple-system,Helvetica,Arial,sans-serif; font-size:13px; font-weight:600; letter-spacing:.16em; text-transform:uppercase; color:#8a5a3a;">Studytab</div>
+            <h2 style="margin:22px 0 0; font-size:48px; font-weight:700; line-height:1; letter-spacing:-.025em;">Notenschnitt sofort. Mitschriften griffbereit.</h2>
+            <div style="margin-top:auto;">
+              <p style="margin:0 0 22px; font-family:-apple-system,Helvetica,Arial,sans-serif; font-size:15px; line-height:1.5; color:#5b5148; max-width:320px;">Studytab rechnet deinen Schnitt aus, sammelt deine Hefteinträge und hält deine Karteikarten bereit.</p>
+              <div style="display:flex; flex-direction:column; gap:14px; font-family:-apple-system,Helvetica,Arial,sans-serif;">
+                <div>
+                  <div style="font-size:10px; letter-spacing:.14em; text-transform:uppercase; color:#a99a8b; margin-bottom:8px;">vor dem Release</div>
+                  <div style="display:flex; align-items:center; gap:14px;"><div style="background:#e6ddd2; color:#b0a595; font-size:16px; font-weight:700; padding:15px 30px; border-radius:4px; cursor:not-allowed;">Download now</div><span style="font-size:13px; color:#7a6f63;">Bald im App Store</span></div>
+                </div>
+                <div>
+                  <div style="font-size:10px; letter-spacing:.14em; text-transform:uppercase; color:#a99a8b; margin-bottom:8px;">nach dem Release</div>
+                  <div style="display:flex; align-items:center; gap:14px;"><div style="background:#e0492a; color:#fff; font-size:16px; font-weight:700; padding:15px 30px; border-radius:4px;">Download now</div><div style="width:120px; height:44px; border-radius:6px; background:#d8d2c8; border:1px dashed #b8b0a2; display:flex; align-items:center; justify-content:center; text-align:center; font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace; font-size:8px; line-height:1.25; color:#8a8072; padding:0 6px;">Platzhalter<br>App-Store-Badge</div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div style="display:flex; flex-direction:column; gap:2px; margin-top:30px; border-top:2px solid #17130f;">
+            <div style="padding:16px 0 14px; border-bottom:1px solid rgba(23,19,15,.15);"><div style="font-size:20px; font-weight:700;">Noten</div><div style="font-family:-apple-system,Helvetica,Arial,sans-serif; font-size:13.5px; color:#5b5148; line-height:1.42; margin-top:4px;">Trag eine Note ein und sieh sofort deinen Schnitt — pro Fach und pro Halbjahr.</div></div>
+            <div style="padding:14px 0; border-bottom:1px solid rgba(23,19,15,.15);"><div style="font-size:20px; font-weight:700;">Mitschriften</div><div style="font-family:-apple-system,Helvetica,Arial,sans-serif; font-size:13.5px; color:#5b5148; line-height:1.42; margin-top:4px;">Fotografier deine Hefteinträge ab und finde sie wieder, wenn du sie brauchst.</div></div>
+            <div style="padding:14px 0;"><div style="font-size:20px; font-weight:700;">Karteikarten</div><div style="font-family:-apple-system,Helvetica,Arial,sans-serif; font-size:13.5px; color:#5b5148; line-height:1.42; margin-top:4px;">Leg dir Sets an und lern damit, wann du Zeit hast.</div></div>
+          </div>
+
+          <div style="font-family:-apple-system,Helvetica,Arial,sans-serif; margin-top:20px; font-size:13px; color:#5b5148;">Kein Tracking, keine Werbung, keine Weitergabe deiner Daten.</div>
+
+          <div style="margin-top:auto; padding-top:26px; font-family:-apple-system,Helvetica,Arial,sans-serif;">
+            <!-- reserviert: "Ein Projekt von drei Schülern" — bewusst leer -->
+            <div style="height:20px;"></div>
+            <div style="display:flex; flex-wrap:wrap; gap:8px 12px; align-items:center; font-size:12px; color:#7a6f63; padding-top:16px; border-top:1px solid rgba(23,19,15,.15);"><a href="#1c">Impressum</a><span style="color:#c2b9ab;">·</span><a href="#1c">Datenschutz</a><span style="color:#c2b9ab;">·</span><a href="#1c">Kontakt</a><span style="margin-left:auto; color:#a99a8b;">© 2026 Studytab</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 1c desktop -->
+      <div>
+        <div style="font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace; font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:#7c7f86; margin-bottom:10px;">Desktop · 1440 × 1024</div>
+        <div style="width:1440px; min-height:1024px; background:#f7f4ef; color:#17130f; font-family:Georgia,'Times New Roman',serif; box-shadow:0 24px 70px rgba(0,0,0,.4); display:flex; flex-direction:column; padding:48px 80px 40px;">
+          <div style="min-height:820px; display:flex; flex-direction:column;">
+            <div style="display:flex; justify-content:space-between; align-items:baseline; font-family:-apple-system,Helvetica,Arial,sans-serif;">
+              <div style="font-size:16px; font-weight:600; letter-spacing:.16em; text-transform:uppercase; color:#8a5a3a;">Studytab</div>
+            </div>
+            <h2 style="margin:30px 0 0; font-size:132px; font-weight:700; line-height:.94; letter-spacing:-.025em; max-width:1180px;">Notenschnitt sofort. Mitschriften griffbereit.</h2>
+            <div style="margin-top:auto; display:flex; justify-content:space-between; align-items:flex-end; gap:60px;">
+              <div style="display:flex; flex-direction:column; gap:20px; font-family:-apple-system,Helvetica,Arial,sans-serif;">
+                <div><div style="font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:#a99a8b; margin-bottom:10px;">vor dem Release</div><div style="display:flex; align-items:center; gap:16px;"><div style="background:#e6ddd2; color:#b0a595; font-size:19px; font-weight:700; padding:18px 40px; border-radius:5px; cursor:not-allowed;">Download now</div><span style="font-size:15px; color:#7a6f63;">Bald im App Store</span></div></div>
+                <div><div style="font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:#a99a8b; margin-bottom:10px;">nach dem Release</div><div style="display:flex; align-items:center; gap:16px;"><div style="background:#e0492a; color:#fff; font-size:19px; font-weight:700; padding:18px 40px; border-radius:5px;">Download now</div><div style="width:150px; height:52px; border-radius:6px; background:#d8d2c8; border:1px dashed #b8b0a2; display:flex; align-items:center; justify-content:center; text-align:center; font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace; font-size:9px; line-height:1.3; color:#8a8072;">Platzhalter<br>App-Store-Badge</div></div></div>
+              </div>
+              <p style="margin:0; font-family:-apple-system,Helvetica,Arial,sans-serif; font-size:21px; line-height:1.5; color:#5b5148; max-width:440px; text-align:right;">Studytab rechnet deinen Schnitt aus, sammelt deine Hefteinträge und hält deine Karteikarten bereit.</p>
+            </div>
+          </div>
+
+          <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:0; margin-top:40px; border-top:2px solid #17130f;">
+            <div style="padding:26px 32px 26px 0; border-right:1px solid rgba(23,19,15,.15);"><div style="font-size:28px; font-weight:700;">Noten</div><div style="font-family:-apple-system,Helvetica,Arial,sans-serif; font-size:16px; color:#5b5148; line-height:1.45; margin-top:8px;">Trag eine Note ein und sieh sofort deinen Schnitt — pro Fach und pro Halbjahr.</div></div>
+            <div style="padding:26px 32px; border-right:1px solid rgba(23,19,15,.15);"><div style="font-size:28px; font-weight:700;">Mitschriften</div><div style="font-family:-apple-system,Helvetica,Arial,sans-serif; font-size:16px; color:#5b5148; line-height:1.45; margin-top:8px;">Fotografier deine Hefteinträge ab und finde sie wieder, wenn du sie brauchst.</div></div>
+            <div style="padding:26px 0 26px 32px;"><div style="font-size:28px; font-weight:700;">Karteikarten</div><div style="font-family:-apple-system,Helvetica,Arial,sans-serif; font-size:16px; color:#5b5148; line-height:1.45; margin-top:8px;">Leg dir Sets an und lern damit, wann du Zeit hast.</div></div>
+          </div>
+
+          <div style="font-family:-apple-system,Helvetica,Arial,sans-serif; margin-top:32px; display:flex; align-items:flex-end; justify-content:space-between;">
+            <div style="font-size:15px; color:#5b5148;">Kein Tracking, keine Werbung, keine Weitergabe deiner Daten.</div>
+          </div>
+
+          <div style="font-family:-apple-system,Helvetica,Arial,sans-serif; margin-top:28px;">
+            <!-- reserviert: "Ein Projekt von drei Schülern" — bewusst leer -->
+            <div style="height:22px;"></div>
+            <div style="display:flex; gap:16px; align-items:center; font-size:14px; color:#7a6f63; padding-top:18px; border-top:1px solid rgba(23,19,15,.15);"><a href="#1c">Impressum</a><span style="color:#c2b9ab;">·</span><a href="#1c">Datenschutz</a><span style="color:#c2b9ab;">·</span><a href="#1c">Kontakt</a><span style="margin-left:auto; color:#a99a8b;">© 2026 Studytab</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;scanZeile&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Runde 3&quot;},&quot;flipSekunden&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:3.4,&quot;min&quot;:1.2,&quot;max&quot;:8,&quot;step&quot;:0.2,&quot;unit&quot;:&quot;s&quot;,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Runde 3&quot;}}">
+class Component extends DCLogic {
+  state = { flipped: false };
+  componentDidMount() { this.schedule(); }
+  componentWillUnmount() { clearTimeout(this._t); }
+  schedule() {
+    const ms = Math.max(1.2, this.props.flipSekunden ?? 3.4) * 1000;
+    this._t = setTimeout(() => { this.setState(p => ({ flipped: !p.flipped })); this.schedule(); }, ms);
+  }
+  renderVals() {
+    return {
+      scanZeile: this.props.scanZeile ?? true,
+      flipT: this.state.flipped ? 'rotateY(180deg)' : 'rotateY(0deg)'
+    };
+  }
+}
+</script>
+</body>
+</html>
