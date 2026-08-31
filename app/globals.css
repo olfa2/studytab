@@ -1,5 +1,13 @@
 /* ==========================================================================
-   Studytab Landingpage — Design-Leinwand, Artboard 3a
+   Studytab Landingpage
+
+   Eine Regel trägt die ganze Seite: jeder Abschnitt ist ein Band mit
+   derselben Anatomie — Kicker, Titel, Lead, Inhalt. Größen kommen aus
+   der Skala unten, nicht aus Einzelentscheidungen. Vorher hatten fünf
+   gleichrangige Abschnitte fünf verschiedene Überschriftengrößen
+   (mobil 21–28px, Desktop 25–46px); die Team-Sektion war die einzige,
+   bei der es zufällig gut zusammenfiel — sie ist jetzt die Vorlage.
+
    Mobil ist maßgeblich (390 breit), Desktop (1440) ist die Ableitung.
    ========================================================================== */
 
@@ -28,14 +36,14 @@
   /*
    * Grün ist in der App KEINE Markenfarbe, sondern die Farbe der besten Note
    * (Color+Theme.swift: "Bewusst an die beste Note gekoppelt und NICHT an die
-   * Marke"). Deshalb steht es hier nur am Schnitt-Banner und an der Bestätigung
-   * — nie als allgemeiner Akzent.
+   * Marke"). Es steht deshalb nur an der Schnitt-Zahl und an der Bestätigung
+   * des Anmeldeformulars — nie als allgemeiner Akzent, nie als Fläche.
    */
   --green: #12a877;
   --green-deep: #0b6b52;
   --green-pale: #e8f7f1;
 
-  /* Blau ist die Aktionsfarbe der App (accent2_600) */
+  /* Blau ist die Aktionsfarbe der App (accent2_600) — Buttons und Links */
   --blue: #2563eb;
   --blue-ink: #e6eefe;
   --blue-pale: #e6eefe;
@@ -48,6 +56,35 @@
   --ph-a: #e8ebf0;
   --ph-b: #e0e4ea;
   --ph-line: #b9bfcb;
+
+  /* ---------------------------------------------------------- Skala -- */
+  /*
+   * Eine Größe pro Rolle. Der Wert für Abschnittstitel ist der der
+   * Team-Sektion. Der Desktop-Block unten definiert dieselben Marken
+   * einmal neu — dadurch wächst die ganze Seite mit, ohne dass ein
+   * einzelner Abschnitt aus der Reihe tanzen kann.
+   */
+  --t-h1: 34px;
+  /*
+   * Die Kennzahl in der Schnitt-Karte. Steht bewusst UNTER --t-h1 und
+   * gehört in die Skala, weil sie eine eigene Rolle ist — eine Zahl,
+   * kein Titel. Vorher stand sie fest an der Karte: mobil 54px gegen
+   * 34px Überschrift, also das 1,59-fache. Der Blick landete damit
+   * zuerst auf einer erfundenen Note statt auf der Schlagzeile.
+   * Wer diesen Wert ändert, muss ihn kleiner als --t-h1 halten.
+   */
+  --t-figure: 32px;
+  --t-h2: 26px;
+  --t-h3: 18px;
+  --t-lead: 16px;
+  --t-body: 15px;
+  --t-kicker: 10px;
+  --t-meta: 11px;
+
+  --band-gap: 40px;
+  --band-pad: 30px 22px;
+  --radius: 18px;
+  --radius-lg: 22px;
 
   --shell: 20px;
   --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
@@ -100,7 +137,7 @@ a:hover { text-decoration: underline; text-underline-offset: 3px; }
 /* --------------------------------------------------------------- Gerüst -- */
 
 .page {
-  max-width: 1440px;
+  max-width: 1120px;
   margin: 0 auto;
   padding: 0 var(--shell);
   display: flex;
@@ -108,35 +145,20 @@ a:hover { text-decoration: underline; text-underline-offset: 3px; }
   min-height: 100vh;
 }
 
-/* --------------------------------------------------------------- Header -- */
+/* --------------------------------------------------------------- Kopf -- */
 
 /*
- * Bleibt oben kleben. Sobald das Anmeldefeld aus dem Hero weggescrollt
- * ist, erscheint rechts der Handlungsaufruf — vorher wäre er doppelt,
- * das Feld steht ja direkt darunter.
- *
- * Die negativen Ränder ziehen den Hintergrund über die Seitenränder
- * hinaus, damit im Klebezustand nichts seitlich darunter durchscrollt.
+ * Wortmarke links, Status rechts. Nicht mehr klebend: Der klebende Kopf
+ * existierte nur, um einen zweiten Anmelde-Button einzublenden, sobald
+ * das Feld im Einstieg weggescrollt war. Der ist entfallen, also auch
+ * der Grund fürs Kleben.
  */
 .header {
-  position: sticky;
-  top: 0;
-  z-index: 20;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 12px;
-  margin: 0 calc(var(--shell) * -1) 22px;
-  padding: 14px var(--shell);
-  background: var(--page);
-  border-bottom: 1px solid transparent;
-  transition: border-color .2s ease;
-}
-
-.header[data-stuck="true"] { border-bottom-color: var(--line); }
-
-@media (prefers-reduced-motion: reduce) {
-  .header { transition: none; }
+  padding: 14px 0 22px;
 }
 
 .header__brand {
@@ -158,113 +180,155 @@ a:hover { text-decoration: underline; text-underline-offset: 3px; }
   font-size: 21px;
 }
 
-.header__cta {
+.header__status {
   flex: 0 0 auto;
-  background: var(--blue);
-  color: var(--blue-ink);
-  font-family: var(--font-baloo), sans-serif;
+  font-family: var(--mono);
+  font-size: var(--t-meta);
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--soft);
+  white-space: nowrap;
+}
+
+.header__link {
+  flex: 0 0 auto;
   font-weight: 700;
   font-size: 14px;
-  padding: 9px 18px;
-  border-radius: 999px;
-  white-space: nowrap;
-  transition: opacity .2s ease, visibility .2s ease;
+  color: var(--blue);
 }
 
-.header__cta:hover { text-decoration: none; }
+/* ============================================================== Das Band == */
 
-.header__cta[data-visible="false"] {
-  opacity: 0;
-  visibility: hidden;
+/*
+ * Skelett jedes Abschnitts. Wer ein neues Band anlegt, erbt Skala und
+ * Rhythmus automatisch und muss keine Größe mehr selbst wählen.
+ */
+
+.band { margin-top: var(--band-gap); }
+
+/* Der Einstieg schließt direkt an den Kopf an */
+.band:first-of-type { margin-top: 0; }
+
+.band__kicker {
+  font-family: var(--mono);
+  font-size: var(--t-kicker);
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--soft);
+  margin-bottom: 10px;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .header__cta { transition: none; }
-}
-
-/* ----------------------------------------------------------------- Hero -- */
-
-.scanline {
-  display: inline-flex;
-  align-items: center;
-  gap: 9px;
-  background: var(--surface);
-  border-radius: 999px;
-  padding: 8px 14px;
-  align-self: flex-start;
-  margin-bottom: 18px;
-  font-size: 12.5px;
-  color: var(--muted);
-}
-
-.scanline__dot {
-  width: 7px;
-  height: 7px;
-  border-radius: 999px;
-  background: var(--green);
-  flex: 0 0 7px;
-}
-
-.headline {
-  margin: 0 0 12px;
+.band__title {
   font-weight: 700;
-  font-size: 35px;
-  line-height: 1.05;
+  font-size: var(--t-h2);
+  line-height: 1.1;
   letter-spacing: -.02em;
+  margin-bottom: 12px;
 }
 
-.lede {
-  margin: 0 0 22px;
-  font-size: 15.5px;
+/* Nur der Seitentitel im Einstieg — das einzige h1 der Seite */
+.band__title--page {
+  font-size: var(--t-h1);
+  line-height: 1.05;
+}
+
+.band__lead {
+  font-size: var(--t-lead);
   line-height: 1.5;
   color: var(--muted);
+  max-width: 58ch;
+  margin-bottom: 22px;
 }
 
-/* Schnitt-Banner */
+.band__text {
+  font-size: var(--t-body);
+  line-height: 1.55;
+  color: var(--muted);
+  max-width: 62ch;
+  margin-bottom: 14px;
+}
 
-.average {
-  border-radius: 22px;
-  background: linear-gradient(135deg, var(--green), var(--green-deep));
-  box-shadow: 0 10px 22px rgba(18, 168, 119, .4);
-  padding: 20px;
+.band__meta {
+  font-family: var(--mono);
+  font-size: var(--t-meta);
+  color: var(--faint);
+  line-height: 1.45;
+}
+
+/*
+ * Geteiltes Band: Bildspalte und Textspalte. Welche Seite das Bild
+ * bekommt, entscheidet allein die Reihenfolge im Markup — Team stellt
+ * das Bild voran (links), die Funktionen den Text (Bild rechts). Mobil
+ * stapelt beides in genau dieser Reihenfolge.
+ */
+.band--split {
   display: flex;
-  align-items: center;
-  gap: 18px;
-  margin-bottom: 24px;
-  color: #fff;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.band--split .band__body { min-width: 0; }
+
+/* Das dunkle Band — die einzige Stelle der Seite, an der die Farbe kippt */
+.band--dark {
+  background: var(--frame);
+  color: #f4f4f6;
+  border-radius: var(--radius-lg);
+  padding: var(--band-pad);
+}
+
+.band--dark .band__kicker { color: #7f8794; }
+.band--dark .band__lead { color: #a9b0bb; }
+
+/* ------------------------------------------------------------ Einstieg -- */
+
+/*
+ * Der Schnitt als ruhige Karte. Vorher war das ein grüner Vollflächen-
+ * Verlauf mit 22px-Leuchtschatten — das lauteste Element der Seite, und
+ * damit genau die Verwendung von Grün als Markenfarbe, die
+ * Color+Theme.swift ausschließt. Jetzt trägt Grün nur noch die Zahl.
+ */
+.average {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 22px;
+  margin-top: 26px;
 }
 
 .average__label {
-  font-size: 12.5px;
-  color: rgba(255, 255, 255, .88);
-  margin-bottom: 2px;
+  font-family: var(--mono);
+  font-size: var(--t-kicker);
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--soft);
+  margin-bottom: 8px;
 }
 
 .average__value {
   font-weight: 800;
-  font-size: 54px;
+  font-size: var(--t-figure);
   line-height: .9;
-}
-
-.average__side {
-  flex: 1;
-  border-left: 1px solid rgba(255, 255, 255, .28);
-  padding-left: 16px;
+  color: var(--green-deep);
+  margin-bottom: 14px;
 }
 
 .average__term {
   font-size: 13.5px;
   font-weight: 700;
-  margin-bottom: 3px;
+  color: var(--ink-2);
+  margin-bottom: 4px;
+  padding-top: 14px;
+  border-top: 1px solid var(--hairline);
 }
 
 .average__note {
   font-size: 13px;
-  color: rgba(255, 255, 255, .86);
+  color: var(--muted);
   line-height: 1.4;
 }
 
-/* ------------------------------------------------------------------ CTA -- */
+/* ----------------------------------------------------------------- CTA -- */
 
 .cta { margin-bottom: 14px; }
 
@@ -285,7 +349,6 @@ a:hover { text-decoration: underline; text-underline-offset: 3px; }
   padding: 15px 20px;
   border: 0;
   border-radius: 999px;
-  box-shadow: 0 4px 14px rgba(37, 99, 235, .35);
   cursor: pointer;
   display: block;
 }
@@ -295,14 +358,7 @@ a:hover { text-decoration: underline; text-underline-offset: 3px; }
 .cta__button[aria-disabled="true"],
 .cta__button:disabled {
   opacity: .45;
-  box-shadow: none;
   cursor: not-allowed;
-}
-
-.cta__soon {
-  font-size: 13px;
-  color: var(--faint);
-  flex: 0 0 auto;
 }
 
 .cta__badge {
@@ -323,7 +379,7 @@ a:hover { text-decoration: underline; text-underline-offset: 3px; }
   padding: 0 6px;
 }
 
-/* -------------------------------------------------- Start-Benachrichtigung -- */
+/* ------------------------------------------- Start-Benachrichtigung -- */
 
 .signup { margin-bottom: 14px; }
 
@@ -391,6 +447,7 @@ a:hover { text-decoration: underline; text-underline-offset: 3px; }
   margin-top: 10px;
 }
 
+/* Grün an der Bestätigung ist gedeckt: bestätigt = beste Note */
 .signup__ok {
   display: flex;
   align-items: flex-start;
@@ -412,28 +469,7 @@ a:hover { text-decoration: underline; text-underline-offset: 3px; }
   margin-top: 7px;
 }
 
-.privacy {
-  font-size: 12.5px;
-  color: var(--faint);
-  margin-bottom: 26px;
-}
-
 /* ---------------------------------------------------------- Bildschirme -- */
-
-.screens { padding-top: 30px; }
-
-.screens__title {
-  font-weight: 700;
-  font-size: 24px;
-  margin-bottom: 4px;
-}
-
-.screens__subtitle {
-  font-size: 13.5px;
-  color: var(--muted);
-  line-height: 1.45;
-  margin-bottom: 16px;
-}
 
 .screens__strip {
   display: flex;
@@ -449,30 +485,23 @@ a:hover { text-decoration: underline; text-underline-offset: 3px; }
 
 .screens__strip::-webkit-scrollbar { display: none; }
 
-.screens__note {
-  font-family: var(--mono);
-  font-size: 11px;
-  color: var(--faint);
-  margin-top: 12px;
-}
+.band .screens__strip + .band__meta { margin-top: 12px; }
 
 /* Gerätefassung mit Screenshot-Slot */
 
 .phone {
-  flex: 0 0 200px;
-  padding: 7px;
+  flex: 0 0 186px;
   background: var(--frame);
   border-radius: 26px;
-  box-shadow: 0 10px 26px rgba(28, 31, 41, .28);
+  padding: 7px;
   scroll-snap-align: start;
+  box-shadow: 0 10px 24px rgba(28, 31, 41, .16);
 }
 
 .phone__slot {
-  aspect-ratio: 1290 / 2796;
   border-radius: 20px;
   overflow: hidden;
-  display: block;
-  position: relative;
+  aspect-ratio: 1290 / 2796;
 }
 
 .phone__shot {
@@ -482,9 +511,8 @@ a:hover { text-decoration: underline; text-underline-offset: 3px; }
   display: block;
 }
 
-/* Platzhalter, solange kein echter Screenshot hinterlegt ist */
-
 .slot-placeholder {
+  width: 100%;
   height: 100%;
   border-radius: inherit;
   display: flex;
@@ -506,15 +534,14 @@ a:hover { text-decoration: underline; text-underline-offset: 3px; }
 
 .slot-placeholder__title {
   font-weight: 700;
-  font-size: 15px;
-  line-height: 1.15;
+  font-size: 17px;
   color: var(--muted);
 }
 
 .slot-placeholder__caption {
-  font-size: 10.5px;
+  font-size: 11.5px;
   line-height: 1.35;
-  color: #7d8492;
+  color: var(--faint);
   white-space: pre-line;
 }
 
@@ -525,35 +552,38 @@ a:hover { text-decoration: underline; text-underline-offset: 3px; }
   margin-top: 4px;
 }
 
-/* ------------------------------------------------------------- Features -- */
+/* ------------------------------------------------------------ Funktionen -- */
 
-.features {
-  padding-top: 34px;
+.points {
+  list-style: none;
+  margin: 0;
+  padding: 0;
   display: flex;
   flex-direction: column;
-  gap: 22px;
+  gap: 18px;
 }
 
-.feature__head {
+.point {
   display: flex;
+  gap: 12px;
   align-items: baseline;
-  gap: 9px;
-  margin-bottom: 5px;
 }
 
-.feature__number {
+.point__number {
+  flex: 0 0 auto;
   font-family: var(--mono);
   font-size: 11px;
   color: var(--soft);
 }
 
-.feature__title {
+.point__title {
   font-weight: 700;
-  font-size: 21px;
+  font-size: var(--t-h3);
+  margin-bottom: 4px;
 }
 
-.feature__text {
-  font-size: 14px;
+.point__text {
+  font-size: var(--t-body);
   color: var(--muted);
   line-height: 1.5;
 }
@@ -562,13 +592,12 @@ a:hover { text-decoration: underline; text-underline-offset: 3px; }
 
 .flash {
   perspective: 900px;
-  margin-top: 14px;
   width: 100%;
 }
 
 .flash__inner {
   position: relative;
-  height: 132px;
+  height: 152px;
   transform-style: preserve-3d;
   transition: transform .85s cubic-bezier(.4, 0, .2, 1);
   cursor: pointer;
@@ -588,23 +617,21 @@ a:hover { text-decoration: underline; text-underline-offset: 3px; }
   position: absolute;
   inset: 0;
   backface-visibility: hidden;
-  border-radius: 14px;
-  padding: 16px;
+  border-radius: var(--radius);
+  padding: 18px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 }
 
 .flash__face--front {
-  background: #fff;
-  border: 1px solid var(--hairline);
-  box-shadow: 0 4px 14px rgba(28, 31, 41, .12);
+  background: var(--surface);
+  border: 1px solid var(--line);
 }
 
 .flash__face--back {
   transform: rotateY(180deg);
   background: var(--card-back);
-  box-shadow: 0 4px 14px rgba(11, 109, 158, .3);
   color: #fff;
 }
 
@@ -643,40 +670,7 @@ a:hover { text-decoration: underline; text-underline-offset: 3px; }
 
 /* ---------------------------------------------------------- Datenschutz -- */
 
-.privacy-block {
-  margin-top: 40px;
-  background: var(--frame);
-  color: #f4f4f6;
-  border-radius: 22px;
-  padding: 30px 22px 26px;
-}
-
-.privacy-block__kicker {
-  font-family: var(--mono);
-  font-size: 10px;
-  letter-spacing: .16em;
-  text-transform: uppercase;
-  color: #7f8794;
-  margin-bottom: 14px;
-}
-
-.privacy-block__title {
-  font-weight: 700;
-  font-size: 28px;
-  line-height: 1.1;
-  letter-spacing: -.02em;
-  margin-bottom: 10px;
-}
-
-.privacy-block__lead {
-  font-size: 14.5px;
-  line-height: 1.5;
-  color: #a9b0bb;
-  margin-bottom: 26px;
-  max-width: 640px;
-}
-
-.privacy-block__grid {
+.claims {
   list-style: none;
   margin: 0;
   padding: 0;
@@ -687,7 +681,7 @@ a:hover { text-decoration: underline; text-underline-offset: 3px; }
 
 .claim { position: relative; padding-left: 18px; }
 
-/* Ozeanblau statt Grün: Grün ist in der App für Noten reserviert */
+/* Ozeanblau statt Grün: Grün ist für Noten reserviert */
 .claim__dot {
   position: absolute;
   left: 0;
@@ -700,27 +694,20 @@ a:hover { text-decoration: underline; text-underline-offset: 3px; }
 
 .claim__title {
   font-weight: 700;
-  font-size: 17px;
+  font-size: var(--t-h3);
   margin-bottom: 4px;
 }
 
 .claim__text {
-  font-size: 14px;
+  font-size: var(--t-body);
   line-height: 1.5;
   color: #a9b0bb;
 }
 
 /* ------------------------------------------------- Wer dahintersteckt -- */
 
-.team {
-  margin-top: 40px;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
 .team__photo {
-  border-radius: 18px;
+  border-radius: var(--radius);
   overflow: hidden;
 }
 
@@ -763,30 +750,6 @@ a:hover { text-decoration: underline; text-underline-offset: 3px; }
   color: var(--soft);
 }
 
-.team__kicker {
-  font-family: var(--mono);
-  font-size: 10px;
-  letter-spacing: .16em;
-  text-transform: uppercase;
-  color: var(--soft);
-  margin-bottom: 8px;
-}
-
-.team__title {
-  font-weight: 700;
-  font-size: 26px;
-  line-height: 1.1;
-  letter-spacing: -.02em;
-  margin-bottom: 12px;
-}
-
-.team__text {
-  font-size: 15px;
-  line-height: 1.55;
-  color: var(--muted);
-  margin-bottom: 14px;
-}
-
 .team__meta {
   font-size: 13.5px;
   color: var(--ink);
@@ -796,54 +759,25 @@ a:hover { text-decoration: underline; text-underline-offset: 3px; }
 
 .team__sep { color: var(--line-strong); font-weight: 400; }
 
+/* Blau, nicht Grün: das ist ein Link, also eine Aktion */
 .team__contact {
   display: inline-block;
   font-size: 14px;
   font-weight: 700;
-  color: var(--green-deep);
+  color: var(--blue);
   text-decoration: underline;
   text-underline-offset: 3px;
 }
 
-/* ------------------------------------------------------------ Abschluss -- */
-
-.closing {
-  margin-top: 40px;
-  background: var(--blue-pale);
-  border-radius: 22px;
-  padding: 30px 22px;
-  /* damit der klebende Header die Überschrift nach dem Sprung nicht verdeckt */
-  scroll-margin-top: 82px;
-}
-
-.closing__title {
-  font-weight: 700;
-  font-size: 24px;
-  line-height: 1.15;
-  letter-spacing: -.02em;
-  margin-bottom: 8px;
-}
-
-.closing__text {
-  font-size: 14.5px;
-  line-height: 1.5;
-  color: var(--muted);
-  margin-bottom: 20px;
-}
-
-.closing .signup { margin-bottom: 0; }
-
-/* --------------------------------------------------------------- Footer -- */
+/* --------------------------------------------------------------- Fuß -- */
 
 .footer {
-  margin-top: 36px;
+  margin-top: var(--band-gap);
   margin-left: calc(var(--shell) * -1);
   margin-right: calc(var(--shell) * -1);
   padding: 22px var(--shell) 24px;
   background: var(--surface);
 }
-
-.footer__reserved { height: 20px; }
 
 .footer__bar {
   display: flex;
@@ -852,8 +786,6 @@ a:hover { text-decoration: underline; text-underline-offset: 3px; }
   align-items: center;
   font-size: 13px;
   color: var(--muted);
-  padding-top: 16px;
-  border-top: 1px solid var(--line);
 }
 
 .footer__dot { color: var(--line-strong); }
@@ -863,151 +795,155 @@ a:hover { text-decoration: underline; text-underline-offset: 3px; }
   color: var(--soft);
 }
 
+/* -------------------------------------------------------- Rechtstexte -- */
+
+/*
+ * Impressum und Datenschutz. Kein eigenes Größensystem: Beide sind ein
+ * Band wie jedes andere, Kicker, Titel und Lead kommen unverändert aus
+ * der Skala. Neu sind hier nur die Abschnitts-Überschrift und die
+ * Markierung der offenen Stellen.
+ *
+ * Gestrichelt heißt auf dieser Seite überall dasselbe: fehlt noch. Die
+ * Screenshot-Slots und das Team-Foto benutzen dieselbe Linie (--ph-line),
+ * nur ohne Schraffur — unter Fließtext wäre die nicht lesbar.
+ */
+
+.legal { max-width: 68ch; }
+
+.legal__notice {
+  border: 1px dashed var(--ph-line);
+  border-radius: var(--radius);
+  background: var(--surface);
+  padding: 16px 18px;
+  margin-bottom: 30px;
+}
+
+.legal__notice-title {
+  font-size: var(--t-h3);
+  font-weight: 700;
+  line-height: 1.25;
+  margin-bottom: 6px;
+}
+
+.legal__notice-text {
+  font-size: var(--t-body);
+  line-height: 1.55;
+  color: var(--muted);
+}
+
+.legal__section { margin-top: 30px; }
+
+.legal__heading {
+  font-size: var(--t-h3);
+  font-weight: 700;
+  line-height: 1.25;
+  margin-bottom: 10px;
+}
+
+/* Der Hilfstext steht bewusst blasser als die geprüften Sätze darüber */
+.legal__note {
+  font-size: var(--t-body);
+  line-height: 1.55;
+  color: var(--faint);
+  max-width: 62ch;
+}
+
+.legal__todo {
+  border-left: 2px dashed var(--ph-line);
+  padding-left: 14px;
+  margin-top: 12px;
+}
+
+.legal__todo-label {
+  font-family: var(--mono);
+  font-size: var(--t-kicker);
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--soft);
+  margin-bottom: 8px;
+}
+
+.legal__todo-list {
+  margin: 0;
+  padding-left: 18px;
+  font-size: var(--t-body);
+  line-height: 1.55;
+  color: var(--ink-2);
+}
+
+.legal__todo-list li + li { margin-top: 8px; }
+
+/* Blau, weil es ein Link ist — dieselbe Regel wie im Team-Block */
+.legal__back {
+  display: inline-block;
+  margin-top: 34px;
+  font-weight: 700;
+  font-size: var(--t-body);
+  color: var(--blue);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
 /* ========================================================================== */
-/* Desktop — 1440 × 1024                                                      */
+/* Desktop — ab 1024px                                                        */
 /* ========================================================================== */
 
 @media (min-width: 1024px) {
-  :root { --shell: 80px; }
+  :root {
+    --shell: 64px;
+
+    /* Dieselben Marken, größer — die ganze Seite wächst auf einmal mit */
+    --t-h1: 56px;
+    --t-figure: 40px;
+    --t-h2: 34px;
+    --t-h3: 20px;
+    --t-lead: 18px;
+    --t-body: 17px;
+    --t-kicker: 11px;
+    --t-meta: 12px;
+
+    --band-gap: 72px;
+    --band-pad: 52px 56px;
+    --radius-lg: 28px;
+  }
 
   .page { padding: 0 var(--shell) 34px; }
 
-  .header {
-    margin-bottom: 52px;
-    padding: 22px var(--shell);
-  }
+  .header { padding: 22px 0 40px; }
   .header__brand { gap: 12px; }
   .header__logo { width: 44px; height: 44px; border-radius: 12px; }
   .header__name { font-size: 25px; }
-  .header__cta { font-size: 16px; padding: 11px 24px; }
+  .header__link { font-size: 16px; }
 
-  .hero {
+  /* Das geteilte Band: feste Bildspalte, flexible Textspalte */
+  .band--split {
+    flex-direction: row;
+    gap: 48px;
+    align-items: center;
+  }
+
+  .band--split .band__visual { flex: 0 0 460px; }
+  .band--split .band__body { flex: 1; }
+
+  .band__kicker { margin-bottom: 14px; }
+  .band__title { margin-bottom: 16px; }
+  .band__lead { margin-bottom: 28px; }
+
+  /*
+   * Einstieg: Text links, der Schnitt rechts. Vorher stand hier ein
+   * Zweispalter aus Text und drei Geräten — beide Spalten zu eng.
+   */
+  .band--intro {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) 560px;
-    gap: 72px;
-    align-items: flex-start;
+    grid-template-columns: minmax(0, 1fr) 320px;
+    column-gap: 64px;
+    align-items: start;
   }
 
-  .hero__copy { padding-top: 8px; }
-
-  .scanline {
-    padding: 9px 17px;
-    margin-bottom: 22px;
-    font-size: 14px;
-    gap: 10px;
-  }
-  .scanline__dot { width: 8px; height: 8px; flex-basis: 8px; }
-
-  .headline {
-    font-size: 64px;
-    line-height: 1.02;
-    letter-spacing: -.025em;
-    margin-bottom: 20px;
-  }
-
-  .lede { font-size: 20px; margin-bottom: 34px; max-width: 540px; }
-
-  .average {
-    padding: 22px 26px;
-    gap: 24px;
-    max-width: 540px;
-    margin-bottom: 32px;
-    box-shadow: 0 12px 28px rgba(18, 168, 119, .4);
-  }
-  .average__label { font-size: 14px; }
-  .average__value { font-size: 66px; line-height: .88; }
-  .average__side { padding-left: 22px; }
-  .average__term { font-size: 16px; margin-bottom: 4px; }
-  .average__note { font-size: 15px; }
-
-  .cta { margin-bottom: 16px; }
-  .cta__row { gap: 16px; }
-  .cta__button { flex: 0 0 auto; font-size: 20px; padding: 16px 44px; }
-  .cta__soon { font-size: 15px; }
-  .cta__badge { width: 150px; height: 52px; border-radius: 9px; font-size: 9px; line-height: 1.3; }
-
-  .privacy { font-size: 15px; margin-bottom: 0; }
-
-  /* Die Bildschirme wandern in die rechte Hero-Spalte */
-  .screens { padding-top: 0; }
-  .screens__title, .screens__subtitle { display: none; }
-
-  .screens__strip {
-    overflow: visible;
-    gap: 16px;
-    margin: 0;
-    padding: 0;
-  }
-
-  .screens__strip > .phone:first-child { margin-top: 26px; }
-
-  .phone {
-    flex: 0 0 250px;
-    padding: 9px;
-    border-radius: 34px;
-    box-shadow: 0 18px 44px rgba(28, 31, 41, .3);
-  }
-
-  .phone__slot { border-radius: 26px; }
-
-  .slot-placeholder {
-    gap: 8px;
-    padding: 0 18px;
-    background: repeating-linear-gradient(45deg, var(--ph-a) 0 11px, var(--ph-b) 11px 22px);
-  }
-  .slot-placeholder__kicker { font-size: 10px; }
-  .slot-placeholder__title { font-size: 19px; }
-  .slot-placeholder__caption { font-size: 12.5px; line-height: 1.4; }
-  .slot-placeholder__size { font-size: 10px; margin-top: 6px; }
-
-  .screens__note { font-size: 12px; margin-top: 16px; }
-
-  .features {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1.15fr;
-    gap: 0;
-    margin-top: 64px;
-    padding-top: 0;
-    border-top: 1px solid var(--line);
-  }
-
-  .feature { padding: 28px 34px; border-right: 1px solid var(--line); }
-  .feature:first-child { padding-left: 0; }
-  .feature:last-child {
-    padding-right: 0;
-    border-right: 0;
-    display: flex;
-    gap: 26px;
-    align-items: flex-start;
-  }
-  .feature__body { flex: 1; }
-
-  .feature__head { gap: 10px; margin-bottom: 6px; }
-  .feature__number { font-size: 12px; }
-  .feature__title { font-size: 25px; }
-  .feature__text { font-size: 16px; }
-
-  .flash { flex: 0 0 218px; margin-top: 0; width: 218px; }
-  .flash__face { padding: 15px; }
-  .flash__label { font-size: 9.5px; }
-  .flash__question { font-size: 17px; }
-  .flash__answer { font-size: 24px; }
-  .flash__hint { font-size: 11px; }
-
-  .footer {
-    margin: auto 0 0;
-    padding: 40px 0 0;
-    background: none;
-  }
-
-  .footer__reserved { height: 22px; }
-
-  .footer__bar {
-    gap: 16px;
-    font-size: 14px;
-    padding-top: 18px;
-    flex-wrap: nowrap;
-  }
+  .average { margin-top: 0; padding: 26px; }
+  /* .average__value braucht hier nichts mehr — --t-figure wächst oben mit */
+  .average__term { font-size: 15px; }
+  .average__note { font-size: 14px; }
 
   /* Start-Benachrichtigung: Feld und Button nebeneinander */
 
@@ -1036,61 +972,88 @@ a:hover { text-decoration: underline; text-underline-offset: 3px; }
   .signup__note { font-size: 13px; }
   .signup__ok { font-size: 17px; padding: 18px 22px; }
 
+  .cta__row { gap: 16px; }
+  .cta__button { flex: 0 0 auto; font-size: 20px; padding: 16px 44px; }
+  .cta__badge { width: 150px; height: 52px; border-radius: 9px; font-size: 9px; line-height: 1.3; }
+
+  /*
+   * Bildschirme über die volle Breite. In der alten 560er-Spalte standen
+   * drei 250er-Geräte gequetscht nebeneinander — daher der `margin-top`
+   * am ersten als Notlösung. Über die ganze Breite ist er nicht nötig.
+   */
+  .screens__strip {
+    overflow: visible;
+    gap: 28px;
+    margin: 0;
+    padding: 0;
+  }
+
+  .phone {
+    flex: 0 0 268px;
+    padding: 9px;
+    border-radius: 34px;
+    box-shadow: 0 14px 32px rgba(28, 31, 41, .16);
+  }
+
+  .phone__slot { border-radius: 26px; }
+
+  .slot-placeholder {
+    gap: 8px;
+    padding: 0 18px;
+    background: repeating-linear-gradient(45deg, var(--ph-a) 0 11px, var(--ph-b) 11px 22px);
+  }
+  .slot-placeholder__kicker { font-size: 10px; }
+  .slot-placeholder__title { font-size: 19px; }
+  .slot-placeholder__caption { font-size: 12.5px; line-height: 1.4; }
+  .slot-placeholder__size { font-size: 10px; margin-top: 6px; }
+
+  .band .screens__strip + .band__meta { margin-top: 16px; }
+
+  /* Funktionen */
+
+  .points { gap: 22px; }
+  .point { gap: 14px; }
+  .point__number { font-size: 12px; }
+
+  .flash__inner { height: 210px; }
+  .flash__face { padding: 22px; }
+  .flash__label { font-size: 10px; }
+  .flash__question { font-size: 22px; }
+  .flash__answer { font-size: 30px; }
+  .flash__hint { font-size: 12px; }
+
   /* Datenschutz */
 
-  .privacy-block {
-    margin-top: 64px;
-    border-radius: 28px;
-    padding: 52px 56px;
-  }
-
-  .privacy-block__kicker { font-size: 11px; margin-bottom: 18px; }
-
-  .privacy-block__title {
-    font-size: 46px;
-    margin-bottom: 14px;
-    max-width: 900px;
-  }
-
-  .privacy-block__lead { font-size: 18px; margin-bottom: 44px; }
-
-  .privacy-block__grid { flex-direction: row; gap: 40px; }
-
+  .claims { flex-direction: row; gap: 40px; }
   .claim { flex: 1; padding-left: 20px; }
-  .claim__title { font-size: 20px; margin-bottom: 6px; }
   .claim__text { font-size: 15px; }
 
   /* Wer dahintersteckt */
 
-  .team {
-    margin-top: 64px;
-    flex-direction: row;
-    gap: 48px;
-    align-items: center;
-  }
-
-  .team__photo { flex: 0 0 460px; border-radius: 22px; }
-  .team__body { flex: 1; }
-  .team__title { font-size: 34px; margin-bottom: 16px; }
-  .team__text { font-size: 17px; max-width: 620px; margin-bottom: 18px; }
+  .team__photo { border-radius: var(--radius-lg); }
   .team__meta { font-size: 15px; margin-bottom: 14px; }
   .team__placeholder-text { font-size: 20px; }
   .team__placeholder-kicker, .team__placeholder-size { font-size: 10px; }
 
-  /* Abschluss */
+  /* Fuß */
 
-  .closing {
-    margin-top: 64px;
-    border-radius: 28px;
-    padding: 48px 56px;
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) 540px;
-    gap: 48px;
-    align-items: center;
-    scroll-margin-top: 110px;
+  .footer {
+    margin: var(--band-gap) 0 0;
+    padding: 22px 0 0;
+    background: none;
+    border-top: 1px solid var(--line);
   }
 
-  .closing__title { font-size: 34px; margin-bottom: 10px; }
-  .closing__text { font-size: 17px; margin-bottom: 0; max-width: 520px; }
-  .closing .signup { max-width: none; }
+  .footer__bar {
+    gap: 16px;
+    font-size: 14px;
+    flex-wrap: nowrap;
+  }
+
+  /* Rechtstexte — nur Abstände, die Größen macht die Skala oben mit */
+
+  .legal__notice { padding: 22px 26px; margin-bottom: 40px; }
+  .legal__section { margin-top: 40px; }
+  .legal__todo { padding-left: 18px; margin-top: 14px; }
+  .legal__back { margin-top: 44px; }
 }

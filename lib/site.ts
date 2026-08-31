@@ -128,27 +128,44 @@ export const site = {
   /**
    * Wer dahintersteckt. Im Design war dieser Block reserviert und leer.
    *
-   * TODO vor dem Livegang: `names`, `school` und `photo` ausfüllen —
-   * `text` ist ein Entwurf, schreibt ihn mit euren eigenen Worten um.
+   * TODO vor dem Livegang: `photo` ausfüllen — `text` ist ein Entwurf,
+   * schreibt ihn mit euren eigenen Worten um.
    * Solange `photo` null ist, steht dort ein Platzhalter.
    */
   team: {
     kicker: "Wer dahintersteckt",
     title: "Ein Projekt von drei Schülern",
     text: "Wir sind drei Schüler aus Österreich und haben Studytab gebaut, weil wir selbst keine App gefunden haben, die mit Schularbeit, Mitarbeit und Halbjahresschnitt umgehen kann. Alles, was drin ist, benutzen wir jeden Tag selbst. Wenn dir etwas fehlt: schreib uns, wir lesen jede Mail.",
-    names: "Vorname, Vorname und Vorname",
-    school: "Schule, Ort",
+    names: "Oliver, Jonathan und Anton",
+    school: "HTL Spengergasse, Wien",
     photo: null as string | null,
     photoAlt: "Die drei Schüler hinter Studytab",
     contact: { label: "Schreib uns", href: "/kontakt" },
   },
 
   screensSection: {
+    kicker: "Die App",
     title: "So sieht's aus",
-    subtitle: "Drei Bildschirme, mehr braucht die App nicht.",
+    /*
+     * Hier stand "Drei Bildschirme, mehr braucht die App nicht." — `screens`
+     * unten hat aber zwei Einträge. Auf einer Seite, die mit Ehrlichkeit
+     * wirbt, darf keine nachzählbare Angabe falsch sein. Jetzt ohne Zahl,
+     * dann stimmt der Satz unabhängig davon, wie viele Slots gefüllt sind.
+     */
+    subtitle: "Ein Blick hinein, bevor du sie installierst.",
     /** Bildunterschrift, solange noch Platzhalter stehen */
     placeholderNote:
       "Platzhalter — echte Screenshots aus der App (1290 × 2796) kommen hier hinein",
+  },
+
+  /**
+   * Der Rahmen um die drei Funktionen. Der Abschnitt hatte bisher keinen
+   * eigenen Kopf — die drei Punkte standen ohne Überschrift im Raum.
+   */
+  featuresSection: {
+    kicker: "Was drin ist",
+    title: "Drei Dinge, mehr nicht.",
+    lead: "Noten, Mitschriften und Karteikarten — zugeschnitten auf das, was in Österreich zählt: Schularbeit, Mitarbeit, Semesterschnitt.",
   },
 
   features: [
@@ -210,3 +227,189 @@ export const screens: Screen[] = [
 /** Seitenverhältnis eines iPhone-Screenshots (6.7") */
 export const SCREENSHOT_RATIO = "1290 / 2796";
 export const SCREENSHOT_SIZE = { width: 1290, height: 2796 };
+
+/* ==========================================================================
+   Impressum und Datenschutzerklärung
+
+   Beides ist ein GERÜST, kein fertiger Rechtstext. Die Gliederung steht,
+   die Angaben fehlen. Sie müssen von Oliver, Jonathan und Anton kommen:
+   erfundene Betreiberdaten oder abgeschriebene Textbausteine wären
+   schlechter als eine fehlende Seite — vor allem auf einer Seite, die
+   mit Ehrlichkeit wirbt.
+
+   `note`  erklärt, was in den Abschnitt gehört und warum.
+   `facts` sind Sätze, die schon feststehen, weil sie am Code geprüft sind.
+   `todo`  sind die Lücken. Solange irgendwo ein `todo` steht, zeigt die
+           Seite oben einen Warnkasten und markiert jede offene Stelle.
+   ========================================================================== */
+
+export type LegalSection = {
+  heading: string;
+  /** Wozu der Abschnitt da ist. Hilfstext, kein Rechtstext. */
+  note: string;
+  /** Was schon feststeht — am Projekt nachgeprüft, nicht behauptet. */
+  facts?: string[];
+  /** Die offenen Stellen. Leeres Array = dieser Abschnitt ist fertig. */
+  todo: string[];
+};
+
+export type LegalDoc = {
+  kicker: string;
+  title: string;
+  lead: string;
+  /** Der Warnkasten oben. Verschwindet von selbst, sobald kein `todo` mehr offen ist. */
+  notice: { title: string; text: string };
+  sections: LegalSection[];
+  backLabel: string;
+};
+
+export const legal: {
+  todoLabel: string;
+  impressum: LegalDoc;
+  datenschutz: LegalDoc;
+} = {
+  todoLabel: "Von euch auszufüllen",
+
+  impressum: {
+    kicker: "Pflichtangaben",
+    title: "Impressum",
+    lead: "Angaben nach § 5 E-Commerce-Gesetz und § 25 Mediengesetz.",
+    notice: {
+      title: "Dieses Impressum gilt noch nicht.",
+      text: "Es ist ein Gerüst: Die Abschnitte stehen, die Angaben fehlen. Jede markierte Stelle muss ausgefüllt werden. Solange hier etwas offen ist, sollte die Seite nicht öffentlich verlinkt werden.",
+    },
+    backLabel: "Zurück zur Startseite",
+    sections: [
+      {
+        heading: "Medieninhaber und Diensteanbieter",
+        note: "Wer die Seite betreibt, mit einer Anschrift, an die man tatsächlich zustellen kann. Ein Postfach genügt dafür nicht.",
+        todo: [
+          "Vollständige Namen aller drei — im Impressum reichen Vornamen nicht.",
+          "Anschrift mit Straße, Hausnummer, Postleitzahl und Ort. Wenn es keine andere gibt, ist das eine Privatadresse. Das ist der unangenehme Teil, und genau deshalb steht der nächste Abschnitt hier.",
+        ],
+      },
+      {
+        heading: "Wer haftet, wenn ihr noch nicht volljährig seid",
+        note: "Keine Formalität, sondern die Frage, die vor dem Livegang zuerst geklärt gehört: Ein Impressum braucht jemanden, der rechtlich einsteht. Bei Minderjährigen sind das üblicherweise die Erziehungsberechtigten, die dann mit Namen und Anschrift als Medieninhaber dastehen.",
+        todo: [
+          "Klären, ob alle drei volljährig sind.",
+          "Falls nicht: mit den Erziehungsberechtigten sprechen — oder mit der HTL Spengergasse, ob die Schule das Projekt trägt. Bei Schulprojekten ist das der übliche Weg und erspart euch die Privatadresse im Netz.",
+        ],
+      },
+      {
+        heading: "Kontakt",
+        note: "§ 5 ECG verlangt eine E-Mail-Adresse, unter der ihr wirklich erreichbar seid. Für Presse ist sie ohnehin die wichtigste Angabe auf dieser Seite.",
+        todo: [
+          "Die E-Mail-Adresse eintragen. Sie fehlt im ganzen Projekt noch — auch »Schreib uns« im Team-Block und »Kontakt« in der Fußzeile zeigen derzeit ins Leere.",
+        ],
+      },
+      {
+        heading: "Worum es auf dieser Seite geht",
+        note: "Ein Satz zum Gegenstand der Website. Der folgende ist aus dem Seiteninhalt abgeleitet, nicht erfunden — prüft ihn und übernehmt oder ersetzt ihn.",
+        facts: [
+          "Diese Website informiert über Studytab, eine iOS-App für Noten, Mitschriften und Karteikarten, und nimmt vor dem Start E-Mail-Adressen für eine einmalige Benachrichtigung entgegen.",
+        ],
+        todo: ["Satz bestätigen oder umschreiben."],
+      },
+      {
+        heading: "Unternehmerische Angaben",
+        note: "Firmenbuchnummer, UID, Gewerbeberechtigung, Kammer und Aufsichtsbehörde verlangt § 5 ECG nur von Unternehmen. Ob ein Schulprojekt ohne Einnahmen darunterfällt, entscheidet man nicht nach Gefühl.",
+        todo: [
+          "Spätestens klären, sobald die App etwas kostet oder ihr auf anderem Weg Geld einnehmt.",
+          "Solange sie gratis ist und nichts verkauft wird, ist die Frage vermutlich gegenstandslos — lasst euch das aber bestätigen, etwa von einer Lehrkraft für Recht oder der Wirtschaftskammer.",
+        ],
+      },
+      {
+        heading: "Blattlinie (§ 25 Mediengesetz)",
+        note: "Eine Zeile zur grundlegenden Richtung der Seite: worüber sie informiert und für wen.",
+        todo: ["Einen Satz schreiben."],
+      },
+      {
+        heading: "Haftung und Urheberrecht",
+        note: "Hier stehen auf vielen Seiten abgeschriebene Textbausteine. Übernehmt keine: Entweder ihr versteht, was dort steht, oder es steht besser gar nicht da. Pflicht ist dieser Abschnitt nicht.",
+        todo: [
+          "Entscheiden, ob ihr ihn überhaupt wollt — und wenn ja, selbst formulieren.",
+        ],
+      },
+    ],
+  },
+
+  datenschutz: {
+    kicker: "Pflichtangaben",
+    title: "Datenschutzerklärung",
+    lead: "Was mit deiner E-Mail-Adresse passiert, wenn du dich für die Start-Benachrichtigung anmeldest.",
+    notice: {
+      title: "Auch das hier ist noch ein Gerüst.",
+      text: "Die Gliederung folgt Art. 13 DSGVO, die Angaben müssen von den drei Betreibern kommen. Erfundene Sätze wären hier besonders heikel: Eine Datenschutzerklärung, die etwas anderes behauptet als der Code tut, ist schlechter als gar keine.",
+    },
+    backLabel: "Zurück zur Startseite",
+    sections: [
+      {
+        heading: "Diese Seite und die App sind zweierlei",
+        note: "Damit nichts durcheinandergerät: Auf dieser Website wird genau eine Sache erhoben, nämlich die E-Mail-Adresse für die Start-Benachrichtigung. Was die App mit Noten, Mitschriften und Karteikarten macht, steht in der Datenschutz-Seite der App und gehört hier höchstens als Verweis hin.",
+        todo: [
+          "Entscheiden, ob die Datenschutz-Seite aus der App hier verlinkt oder wiederholt wird. Widersprechen dürfen sich die beiden nicht.",
+        ],
+      },
+      {
+        heading: "Verantwortlicher",
+        note: "Art. 13 Abs. 1 lit. a: wer über diese Daten entscheidet — Name, Anschrift, E-Mail-Adresse. Dieselben Angaben wie im Impressum.",
+        todo: ["Übernehmen, sobald das Impressum steht."],
+      },
+      {
+        heading: "Welche Daten erhoben werden",
+        note: "Beide Sätze sind am Code nachgeprüft: app/actions.ts und lib/signups.ts.",
+        facts: [
+          "Genau ein Feld: die E-Mail-Adresse aus dem Anmeldeformular, dazu der Zeitpunkt der Anmeldung.",
+          "Das Formular hat ein zweites, unsichtbares Feld, das Bots abfängt. Wird es ausgefüllt, wird nichts gespeichert.",
+        ],
+        todo: ["Gegenprüfen, sobald sich am Formular etwas ändert."],
+      },
+      {
+        heading: "Zweck und Rechtsgrundlage",
+        note: "Art. 13 Abs. 1 lit. c. Zweck ist die einmalige Nachricht zum Start; als Rechtsgrundlage kommt die Einwilligung nach Art. 6 Abs. 1 lit. a DSGVO in Betracht. Das ist der rechtlich heikelste Punkt der Seite — er gehört bestätigt, nicht abgeschrieben.",
+        todo: [
+          "Die Formulierung von jemandem prüfen lassen, der sich damit auskennt.",
+          "Unter dem Anmeldefeld steht »Abmelden mit einem Klick.« — einen Abmeldeweg gibt es aber noch nicht. Entweder ihr baut ihn, oder der Satz muss weg. Ungedeckt darf er nicht stehen bleiben.",
+        ],
+      },
+      {
+        heading: "Wie lange gespeichert wird",
+        note: "Art. 13 Abs. 2 lit. a verlangt eine Frist oder wenigstens ein Kriterium, nach dem sich die Frist bestimmt.",
+        todo: [
+          "Frist festlegen. Naheliegend: bis zur Start-Mail, danach löschen.",
+          "Festlegen, was passiert, wenn die App doch nicht erscheint.",
+        ],
+      },
+      {
+        heading: "Wo die Adressen liegen",
+        note: "Das ändert sich, sobald ein Hoster oder ein Mailversand dazukommt — lib/signups.ts ist im Code ausdrücklich als Austauschpunkt markiert. Ab dann braucht es hier den Namen des Dienstes und einen Auftragsverarbeitungsvertrag nach Art. 28 DSGVO.",
+        facts: [
+          "Stand heute schreibt die Seite jede Adresse in eine Datei auf dem Server, auf dem sie läuft. Ein Dienstleister ist nicht beteiligt.",
+        ],
+        todo: [
+          "Eintragen, sobald feststeht, wo die Seite läuft und womit die Mails verschickt werden.",
+          "Die Server-Logs des Hosters prüfen: IP-Adressen werden dort fast immer gespeichert, und dann gehören sie hier hinein.",
+        ],
+      },
+      {
+        heading: "Deine Rechte",
+        note: "Art. 13 Abs. 2 lit. b bis d: Auskunft, Berichtigung, Löschung, Einschränkung, Datenübertragbarkeit, Widerspruch und der jederzeitige Widerruf der Einwilligung — dazu das Recht, sich bei der Aufsichtsbehörde zu beschweren.",
+        todo: [
+          "Ausformulieren und angeben, an welche Adresse man sich dafür wendet.",
+          "Die Österreichische Datenschutzbehörde als Beschwerdestelle nennen. Anschrift auf dsb.gv.at nachschlagen, nicht aus dem Gedächtnis eintragen.",
+        ],
+      },
+      {
+        heading: "Kein Tracking, keine Cookies",
+        note: "Keine Behauptung, sondern nachzählbar: Das Projekt hängt an drei Paketen — next, react und react-dom. Ein Analyse- oder Werbewerkzeug ist nirgends eingebunden.",
+        facts: [
+          "Die Seite setzt keine Analyse- oder Werbe-Cookies und lädt keine Tracking-Bibliothek.",
+        ],
+        todo: [
+          "Gilt genau so lange, bis jemand ein Analyse-Werkzeug einbaut. Dann muss dieser Abschnitt als Erstes geändert werden.",
+        ],
+      },
+    ],
+  },
+};

@@ -1,41 +1,42 @@
 import { site } from "@/lib/site";
 import DownloadCta from "./DownloadCta";
-import Screens from "./Screens";
-import { HERO_CTA_ID } from "./Header";
 
+/**
+ * Der Einstieg — ein Band über die volle Breite.
+ *
+ * Kicker, Titel und Lead kommen aus dem gemeinsamen Band-Bestand, damit
+ * dieser Abschnitt dieselbe Anatomie hat wie alle anderen. Rechts daneben
+ * steht der Schnitt als ruhige Karte: kein Verlauf, kein Leuchtschatten,
+ * Grün nur an der Zahl selbst — so wie Color+Theme.swift es vorschreibt.
+ *
+ * Der Screenshot-Streifen ist kein Teil des Einstiegs mehr, sondern ein
+ * eigenes Band darunter (components/Screens.tsx).
+ */
 export default function Hero() {
   return (
-    <section className="hero">
-      <div className="hero__copy">
+    <section className="band band--intro">
+      <div className="band__body">
         {site.showScanLine ? (
-          <div className="scanline">
-            <span className="scanline__dot" aria-hidden="true" />
-            <span>{site.scanLine}</span>
-          </div>
+          <p className="band__kicker">{site.scanLine}</p>
         ) : null}
 
-        <h1 className="headline display">{site.headline}</h1>
-        <p className="lede">{site.lede}</p>
+        <h1 className="band__title band__title--page display">
+          {site.headline}
+        </h1>
 
-        <div className="average">
-          <div>
-            <div className="average__label">{site.average.label}</div>
-            <div className="average__value display">{site.average.value}</div>
-          </div>
-          <div className="average__side">
-            <div className="average__term">{site.average.term}</div>
-            <div className="average__note">{site.average.note}</div>
-          </div>
-        </div>
+        <p className="band__lead">{site.lede}</p>
 
-        <div id={HERO_CTA_ID}>
-          <DownloadCta />
-        </div>
+        <DownloadCta />
 
-        <p className="privacy">{site.privacy}</p>
+        <p className="band__meta">{site.privacy}</p>
       </div>
 
-      <Screens />
+      <aside className="average" aria-label={site.average.label}>
+        <div className="average__label">{site.average.label}</div>
+        <div className="average__value display">{site.average.value}</div>
+        <div className="average__term">{site.average.term}</div>
+        <div className="average__note">{site.average.note}</div>
+      </aside>
     </section>
   );
 }

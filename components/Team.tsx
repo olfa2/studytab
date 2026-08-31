@@ -2,45 +2,53 @@ import Image from "next/image";
 import { site } from "@/lib/site";
 
 /**
- * "Ein Projekt von drei Schülern" — im Design war der Block reserviert
- * und leer. Bei einer Schul-App ist genau das der Vertrauensanker:
- * Wer dahintersteckt, überzeugt mehr als jedes Feature-Argument.
+ * "Ein Projekt von drei Schülern" — bei einer Schul-App der Vertrauens-
+ * anker: Wer dahintersteckt, überzeugt mehr als jedes Feature-Argument.
+ * Für Presse und Wettbewerbe ist es ohnehin der wichtigste Block.
  *
- * Solange `site.team.photo` null ist, steht hier ein Platzhalter —
- * gleiche Machart wie bei den Screenshot-Slots.
+ * Dieser Abschnitt war die Vorlage für das Band-System, nicht dessen
+ * Baustelle: Aufbau, Texte und Reihenfolge sind unverändert, er trägt
+ * jetzt nur die gemeinsamen Klassennamen. Bild zuerst im Markup — damit
+ * es auf dem Desktop links steht und mobil oben, so wie bisher.
+ *
+ * Solange `site.team.photo` null ist, steht hier ein Platzhalter.
  */
 export default function Team() {
   const team = site.team;
 
   return (
-    <section className="team" aria-labelledby="team">
-      <div className="team__photo">
-        {team.photo ? (
-          <Image
-            className="team__image"
-            src={team.photo}
-            alt={team.photoAlt}
-            width={1200}
-            height={900}
-            sizes="(min-width: 1024px) 460px, 100vw"
-          />
-        ) : (
-          <div className="ph-surface team__placeholder">
-            <span className="team__placeholder-kicker">Foto</span>
-            <span className="team__placeholder-text">
-              Ein Bild von euch dreien
-            </span>
-            <span className="team__placeholder-size">quer, mindestens 1200 breit</span>
-          </div>
-        )}
+    <section className="band band--split" aria-labelledby="team">
+      <div className="band__visual">
+        <div className="team__photo">
+          {team.photo ? (
+            <Image
+              className="team__image"
+              src={team.photo}
+              alt={team.photoAlt}
+              width={1200}
+              height={900}
+              sizes="(min-width: 1024px) 460px, 100vw"
+            />
+          ) : (
+            <div className="ph-surface team__placeholder">
+              <span className="team__placeholder-kicker">Foto</span>
+              <span className="team__placeholder-text">
+                Ein Bild von euch dreien
+              </span>
+              <span className="team__placeholder-size">
+                quer, mindestens 1200 breit
+              </span>
+            </div>
+          )}
+        </div>
       </div>
 
-      <div className="team__body">
-        <p className="team__kicker">{team.kicker}</p>
-        <h2 className="team__title display" id="team">
+      <div className="band__body">
+        <p className="band__kicker">{team.kicker}</p>
+        <h2 className="band__title display" id="team">
           {team.title}
         </h2>
-        <p className="team__text">{team.text}</p>
+        <p className="band__text">{team.text}</p>
         <p className="team__meta">
           {team.names}
           <span className="team__sep"> · </span>

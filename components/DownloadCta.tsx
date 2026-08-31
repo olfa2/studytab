@@ -1,12 +1,6 @@
 import { site } from "@/lib/site";
 import SignupForm from "./SignupForm";
 
-type Props = {
-  /** Kurze Feldbeschriftung, nur für Screenreader (Abschluss-Block) */
-  signupLabel?: string;
-  signupLabelHidden?: boolean;
-};
-
 /**
  * Der Handlungsaufruf.
  *
@@ -14,14 +8,13 @@ type Props = {
  * die Anmeldung für die Start-Benachrichtigung statt eines toten Buttons.
  * Nach dem Release (`site.released = true`) der echte Download.
  *
- * Kommt zweimal vor: im Hero und im Abschluss-Block.
+ * Steht einmal auf der Seite, im Einstieg. Die Props für eine verkürzte,
+ * nur vorgelesene Feldbeschriftung sind mit dem Abschluss-Block entfallen,
+ * der sie als einziger gesetzt hat; SignupForm kann das weiterhin.
  */
-export default function DownloadCta({
-  signupLabel,
-  signupLabelHidden,
-}: Props = {}) {
+export default function DownloadCta() {
   if (!site.released) {
-    return <SignupForm label={signupLabel} labelHidden={signupLabelHidden} />;
+    return <SignupForm />;
   }
 
   return (

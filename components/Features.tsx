@@ -2,29 +2,44 @@ import { site } from "@/lib/site";
 import FlashCard from "./FlashCard";
 
 /**
- * Die drei Punkte. Auf dem Desktop ein Dreispalter, mobil untereinander.
- * Beim letzten (Karteikarten) steht die drehende Karte daneben — mobil
- * rutscht sie per CSS unter den Text, gerendert wird sie nur einmal.
+ * Die drei Funktionen als geteiltes Band: Text links, die drehende
+ * Karteikarte rechts in der Bildspalte.
+ *
+ * Vorher waren es drei gleichwertige Spalten mit Trennlinien und ohne
+ * Abschnittskopf — die Punkte standen ohne Überschrift im Raum, und die
+ * Karteikarte klebte als vierter Fremdkörper in der letzten Spalte.
+ * Jetzt hat der Abschnitt einen Kopf wie jeder andere, und die Karte ist
+ * das Bild des Bandes.
+ *
+ * Reihenfolge im Markup ist Text vor Bild, damit mobil zuerst gelesen
+ * wird, worum es geht, und die Karte darunter rutscht.
  */
 export default function Features() {
   return (
-    <section className="features">
-      {site.features.map((feature, index) => {
-        const isLast = index === site.features.length - 1;
+    <section className="band band--split" aria-labelledby="features">
+      <div className="band__body">
+        <p className="band__kicker">{site.featuresSection.kicker}</p>
+        <h2 className="band__title display" id="features">
+          {site.featuresSection.title}
+        </h2>
+        <p className="band__lead">{site.featuresSection.lead}</p>
 
-        return (
-          <div className="feature" key={feature.number}>
-            <div className="feature__body">
-              <div className="feature__head">
-                <span className="feature__number">{feature.number}</span>
-                <h3 className="feature__title display">{feature.title}</h3>
+        <ul className="points">
+          {site.features.map((feature) => (
+            <li className="point" key={feature.number}>
+              <span className="point__number">{feature.number}</span>
+              <div>
+                <h3 className="point__title display">{feature.title}</h3>
+                <p className="point__text">{feature.text}</p>
               </div>
-              <p className="feature__text">{feature.text}</p>
-            </div>
-            {isLast ? <FlashCard /> : null}
-          </div>
-        );
-      })}
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <div className="band__visual">
+        <FlashCard />
+      </div>
     </section>
   );
 }

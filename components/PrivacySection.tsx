@@ -1,27 +1,32 @@
 import { site } from "@/lib/site";
 
 /**
- * Der dunkle Block. Auf der ganzen Seite die einzige Stelle, an der die
- * Farbe kippt — das Thema, bei dem Vertrauen entsteht, bekommt dafür
- * den Platz, den es vorher als 12,5-px-Fußnote nicht hatte.
+ * Das dunkle Band. Auf der ganzen Seite die einzige Stelle, an der die
+ * Farbe kippt — bewusst gesetzt, damit die Seite einen Merkpunkt hat.
  *
  * Der Inhalt ist am App-Repo geprüft und deckt sich mit dem "Kurz gesagt"
  * der Datenschutz-Seite in der App. Siehe die Belege in lib/site.ts.
+ *
+ * Die Überschrift lief vorher mit 46px aus der Reihe, während gleich-
+ * rangige Abschnitte bei 25–34px lagen; sie folgt jetzt der Skala.
  */
 export default function PrivacySection() {
   const block = site.privacySection;
 
   return (
-    <section className="privacy-block" aria-labelledby="datenschutz">
-      <p className="privacy-block__kicker">{block.kicker}</p>
+    <section
+      className="band band--dark"
+      aria-labelledby="datenschutz"
+    >
+      <p className="band__kicker">{block.kicker}</p>
 
-      <h2 className="privacy-block__title display" id="datenschutz">
+      <h2 className="band__title display" id="datenschutz">
         {block.title}
       </h2>
 
-      <p className="privacy-block__lead">{block.lead}</p>
+      <p className="band__lead">{block.lead}</p>
 
-      <ul className="privacy-block__grid">
+      <ul className="claims">
         {block.claims.map((claim) => (
           <li className="claim" key={claim.title}>
             <span className="claim__dot" aria-hidden="true" />
