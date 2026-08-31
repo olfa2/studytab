@@ -31,10 +31,10 @@ export default function Header() {
 
       {site.released ? (
         <a className="header__link" href={site.appStoreUrl}>
-          Im App Store
+          {site.release.link}
         </a>
       ) : (
-        <span className="header__status">Bald im App Store</span>
+        <span className="header__status">{site.release.pending}</span>
       )}
     </header>
   );

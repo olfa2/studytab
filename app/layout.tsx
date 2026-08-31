@@ -17,14 +17,31 @@ const nunito = Nunito({
   display: "swap",
 });
 
+/*
+ * `metadataBase` macht aus jedem relativen Pfad hier eine absolute URL —
+ * ohne sie hätte `og:image` keine, und kein Dienst könnte das Bild laden.
+ * Die Adresse steht in lib/site.ts, nicht hier.
+ *
+ * Das Bild selbst wird NICHT eingetragen: app/opengraph-image.tsx und
+ * app/twitter-image.tsx melden sich über die Datei-Konvention von selbst
+ * an. Ein `images`-Feld an dieser Stelle würde es doppelt setzen.
+ */
 export const metadata: Metadata = {
-  title: "Studytab — Noten, Mitschriften und Karteikarten",
+  metadataBase: new URL(site.url),
+  title: site.metaTitle,
   description: site.lede,
   openGraph: {
-    title: "Studytab — Noten, Mitschriften und Karteikarten",
+    title: site.metaTitle,
     description: site.lede,
+    url: "/",
+    siteName: site.name,
     locale: "de_AT",
     type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: site.metaTitle,
+    description: site.lede,
   },
   icons: { icon: site.logo, apple: site.logo },
 };

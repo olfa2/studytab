@@ -23,6 +23,41 @@ export const site = {
   logo: "/studytab-logo.jpg",
 
   /**
+   * Die öffentliche Adresse der Seite. Steht hier an genau einer Stelle,
+   * weil `metadataBase` in app/layout.tsx daraus jede absolute URL baut —
+   * auch die des Vorschaubilds für geteilte Links.
+   *
+   * ACHTUNG: Die Domain ist noch nicht registriert. Solange sie nicht auf
+   * die Seite zeigt, verweist `og:image` in jeder geteilten Nachricht ins
+   * Leere. Vor dem ersten Teilen entweder die Domain aufsetzen oder hier
+   * auf die tatsächliche Adresse umstellen — das ist diese eine Zeile.
+   */
+  url: "https://studytab.at",
+
+  /** Der Seitentitel. Steht im Tab, in der Suche und im Vorschaubild. */
+  metaTitle: "Studytab — Noten, Mitschriften und Karteikarten",
+
+  /**
+   * Die Release-Angabe. Sie steht im Kopf und im Vorschaubild — deshalb
+   * hier an einer Stelle statt zweimal im JSX. Phase 12 ersetzt „Bald"
+   * durch einen Zeitraum und muss dafür nur diesen Wert anfassen.
+   */
+  release: {
+    pending: "Bald im App Store",
+    link: "Im App Store",
+  },
+
+  /**
+   * Das Vorschaubild für geteilte Links (1200 × 630), gezeichnet in
+   * app/opengraph-image.tsx. Schlagzeile und Name kommen von oben,
+   * hier steht nur, was sonst nirgends vorkommt.
+   */
+  og: {
+    alt: "Studytab — die App für Noten, Mitschriften und Karteikarten, gemacht fürs österreichische Schulsystem",
+    features: "Noten · Mitschriften · Karteikarten",
+  },
+
+  /**
    * false = vor dem Release: Button ist inaktiv, daneben steht "Bald im App Store".
    * true  = nach dem Release: Button verlinkt auf `appStoreUrl`, daneben das App-Store-Badge.
    */
