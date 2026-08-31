@@ -7,7 +7,9 @@ import DownloadCta from "./DownloadCta";
  * Kicker, Titel und Lead kommen aus dem gemeinsamen Band-Bestand, damit
  * dieser Abschnitt dieselbe Anatomie hat wie alle anderen. Rechts daneben
  * steht der Schnitt als ruhige Karte: kein Verlauf, kein Leuchtschatten,
- * Grün nur an der Zahl selbst — so wie Color+Theme.swift es vorschreibt.
+ * keine gesättigte Farbe. Die Zahl war grün und damit das Auffälligste
+ * im oberen Seitendrittel — an einer Stelle, an der man nichts tun kann.
+ * Gesättigt ist hier jetzt allein der Anmeldeknopf.
  *
  * Der Screenshot-Streifen ist kein Teil des Einstiegs mehr, sondern ein
  * eigenes Band darunter (components/Screens.tsx).

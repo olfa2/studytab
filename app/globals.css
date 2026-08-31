@@ -36,8 +36,11 @@
   /*
    * Grün ist in der App KEINE Markenfarbe, sondern die Farbe der besten Note
    * (Color+Theme.swift: "Bewusst an die beste Note gekoppelt und NICHT an die
-   * Marke"). Es steht deshalb nur an der Schnitt-Zahl und an der Bestätigung
-   * des Anmeldeformulars — nie als allgemeiner Akzent, nie als Fläche.
+   * Marke"). Es steht deshalb nur noch an der Bestätigung des Anmelde-
+   * formulars — nie als allgemeiner Akzent, nie als Fläche. Von der
+   * Schnitt-Zahl ist es abgezogen: Im Einstieg muss der blaue Knopf die
+   * einzige gesättigte Farbe sein, sonst leuchtet das Lauteste an einer
+   * Stelle, an der es nichts zu tun gibt.
    */
   --green: #12a877;
   --green-deep: #0b6b52;
@@ -309,7 +312,16 @@ a:hover { text-decoration: underline; text-underline-offset: 3px; }
   font-weight: 800;
   font-size: var(--t-figure);
   line-height: .9;
-  color: var(--green-deep);
+  /*
+   * Normale Schriftfarbe, kein Grün mehr. Die auffälligste Farbe der
+   * Seite markierte hier etwas, das man nicht anklicken kann — in
+   * diesem System heißt Farbe „hier wird gehandelt", und das ist der
+   * Anmeldeknopf. Abgesetzt bleibt die Zahl trotzdem, nur über die
+   * Hierarchie statt über den Farbton: --ink ist der kräftigste Ton
+   * der Karte, dazu Gewicht 800 und --t-figure. Label, Zeitraum und
+   * Notiz darunter stehen in --soft, --ink-2 und --muted.
+   */
+  color: var(--ink);
   margin-bottom: 14px;
 }
 
