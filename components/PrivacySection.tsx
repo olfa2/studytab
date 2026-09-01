@@ -35,6 +35,15 @@ export default function PrivacySection() {
           </li>
         ))}
       </ul>
+
+      {/*
+        * Der Satz stand vorher klein im Einstieg. Dort ist jetzt die kurze
+        * Zusicherungs-Zeile — aber diese Fassung ist WORTGLEICH mit dem
+        * "Kurz gesagt" der Datenschutz-Seite in der App und muss es
+        * bleiben. Sie darf deshalb nicht verlorengehen und steht jetzt
+        * dort, wo sie ohnehin hingehört: im Datenschutz-Band.
+        */}
+      <p className="band__meta privacy__satz">{site.privacy}</p>
     </section>
   );
 }

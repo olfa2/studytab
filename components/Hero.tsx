@@ -32,7 +32,22 @@ export default function Hero() {
 
         <DownloadCta />
 
-        <p className="band__meta">{site.privacy}</p>
+        {/*
+          * Die drei Zusicherungen — darunter die Antwort auf die Preisfrage.
+          *
+          * Als Reihe und nicht als einzelne Zeile: „Studytab ist gratis."
+          * stand vorher direkt über der Feldbeschriftung, zwei fast gleich
+          * starke Zeilen übereinander, die sich gegenseitig aufgehoben
+          * haben. In einer Dreierreihe trägt jede ihren Teil, und die
+          * Zeile liest sich als Zusage statt als zweite Überschrift.
+          */}
+        <ul className="zusagen">
+          {site.zusicherungen.map((zusage) => (
+            <li className="zusagen__punkt" key={zusage}>
+              {zusage}
+            </li>
+          ))}
+        </ul>
       </div>
 
       {/*

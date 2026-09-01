@@ -68,8 +68,15 @@ export const site = {
    */
   url: "https://studytab.vercel.app",
 
-  /** Der Seitentitel. Steht im Tab, in der Suche und im Vorschaubild. */
-  metaTitle: "Studytab — Noten, Mitschriften und Karteikarten",
+  /**
+   * Der Seitentitel. Steht im Tab, in der Suche und im Vorschaubild.
+   *
+   * Nicht die Schlagzeile: In der Suche zählen die Wörter, nach denen
+   * jemand sucht, und niemand sucht nach „ganze Schule". Deshalb hier die
+   * Funktionen und das Land — knapp unter 60 Zeichen, sonst schneidet
+   * Google ab.
+   */
+  metaTitle: "Studytab — Noten, Mitschriften und Lernzeit für Österreich",
 
   /**
    * Die Release-Angabe. Sie steht im Kopf und im Vorschaubild — deshalb
@@ -87,8 +94,8 @@ export const site = {
    * hier steht nur, was sonst nirgends vorkommt.
    */
   og: {
-    alt: "Studytab — die App für Noten, Mitschriften und Karteikarten, gemacht fürs österreichische Schulsystem",
-    features: "Noten · Mitschriften · Karteikarten",
+    alt: "Studytab — die App für Noten, Mitschriften, Karteikarten und Lernzeit, gemacht fürs österreichische Schulsystem",
+    features: "Noten · Mitschriften · Karteikarten · Lernzeit",
   },
 
   /**
@@ -104,14 +111,52 @@ export const site = {
   /** Sekunden, bis sich die Karteikarte von selbst dreht (Prop `flipSekunden` im Design) */
   flipSeconds: 3.4,
 
-  headline: "Du trägst die Note ein. Den Schnitt hast du schon.",
   /*
-   * "Ohne Konto, auch offline" stand hier vorher und war irreführend: Beim
-   * Einrichten kommt ein Konto-Schritt, der sich mit "Für jetzt überspringen"
-   * umgehen lässt (AccountFlowView.swift). Freiwillig ist es, nicht abwesend.
+   * Die Schlagzeile verspricht das Ganze, nicht eine Funktion — das ist die
+   * Entscheidung hinter dem Umbau. Kurz genug, dass sie nach einmal Lesen
+   * hängenbleibt, und kurz genug fürs Vorschaubild beim Teilen.
+   *
+   * Der frühere Satz "Du trägst die Note ein. Den Schnitt hast du schon."
+   * ist nicht verloren: Er steht jetzt über der Noten-Sektion, also genau
+   * dort, wo er wörtlich zutrifft.
    */
-  lede: "Studytab ist die App für Noten, Mitschriften und Karteikarten — gemacht fürs österreichische Schulsystem. Funktioniert offline, das Konto ist freiwillig.",
+  headline: "Deine ganze Schule. Auf einem Bildschirm.",
+  /*
+   * Ein breites Versprechen muss im selben Atemzug belegt werden, sonst ist
+   * es schwächer als ein konkretes. Der Beleg ist der einzige echte
+   * Funktionsunterschied und steht deshalb im ersten Satz statt im
+   * Nebensatz: Periode.swift hält fest, dass nur Deutschland "Halbjahr"
+   * sagt — Österreich und die Schweiz "Semester". Eine deutsche App
+   * rechnet einem Österreicher buchstäblich das Falsche aus.
+   *
+   * "Ohne Konto, auch offline" stand hier früher und war irreführend: Beim
+   * Einrichten kommt ein Konto-Schritt, der sich mit "Für jetzt
+   * überspringen" umgehen lässt (AccountFlowView.swift). Freiwillig ist es,
+   * nicht abwesend — und es steht jetzt im Datenschutz-Band, wo es hingehört.
+   */
+  lede: "Noten, Mitschriften, Karteikarten und deine Lernzeit — alles in einer App. Und gerechnet wird mit Semester, so wie es in Österreich zählt.",
   scanLine: "Aus dem Schulhaus hergekommen? Dann bist du richtig.",
+
+  /**
+   * Die drei Zusicherungen unter dem Anmeldeformular.
+   *
+   * Sie stehen als Reihe und nicht als einzelne Zeilen: „Studytab ist
+   * gratis." allein stand vorher direkt über der Feldbeschriftung, und
+   * zwei fast gleich starke Zeilen übereinander heben sich gegenseitig
+   * auf — keine gewinnt. In einer Dreierreihe trägt jede ihren Teil.
+   *
+   * Alle drei sind belegt:
+   * - Gratis        → Entscheidung des Teams, Stand 1. September 2026
+   * - Auch offline  → Store/AppStore.swift: ohne Konto vollständig lokal
+   * - Kein Tracking → Package.resolved: keine Analyse- oder Werbe-Pakete
+   *
+   * „Gratis" bewusst ohne „für immer" oder „keine In-App-Käufe": Später
+   * sollen einzelne Zusatzfunktionen im Abo dazukommen. Das Wort bleibt
+   * dann wahr — man lädt die App gratis und benutzt sie gratis. Ein
+   * Versprechen auf ewig müsste man zurücknehmen.
+   */
+  zusicherungen: ["Gratis", "Auch offline", "Kein Tracking"],
+
   /* Wortgleich mit der Datenschutz-Seite in der App (DatenschutzView.swift) */
   privacy: "Kein Tracking, keine Werbung, kein Verkauf von Daten.",
 
@@ -140,14 +185,16 @@ export const site = {
     pending: "Moment …",
     success: "Passt. Du bekommst eine Mail, sobald es losgeht.",
     /*
-     * Hier stand "Abmelden mit einem Klick." — und es gab keinen. Der
-     * Abmeldeweg existiert jetzt (/abmelden/<schluessel>), aber der Link
-     * dorthin kann erst mit der Start-Mail kommen: Vorher wird ja keine
-     * Mail verschickt, in der er stehen könnte. Also sagt der Satz genau
-     * das. Auf einer Seite, die mit Ehrlichkeit wirbt, darf auch die
-     * Kleingedruckte-Zeile nichts versprechen, was noch nicht geht.
+     * Unter dem Feld stand eine graue Zeile ("Eine Mail zum Start. Sonst
+     * keine. Der Abmeldelink steht darin."). Sie ist entfallen, weil die
+     * Zusicherungs-Reihe darunter denselben Platz besser nutzt.
+     *
+     * Was damit weg ist: der Hinweis, WOFÜR die Adresse verwendet wird.
+     * Die Feldbeschriftung sagt es zwar sinngemäß ("Sag mir Bescheid,
+     * wenn Studytab da ist"), und die Datenschutzerklärung steht in der
+     * Fußzeile — aber wer das wieder ausdrücklich hinschreiben will,
+     * ergänzt hier `note` und in SignupForm.tsx die Zeile dazu.
      */
-    note: "Eine Mail zum Start. Sonst keine. Der Abmeldelink steht darin.",
   },
 
   /**
@@ -236,7 +283,13 @@ export const site = {
   team: {
     kicker: "Wer dahintersteckt",
     title: "Ein Projekt von drei Schülern",
-    text: "Wir sind drei Schüler aus Österreich und haben Studytab gebaut, weil wir selbst keine App gefunden haben, die mit Schularbeit, Mitarbeit und Halbjahresschnitt umgehen kann. Alles, was drin ist, benutzen wir jeden Tag selbst. Wenn dir etwas fehlt: schreib uns, wir lesen jede Mail.",
+    /*
+     * "Halbjahresschnitt" stand hier und widersprach dem, womit die Seite
+     * wirbt: Österreich rechnet mit Semester, und genau das ist unser
+     * Argument. Ein Widerspruch ausgerechnet im Team-Block, den Presse und
+     * Jurys am genauesten lesen, wäre der teuerste auf der ganzen Seite.
+     */
+    text: "Wir sind drei Schüler aus Österreich und haben Studytab gebaut, weil wir selbst keine App gefunden haben, die mit Schularbeit, Mitarbeit und Semesterschnitt umgehen kann. Alles, was drin ist, benutzen wir jeden Tag selbst. Wenn dir etwas fehlt: schreib uns, wir lesen jede Mail.",
     names: "Oliver, Jonathan und Anton",
     school: "HTL Spengergasse, Wien",
     photo: null as string | null,
@@ -290,16 +343,25 @@ export const heroShot: Screen = {
  * `src` auf `"/screenshots/" + file` setzen. Sonst ändert sich nichts,
  * der Rahmen und die Maße bleiben.
  *
- * ⚠️ Die Texte hier sind ein erster Wurf im neuen, werbenderen Ton. Sie
- * gehören mit der neuen Schlagzeile zusammen überarbeitet — sie dürfen
- * lauter werden, aber nichts behaupten, was die App nicht kann.
+ * Die Texte sind auf die Schlagzeile hin überarbeitet: Die vier Sektionen
+ * lösen "Deine ganze Schule" der Reihe nach ein, statt es zu wiederholen.
+ * Der Ton darf werben — behaupten darf er nichts, was die App nicht kann.
+ * Wo eine Formulierung an einer Datei der App hängt, steht sie im Kommentar
+ * darüber. Wer hier etwas umschreibt, prüft die Datei mit.
  */
 export const featureSections: FeatureSection[] = [
   {
     id: "faecher",
     kicker: "Deine Fächer",
-    title: "Alles, was du hast — an einem Ort.",
-    lead: "Leg deine Fächer einmal an, und Studytab hält den Rest zusammen. Jedes Fach mit eigenem Schnitt, eigenen Mitschriften, eigenen Karten.",
+    /*
+     * Der Titel hieß "Alles, was du hast — an einem Ort." — und war damit
+     * die Schlagzeile ein zweites Mal, drei Bildschirmhöhen später. Wer
+     * "Deine ganze Schule. Auf einem Bildschirm." gelesen hat, weiß das
+     * schon; die erste Sektion muss das Versprechen einlösen, nicht
+     * bestätigen. Sie zeigt jetzt, WORAN alles hängt: am Fach.
+     */
+    title: "Ein Fach. Und alles, was dazugehört.",
+    lead: "Leg deine Fächer einmal an — danach hat jedes seinen eigenen Schnitt, seine eigenen Mitschriften, seine eigenen Karteikarten. Du tippst auf Mathe und hast alles, was Mathe ist.",
     media: "right",
     layout: "gestaffelt",
     shots: [
@@ -323,7 +385,7 @@ export const featureSections: FeatureSection[] = [
     id: "mitschriften",
     kicker: "Mitschriften",
     title: "Abfotografiert. Eingeordnet. Wiedergefunden.",
-    lead: "Heft aufschlagen, Foto machen, Fach auswählen — fertig. Am Abend vor der Schularbeit weißt du genau, wo alles liegt.",
+    lead: "Heft aufschlagen, Foto machen, Fach auswählen. Mehr ist es nicht. Und am Abend vor der Schularbeit suchst du nicht erst, wo die Stunde von letzter Woche geblieben ist.",
     media: "left",
     layout: "gegenueber",
     shots: [
@@ -355,8 +417,13 @@ export const featureSections: FeatureSection[] = [
      *
      * "wie viele Tage du schon dabei bist" statt "gelernt hast": Die Streak
      * zählt laut StreakView.swift die Tage, an denen die App offen war.
+     *
+     * Die Karteikarten stehen jetzt im ersten Satz. Vorher sprach der Lead
+     * nur von Zeit — daneben lag aber ein Screenshot des Lernmodus, den
+     * kein Wort erklärt hat. Vier Bilder, drei erklärt: Das fällt genau
+     * dem auf, der genau hinschaut.
      */
-    lead: "Session starten, Zeit läuft, Unterbrechungen werden mitgezählt. Danach siehst du schwarz auf weiß, wie lange du wirklich am Stück gearbeitet hast — und wie viele Tage du schon dabei bist.",
+    lead: "Karteikarten für den Stoff, Sessions für die Zeit. Studytab sperrt dein Handy nicht — das darf keine App auf dem iPhone. Es zählt stattdessen mit, wie oft du rausgehst, und zeigt dir danach schwarz auf weiß, wie lange du wirklich am Stück gearbeitet hast — und wie viele Tage du schon dabei bist.",
     media: "right",
     layout: "handkarten",
     shots: [
@@ -399,8 +466,14 @@ export const featureSections: FeatureSection[] = [
      * unterschied: Periode.swift stellt ausdrücklich fest, dass nur
      * Deutschland "Halbjahr" sagt — Österreich und die Schweiz "Semester".
      * Eine deutsche App rechnet einem Österreicher das Falsche aus.
+     *
+     * Der Lead stand vorher fast wörtlich schon oben im Einstieg ("gerechnet
+     * wird mit Semester, so wie es in Österreich zählt"). Ein Argument, das
+     * man zweimal im selben Wortlaut liest, klingt beim zweiten Mal nach
+     * Füllsel statt nach Beweis. Oben steht die Behauptung, hier die
+     * Rechnung dahinter.
      */
-    lead: "Schularbeit, Mitarbeit, Gewichtung — und gerechnet wird mit Semester, so wie es in Österreich zählt. Nicht mit Halbjahr, wie die Apps von nebenan.",
+    lead: "Jede Note mit ihrer Gewichtung — eine Schularbeit zählt anders als eine Mitarbeitsnote, und der Schnitt rechnet sich sofort neu. Und zwar pro Semester, so wie dein Zeugnis es tut. Nicht pro Halbjahr, wie die Apps von nebenan.",
     media: "left",
     layout: "haupt-neben",
     shots: [

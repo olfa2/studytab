@@ -259,6 +259,38 @@ a:hover { text-decoration: underline; text-underline-offset: 3px; }
 }
 
 /*
+ * Die drei Zusicherungen unter dem Anmeldeformular.
+ *
+ * Eine feine Linie darüber trennt sie vom Formular — dadurch lesen sie
+ * sich als Zusammenfassung und nicht als weitere Beschriftung. Der Punkt
+ * dazwischen kommt aus dem Markup, so wie in der Fußzeile und im Team-Band.
+ *
+ * Keine Farbe: Im Einstieg ist der blaue Knopf die einzige gesättigte
+ * Fläche. Auffällig wird die Zeile über Größe und Gewicht.
+ */
+.zusagen {
+  list-style: none;
+  margin: 16px 0 0;
+  padding: 14px 0 0;
+  border-top: 1px solid var(--line);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 6px 14px;
+  font-size: var(--t-body);
+  font-weight: 700;
+  color: var(--ink-2);
+}
+
+/* Der Trenner sitzt am Punkt selbst — dann bricht er sauber mit um */
+.zusagen__punkt + .zusagen__punkt::before {
+  content: "·";
+  color: var(--line-strong);
+  font-weight: 400;
+  margin-right: 14px;
+}
+
+/*
  * Geteiltes Band: Bildspalte und Textspalte. Welche Seite das Bild
  * bekommt, entscheidet allein die Reihenfolge im Markup — Team stellt
  * das Bild voran (links), die Funktionen den Text (Bild rechts). Mobil
@@ -886,6 +918,14 @@ a:hover { text-decoration: underline; text-underline-offset: 3px; }
   color: var(--soft);
 }
 
+/* Der wortgleiche Satz aus der App, unter den vier Punkten im dunklen Band */
+.privacy__satz {
+  margin-top: 22px;
+  padding-top: 18px;
+  border-top: 1px solid rgba(255, 255, 255, .14);
+  color: rgba(244, 244, 246, .62);
+}
+
 /* ---------------------------------------------------------- Abmelden -- */
 
 /*
@@ -1115,6 +1155,9 @@ a:hover { text-decoration: underline; text-underline-offset: 3px; }
    * wandert jede zweite Bildspalte nach links.
    */
   .band--feature[data-media="left"] .band__visual { order: -1; }
+
+  .zusagen { margin-top: 20px; padding-top: 16px; gap: 8px 18px; }
+  .zusagen__punkt + .zusagen__punkt::before { margin-right: 18px; }
 
   .hero__shot { margin-top: 0; justify-content: center; }
   .hero__shot .phone { flex: 0 0 268px; }

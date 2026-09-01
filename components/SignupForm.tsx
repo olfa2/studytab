@@ -1,6 +1,6 @@
 "use client";
 
-import { useActionState, useId } from "react";
+import { useActionState } from "react";
 import { subscribe } from "@/app/actions";
 import { signupInitialState } from "@/lib/signup-state";
 import { site } from "@/lib/site";
@@ -22,15 +22,15 @@ type Props = {
  * Wer über den QR-Code aus dem Schulhaus kommt, soll etwas tun können,
  * statt in einer Sackgasse zu landen.
  *
- * Kommt zweimal auf der Seite vor (Hero und Abschluss), deshalb bekommen
- * die Feld-Verweise über `useId` je eigene Kennungen.
+ * Die graue Hinweiszeile unter dem Feld ist entfallen — den Platz nimmt
+ * jetzt die Zusicherungs-Reihe im Einstieg ein. Damit fallen auch die
+ * `useId`-Kennungen weg, die es nur für den Verweis darauf gab.
  */
 export default function SignupForm({ label, labelHidden = false }: Props) {
   const [state, formAction, isPending] = useActionState(
     subscribe,
     signupInitialState,
   );
-  const noteId = useId();
   const copy = site.signup;
 
   if (state.status === "ok") {
@@ -64,7 +64,6 @@ export default function SignupForm({ label, labelHidden = false }: Props) {
             placeholder={copy.placeholder}
             required
             aria-invalid={state.status === "error"}
-            aria-describedby={noteId}
           />
         </label>
 
@@ -87,9 +86,6 @@ export default function SignupForm({ label, labelHidden = false }: Props) {
         </p>
       ) : null}
 
-      <p className="signup__note" id={noteId}>
-        {copy.note}
-      </p>
     </div>
   );
 }
