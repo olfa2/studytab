@@ -1,5 +1,6 @@
-import { site } from "@/lib/site";
+import { heroShot, site } from "@/lib/site";
 import DownloadCta from "./DownloadCta";
+import ScreenshotSlot from "./ScreenshotSlot";
 
 /**
  * Der Einstieg — ein Band über die volle Breite.
@@ -11,8 +12,9 @@ import DownloadCta from "./DownloadCta";
  * im oberen Seitendrittel — an einer Stelle, an der man nichts tun kann.
  * Gesättigt ist hier jetzt allein der Anmeldeknopf.
  *
- * Der Screenshot-Streifen ist kein Teil des Einstiegs mehr, sondern ein
- * eigenes Band darunter (components/Screens.tsx).
+ * Die Screenshots der einzelnen Funktionen stehen in den vier Bändern
+ * darunter (components/FeatureBand.tsx). Hier steht nur die Startseite —
+ * das Bild, das die ganze App zeigt statt einer Funktion.
  */
 export default function Hero() {
   return (
@@ -33,12 +35,14 @@ export default function Hero() {
         <p className="band__meta">{site.privacy}</p>
       </div>
 
-      <aside className="average" aria-label={site.average.label}>
-        <div className="average__label">{site.average.label}</div>
-        <div className="average__value display">{site.average.value}</div>
-        <div className="average__term">{site.average.term}</div>
-        <div className="average__note">{site.average.note}</div>
-      </aside>
+      {/*
+       * Das Bild der Startseite statt der Schnitt-Karte: Ein Screenshot
+       * zeigt die App, eine erfundene Note behauptet sie nur. Solange
+       * `heroShot.src` null ist, steht hier der Platzhalter.
+       */}
+      <div className="band__visual hero__shot">
+        <ScreenshotSlot screen={heroShot} index={0} />
+      </div>
     </section>
   );
 }

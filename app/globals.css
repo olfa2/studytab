@@ -483,21 +483,113 @@ a:hover { text-decoration: underline; text-underline-offset: 3px; }
 
 /* ---------------------------------------------------------- Bildschirme -- */
 
-.screens__strip {
+/*
+ * Das Bild der Startseite im Einstieg. Steht dort, wo vorher die
+ * Schnitt-Karte stand: Ein Screenshot zeigt die App, eine erfundene Note
+ * behauptet sie nur. Mobil bekommt es Abstand nach oben, am Desktop macht
+ * das die Grid-Spalte von `.band--intro`.
+ */
+.hero__shot {
+  margin-top: 26px;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.hero__shot .phone { flex: 0 0 196px; }
+
+/*
+ * Die Bilder einer Funktions-Sektion.
+ *
+ * Jede Sektion liegt anders — das ist Absicht und keine Spielerei: Vier
+ * gleich aufgereihte Telefonreihen untereinander sehen aus wie eine
+ * Vorlage, nicht wie eine gebaute Seite. Die Anordnung kommt aus `layout`
+ * in lib/site.ts und steht hier als `data-layout`.
+ *
+ * Die Grundschicht ist bei allen gleich, damit nichts auseinanderläuft:
+ * Flexbox, keine eigenen Maße an den Telefonen, kein Scrollen. Nur
+ * Versatz, Drehung und Größe unterscheiden sich.
+ */
+.shots {
   display: flex;
   gap: 12px;
   align-items: flex-start;
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  margin: 0 calc(var(--shell) * -1);
-  padding: 0 var(--shell) 4px;
-  -webkit-overflow-scrolling: touch;
-  scrollbar-width: none;
+  padding-bottom: 4px;
 }
 
-.screens__strip::-webkit-scrollbar { display: none; }
+/* Gedrehte Telefone brauchen Luft, sonst schneidet die Ecke am Rand an */
+.shots[data-layout="gegenueber"],
+.shots[data-layout="handkarten"] {
+  padding-top: 10px;
+}
 
-.band .screens__strip + .band__meta { margin-top: 12px; }
+/*
+ * FÄCHER — nebeneinander, das zweite tiefer gesetzt. Die ruhigste
+ * Anordnung: Hier geht es ums Ordnen, das darf ordentlich aussehen.
+ */
+.shots[data-layout="gestaffelt"] .phone:nth-child(2) { margin-top: 34px; }
+
+/*
+ * MITSCHRIFTEN — zwei, leicht zueinander gekippt, mit Lücke dazwischen.
+ * Die Lücke ist nicht leer gelassen, sondern reserviert: Dort läuft
+ * später der Pfeil vom Aufnehmen zum Einordnen (Phase 15).
+ */
+.shots[data-layout="gegenueber"] {
+  gap: 34px;
+  justify-content: space-between;
+}
+
+.shots[data-layout="gegenueber"] .phone:nth-child(1) { transform: rotate(-4deg); }
+.shots[data-layout="gegenueber"] .phone:nth-child(2) { transform: rotate(4deg); margin-top: 22px; }
+
+/*
+ * LERNEN — vier Karten in der Hand. Sie überlappen, jede ein bisschen
+ * anders gedreht, die vorderste liegt oben. Negative Abstände statt
+ * `position: absolute`, damit der Block seine Höhe behält und nichts
+ * darunter verrutscht.
+ */
+.shots[data-layout="handkarten"] {
+  gap: 0;
+  justify-content: center;
+}
+
+.shots[data-layout="handkarten"] .phone {
+  flex: 0 0 132px;
+  transform-origin: bottom center;
+}
+
+.shots[data-layout="handkarten"] .phone + .phone { margin-left: -46px; }
+
+.shots[data-layout="handkarten"] .phone:nth-child(1) { transform: rotate(-7deg); z-index: 1; }
+.shots[data-layout="handkarten"] .phone:nth-child(2) { transform: rotate(-2deg) translateY(-8px); z-index: 2; }
+.shots[data-layout="handkarten"] .phone:nth-child(3) { transform: rotate(3deg) translateY(-4px); z-index: 3; }
+.shots[data-layout="handkarten"] .phone:nth-child(4) { transform: rotate(8deg); z-index: 4; }
+
+/*
+ * NOTEN — eines groß, das zweite kleiner und versetzt davor. Das große
+ * trägt die Aussage, das kleine belegt sie: hier wird die Note eingetragen.
+ */
+.shots[data-layout="haupt-neben"] {
+  gap: 0;
+  align-items: flex-end;
+}
+
+.shots[data-layout="haupt-neben"] .phone:nth-child(1) { flex: 0 0 200px; }
+
+.shots[data-layout="haupt-neben"] .phone:nth-child(2) {
+  flex: 0 0 132px;
+  margin-left: -40px;
+  margin-bottom: -18px;
+  z-index: 2;
+}
+
+/* Der Hinweis unter den Platzhaltern — verschwindet mit dem ersten echten Bild */
+.shots__note {
+  font-family: var(--mono);
+  font-size: var(--t-meta);
+  color: var(--faint);
+  line-height: 1.45;
+  margin-top: 12px;
+}
 
 /* Gerätefassung mit Screenshot-Slot */
 
@@ -506,14 +598,24 @@ a:hover { text-decoration: underline; text-underline-offset: 3px; }
   background: var(--frame);
   border-radius: 26px;
   padding: 7px;
-  scroll-snap-align: start;
   box-shadow: 0 10px 24px rgba(28, 31, 41, .16);
 }
 
+/*
+ * `container-type` macht den Slot zum Bezugsrahmen für die Textgrößen im
+ * Platzhalter darunter. Nötig, weil die Telefone je nach Anordnung
+ * verschieden groß sind — in den Handkarten sind sie 132px breit, bei
+ * „haupt-neben" 268px. Feste Größen würden im kleinen Rahmen überlaufen.
+ *
+ * Die Ausnahme von der Skala ist hier richtig: Der Platzhalter ist keine
+ * Textstelle der Seite, sondern Beschriftung in einem Bildrahmen. Er muss
+ * mit dem Rahmen wachsen, nicht mit der Seite.
+ */
 .phone__slot {
   border-radius: 20px;
   overflow: hidden;
   aspect-ratio: 1290 / 2796;
+  container-type: inline-size;
 }
 
 .phone__shot {
@@ -523,6 +625,12 @@ a:hover { text-decoration: underline; text-underline-offset: 3px; }
   display: block;
 }
 
+/*
+ * Alle Größen hier in `cqw` — ein Prozent der Slot-Breite. Dadurch sieht
+ * der Platzhalter im 132px-Handkartenrahmen genauso aus wie im 268px-
+ * Rahmen daneben, nur kleiner. Die `clamp()` verhindern, dass er in sehr
+ * kleinen oder sehr großen Rahmen aus dem Ruder läuft.
+ */
 .slot-placeholder {
   width: 100%;
   height: 100%;
@@ -531,74 +639,45 @@ a:hover { text-decoration: underline; text-underline-offset: 3px; }
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 6px;
+  gap: 3cqw;
   text-align: center;
-  padding: 0 14px;
-}
-
-.slot-placeholder__kicker {
-  font-family: var(--mono);
-  font-size: 9px;
-  letter-spacing: .16em;
-  text-transform: uppercase;
-  color: #8a91a0;
+  padding: 0 7cqw;
 }
 
 .slot-placeholder__title {
   font-weight: 700;
-  font-size: 17px;
+  font-size: clamp(11px, 9cqw, 19px);
+  line-height: 1.2;
   color: var(--muted);
 }
 
 .slot-placeholder__caption {
-  font-size: 11.5px;
+  font-size: clamp(8px, 6cqw, 12.5px);
   line-height: 1.35;
   color: var(--faint);
   white-space: pre-line;
 }
 
+/* Der erwartete Dateiname — damit beim Fotografieren niemand raten muss */
+.slot-placeholder__file {
+  font-family: var(--mono);
+  font-size: clamp(7px, 5cqw, 11px);
+  color: var(--muted);
+  background: var(--surface);
+  border: 1px dashed var(--ph-line);
+  border-radius: 5px;
+  padding: 1.5cqw 3cqw;
+  /* Lange Dateinamen brechen um, statt aus dem Rahmen zu laufen */
+  max-width: 100%;
+  overflow-wrap: anywhere;
+}
+
 .slot-placeholder__size {
   font-family: var(--mono);
-  font-size: 8.5px;
-  color: var(--soft);
-  margin-top: 4px;
-}
-
-/* ------------------------------------------------------------ Funktionen -- */
-
-.points {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 18px;
-}
-
-.point {
-  display: flex;
-  gap: 12px;
-  align-items: baseline;
-}
-
-.point__number {
-  flex: 0 0 auto;
-  font-family: var(--mono);
-  font-size: 11px;
+  font-size: clamp(6px, 4.4cqw, 10px);
   color: var(--soft);
 }
 
-.point__title {
-  font-weight: 700;
-  font-size: var(--t-h3);
-  margin-bottom: 4px;
-}
-
-.point__text {
-  font-size: var(--t-body);
-  color: var(--muted);
-  line-height: 1.5;
-}
 
 /* ---------------------------------------------------------- Karteikarte -- */
 
@@ -807,6 +886,38 @@ a:hover { text-decoration: underline; text-underline-offset: 3px; }
   color: var(--soft);
 }
 
+/* ---------------------------------------------------------- Abmelden -- */
+
+/*
+ * Die Seite hinter dem Abmeldelink. Schmale Textsäule wie die Rechtstexte,
+ * ein Knopf, sonst nichts — wer hier landet, will eine Sache erledigen.
+ */
+.abmelden { max-width: 54ch; }
+
+.abmelden form { margin-bottom: 8px; }
+
+.abmelden .cta__button { width: 100%; }
+
+.abmelden__ergebnis {
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+  padding: 18px 20px;
+  margin-bottom: 8px;
+}
+
+.abmelden__ergebnis-titel {
+  font-size: var(--t-h3);
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.abmelden__ergebnis-text {
+  font-size: var(--t-body);
+  line-height: 1.55;
+  color: var(--muted);
+}
+
 /* -------------------------------------------------------- Rechtstexte -- */
 
 /*
@@ -858,6 +969,51 @@ a:hover { text-decoration: underline; text-underline-offset: 3px; }
   line-height: 1.55;
   color: var(--faint);
   max-width: 62ch;
+}
+
+/*
+ * Die Betreiberangaben in Impressum und Datenschutz. Werte in ‹ › sind
+ * noch nicht eingetragen und stehen deshalb gestrichelt — dieselbe
+ * Sprache wie bei den Bildplatzhaltern: gestrichelt heißt „fehlt noch".
+ */
+.legal__angaben {
+  margin: 14px 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.legal__angabe {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 12px;
+  align-items: baseline;
+}
+
+.legal__angabe-label {
+  font-family: var(--mono);
+  font-size: var(--t-kicker);
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--soft);
+  flex: 0 0 90px;
+}
+
+.legal__angabe-wert {
+  margin: 0;
+  font-size: var(--t-body);
+  color: var(--ink);
+  min-width: 0;
+}
+
+.legal__angabe-wert--offen {
+  font-family: var(--mono);
+  font-size: var(--t-meta);
+  color: var(--faint);
+  background: var(--ph-a);
+  border: 1px dashed var(--ph-line);
+  border-radius: 6px;
+  padding: 3px 8px;
 }
 
 .legal__todo {
@@ -952,6 +1108,17 @@ a:hover { text-decoration: underline; text-underline-offset: 3px; }
     align-items: start;
   }
 
+  /*
+   * Der Links-rechts-Wechsel der Funktions-Sektionen. Er passiert hier und
+   * nicht im Markup: Mobil steht in jedem Abschnitt zuerst der Text und
+   * dann das Bild — man will erst wissen, worum es geht. Erst ab hier
+   * wandert jede zweite Bildspalte nach links.
+   */
+  .band--feature[data-media="left"] .band__visual { order: -1; }
+
+  .hero__shot { margin-top: 0; justify-content: center; }
+  .hero__shot .phone { flex: 0 0 268px; }
+
   .average { margin-top: 0; padding: 26px; }
   /* .average__value braucht hier nichts mehr — --t-figure wächst oben mit */
   .average__term { font-size: 15px; }
@@ -993,11 +1160,26 @@ a:hover { text-decoration: underline; text-underline-offset: 3px; }
    * drei 250er-Geräte gequetscht nebeneinander — daher der `margin-top`
    * am ersten als Notlösung. Über die ganze Breite ist er nicht nötig.
    */
-  .screens__strip {
-    overflow: visible;
-    gap: 28px;
-    margin: 0;
-    padding: 0;
+  /* Dieselben vier Anordnungen, nur größer — die Bildspalte hat 460px */
+
+  .shots { gap: 20px; }
+
+  .shots[data-layout="gestaffelt"] { gap: 18px; }
+  .shots[data-layout="gestaffelt"] .phone { flex: 0 0 210px; }
+  .shots[data-layout="gestaffelt"] .phone:nth-child(2) { margin-top: 52px; }
+
+  .shots[data-layout="gegenueber"] { gap: 46px; }
+  .shots[data-layout="gegenueber"] .phone { flex: 0 0 196px; }
+  .shots[data-layout="gegenueber"] .phone:nth-child(2) { margin-top: 34px; }
+
+  .shots[data-layout="handkarten"] .phone { flex: 0 0 178px; }
+  .shots[data-layout="handkarten"] .phone + .phone { margin-left: -58px; }
+
+  .shots[data-layout="haupt-neben"] .phone:nth-child(1) { flex: 0 0 268px; }
+  .shots[data-layout="haupt-neben"] .phone:nth-child(2) {
+    flex: 0 0 176px;
+    margin-left: -54px;
+    margin-bottom: -26px;
   }
 
   .phone {
@@ -1009,23 +1191,14 @@ a:hover { text-decoration: underline; text-underline-offset: 3px; }
 
   .phone__slot { border-radius: 26px; }
 
+  /*
+   * Nur die Schraffur wird gröber. Die Textgrößen macht `cqw` oben — sie
+   * hängen an der Rahmenbreite, nicht an der Bildschirmbreite, und dürfen
+   * hier deshalb nicht überschrieben werden.
+   */
   .slot-placeholder {
-    gap: 8px;
-    padding: 0 18px;
     background: repeating-linear-gradient(45deg, var(--ph-a) 0 11px, var(--ph-b) 11px 22px);
   }
-  .slot-placeholder__kicker { font-size: 10px; }
-  .slot-placeholder__title { font-size: 19px; }
-  .slot-placeholder__caption { font-size: 12.5px; line-height: 1.4; }
-  .slot-placeholder__size { font-size: 10px; margin-top: 6px; }
-
-  .band .screens__strip + .band__meta { margin-top: 16px; }
-
-  /* Funktionen */
-
-  .points { gap: 22px; }
-  .point { gap: 14px; }
-  .point__number { font-size: 12px; }
 
   .flash__inner { height: 210px; }
   .flash__face { padding: 22px; }

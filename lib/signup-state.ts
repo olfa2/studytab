@@ -11,3 +11,10 @@ export type SignupState = {
 };
 
 export const signupInitialState: SignupState = { status: "idle" };
+
+/** Zustand der Abmeldeseite — aus demselben Grund hier und nicht in actions.ts. */
+export type AbmeldeState = {
+  status: "idle" | "fertig" | "error";
+};
+
+export const abmeldeInitialState: AbmeldeState = { status: "idle" };

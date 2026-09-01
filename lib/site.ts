@@ -9,13 +9,44 @@ export type Screen = {
   /** Zweizeilige Beschreibung im Platzhalter */
   caption: string;
   /**
-   * Sobald der echte Screenshot da ist: Datei nach `public/screenshots/` legen
-   * und hier den Pfad eintragen, z. B. "/screenshots/startseite.png".
+   * Der Dateiname, unter dem das Bild erwartet wird. Steht im Platzhalter,
+   * damit beim Fotografieren niemand raten muss, wie die Datei heißen soll.
+   */
+  file: string;
+  /**
+   * Sobald der echte Screenshot da ist: Datei nach `public/screenshots/`
+   * legen und hier den Pfad eintragen — also `"/screenshots/" + file`.
    * Solange `null`, rendert der Platzhalter.
    */
   src: string | null;
   /** Alt-Text für den echten Screenshot */
   alt: string;
+};
+
+/** Eine der vier Funktions-Sektionen. */
+export type FeatureSection = {
+  /** Anker und React-Key */
+  id: string;
+  kicker: string;
+  title: string;
+  lead: string;
+  /**
+   * Auf welcher Seite die Bilder im Desktop stehen. Wechselt abwärts ab,
+   * sonst rutscht die ganze Seite optisch nach einer Seite.
+   */
+  media: "left" | "right";
+  /**
+   * Wie die Bilder liegen. Jede Sektion bekommt eine eigene Anordnung —
+   * vier gleich aufgereihte Telefonreihen untereinander sehen aus wie eine
+   * Vorlage, nicht wie eine gebaute Seite.
+   *
+   * `gestaffelt`   nebeneinander, das zweite tiefer gesetzt
+   * `gegenueber`   zwei, leicht zueinander gekippt, Lücke für den Pfeil
+   * `handkarten`   überlappend aufgefächert, wie Karten in der Hand
+   * `haupt-neben`  eines groß, das zweite kleiner und versetzt davor
+   */
+  layout: "gestaffelt" | "gegenueber" | "handkarten" | "haupt-neben";
+  shots: Screen[];
 };
 
 export const site = {
@@ -27,12 +58,15 @@ export const site = {
    * weil `metadataBase` in app/layout.tsx daraus jede absolute URL baut —
    * auch die des Vorschaubilds für geteilte Links.
    *
-   * ACHTUNG: Die Domain ist noch nicht registriert. Solange sie nicht auf
-   * die Seite zeigt, verweist `og:image` in jeder geteilten Nachricht ins
-   * Leere. Vor dem ersten Teilen entweder die Domain aufsetzen oder hier
-   * auf die tatsächliche Adresse umstellen — das ist diese eine Zeile.
+   * Hier stand `https://studytab.at`. Die Domain ist nicht registriert, und
+   * eine Adresse, die es nicht gibt, liefert kein Bild: Jeder geteilte Link
+   * hätte in WhatsApp, Discord oder einer Presse-Mail einen leeren Platz
+   * gezeigt. Solange die echte Domain fehlt, muss hier die Adresse stehen,
+   * unter der die Seite tatsächlich erreichbar ist.
+   *
+   * SOBALD studytab.at läuft: diese eine Zeile umstellen, sonst nichts.
    */
-  url: "https://studytab.at",
+  url: "https://studytab.vercel.app",
 
   /** Der Seitentitel. Steht im Tab, in der Suche und im Vorschaubild. */
   metaTitle: "Studytab — Noten, Mitschriften und Karteikarten",
@@ -105,7 +139,39 @@ export const site = {
     button: "Sag mir Bescheid",
     pending: "Moment …",
     success: "Passt. Du bekommst eine Mail, sobald es losgeht.",
-    note: "Eine Mail zum Start. Sonst keine. Abmelden mit einem Klick.",
+    /*
+     * Hier stand "Abmelden mit einem Klick." — und es gab keinen. Der
+     * Abmeldeweg existiert jetzt (/abmelden/<schluessel>), aber der Link
+     * dorthin kann erst mit der Start-Mail kommen: Vorher wird ja keine
+     * Mail verschickt, in der er stehen könnte. Also sagt der Satz genau
+     * das. Auf einer Seite, die mit Ehrlichkeit wirbt, darf auch die
+     * Kleingedruckte-Zeile nichts versprechen, was noch nicht geht.
+     */
+    note: "Eine Mail zum Start. Sonst keine. Der Abmeldelink steht darin.",
+  },
+
+  /**
+   * Die Abmeldeseite hinter dem Link aus der Start-Mail.
+   *
+   * Sie fragt einmal nach, statt beim Aufrufen sofort zu löschen: Das
+   * Löschen ist endgültig, und Mailprogramme rufen Links im Hintergrund
+   * auf, um Vorschauen zu bauen. Ohne Nachfrage hätte so ein Abruf Leute
+   * abgemeldet, die nie geklickt haben.
+   */
+  abmelden: {
+    kicker: "Abmelden",
+    title: "Willst du dich abmelden?",
+    lead: "Dann löschen wir deine Adresse aus der Liste. Du bekommst keine Nachricht mehr von uns — auch nicht die zum Start.",
+    button: "Ja, abmelden",
+    pending: "Moment …",
+    fertigTitle: "Erledigt.",
+    fertigText: "Deine Adresse ist gelöscht. Wenn du es dir anders überlegst, kannst du dich jederzeit wieder eintragen.",
+    fehlerTitle: "Das hat nicht geklappt.",
+    fehlerText: "Probier es später noch einmal, oder schreib uns — dann machen wir es von Hand.",
+    /** Für einen Link, der nicht nach einem Schlüssel aussieht */
+    ungueltigTitle: "Dieser Link stimmt nicht.",
+    ungueltigText: "Vielleicht wurde er beim Kopieren abgeschnitten. Nimm den vollständigen Link aus der Mail.",
+    zurueck: "Zur Startseite",
   },
 
   /**
@@ -178,48 +244,9 @@ export const site = {
     contact: { label: "Schreib uns", href: "/kontakt" },
   },
 
-  screensSection: {
-    kicker: "Die App",
-    title: "So sieht's aus",
-    /*
-     * Hier stand "Drei Bildschirme, mehr braucht die App nicht." — `screens`
-     * unten hat aber zwei Einträge. Auf einer Seite, die mit Ehrlichkeit
-     * wirbt, darf keine nachzählbare Angabe falsch sein. Jetzt ohne Zahl,
-     * dann stimmt der Satz unabhängig davon, wie viele Slots gefüllt sind.
-     */
-    subtitle: "Ein Blick hinein, bevor du sie installierst.",
-    /** Bildunterschrift, solange noch Platzhalter stehen */
-    placeholderNote:
-      "Platzhalter — echte Screenshots aus der App (1290 × 2796) kommen hier hinein",
-  },
-
-  /**
-   * Der Rahmen um die drei Funktionen. Der Abschnitt hatte bisher keinen
-   * eigenen Kopf — die drei Punkte standen ohne Überschrift im Raum.
-   */
-  featuresSection: {
-    kicker: "Was drin ist",
-    title: "Drei Dinge, mehr nicht.",
-    lead: "Noten, Mitschriften und Karteikarten — zugeschnitten auf das, was in Österreich zählt: Schularbeit, Mitarbeit, Semesterschnitt.",
-  },
-
-  features: [
-    {
-      number: "01",
-      title: "Noten",
-      text: "Trag eine Note ein und sieh sofort deinen Schnitt — pro Fach und pro Halbjahr.",
-    },
-    {
-      number: "02",
-      title: "Mitschriften",
-      text: "Fotografier deine Hefteinträge ab und finde sie wieder, wenn du sie brauchst.",
-    },
-    {
-      number: "03",
-      title: "Karteikarten",
-      text: "Leg dir Sets an und lern damit, wann du Zeit hast.",
-    },
-  ],
+  /** Steht unter jedem Bildplatz, solange noch kein echtes Bild da ist. */
+  placeholderNote:
+    "Platzhalter — hier kommen die echten Screenshots aus der App hinein (1290 × 2796)",
 
   flashcard: {
     frontLabel: "Geschichte · Frage",
@@ -241,21 +268,157 @@ export const site = {
 } as const;
 
 /**
- * Die Screenshot-Slots. Reihenfolge = Reihenfolge auf der Seite.
- * Ein weiterer Screen = ein weiterer Eintrag, sonst nichts.
+ * Das Bild im Einstieg. Steht allein, weil es nicht zu einer Funktion
+ * gehört, sondern die ganze App zeigt.
  */
-export const screens: Screen[] = [
+export const heroShot: Screen = {
+  title: "Startseite",
+  caption: "Schnitt, Suche,\nneueste Mitschriften",
+  file: "start.png",
+  src: null,
+  alt: "Die Startseite von Studytab mit Notenschnitt, Suche und den neuesten Mitschriften",
+};
+
+/**
+ * Die vier Funktions-Sektionen. Reihenfolge = Reihenfolge auf der Seite.
+ *
+ * Elf Bildplätze insgesamt (mit `heroShot` oben). Alle stehen auf
+ * `src: null` und rendern deshalb den Platzhalter — mit dem erwarteten
+ * Dateinamen darin, damit beim Fotografieren niemand raten muss.
+ *
+ * Sobald ein Bild da ist: Datei nach `public/screenshots/` legen und
+ * `src` auf `"/screenshots/" + file` setzen. Sonst ändert sich nichts,
+ * der Rahmen und die Maße bleiben.
+ *
+ * ⚠️ Die Texte hier sind ein erster Wurf im neuen, werbenderen Ton. Sie
+ * gehören mit der neuen Schlagzeile zusammen überarbeitet — sie dürfen
+ * lauter werden, aber nichts behaupten, was die App nicht kann.
+ */
+export const featureSections: FeatureSection[] = [
   {
-    title: "Startseite",
-    caption: "Schnitt, Suche,\nneueste Mitschriften",
-    src: null,
-    alt: "Studytab Startseite mit Notenschnitt und den neuesten Mitschriften",
+    id: "faecher",
+    kicker: "Deine Fächer",
+    title: "Alles, was du hast — an einem Ort.",
+    lead: "Leg deine Fächer einmal an, und Studytab hält den Rest zusammen. Jedes Fach mit eigenem Schnitt, eigenen Mitschriften, eigenen Karten.",
+    media: "right",
+    layout: "gestaffelt",
+    shots: [
+      {
+        title: "Fächerliste",
+        caption: "Alle Fächer,\njedes mit Schnitt",
+        file: "faecher-liste.png",
+        src: null,
+        alt: "Die Fächerliste in Studytab, jedes Fach mit seinem Notenschnitt",
+      },
+      {
+        title: "Fach anlegen",
+        caption: "Name, Farbe,\nfertig",
+        file: "fach-anlegen.png",
+        src: null,
+        alt: "Ein neues Fach wird in Studytab angelegt",
+      },
+    ],
   },
   {
-    title: "Fach",
-    caption: "Notenliste und\nSchnitt pro Fach",
-    src: null,
-    alt: "Studytab Fachansicht mit Notenliste und Schnitt für das Fach",
+    id: "mitschriften",
+    kicker: "Mitschriften",
+    title: "Abfotografiert. Eingeordnet. Wiedergefunden.",
+    lead: "Heft aufschlagen, Foto machen, Fach auswählen — fertig. Am Abend vor der Schularbeit weißt du genau, wo alles liegt.",
+    media: "left",
+    layout: "gegenueber",
+    shots: [
+      {
+        title: "Aufnehmen",
+        caption: "Seite abfotografieren\noder Foto auswählen",
+        file: "scannen.png",
+        src: null,
+        alt: "Eine Heftseite wird in Studytab aufgenommen",
+      },
+      {
+        title: "Einordnen",
+        caption: "Benennen und\neinem Fach zuweisen",
+        file: "fach-zuweisen.png",
+        src: null,
+        alt: "Eine aufgenommene Mitschrift wird in Studytab einem Fach zugewiesen",
+      },
+    ],
+  },
+  {
+    id: "lernen",
+    kicker: "Lernen",
+    title: "Dranbleiben, auch wenn's zäh wird.",
+    /*
+     * "Unterbrechungen mitgezählt" statt "Handy gesperrt": FokusView.swift
+     * hält fest, dass keine iOS-App das Telefon sperren darf. Sie hält den
+     * Bildschirm wach und zählt, wie oft man rausgeht — und genau das ist
+     * das Verkaufsargument, weil es ehrlich ist.
+     *
+     * "wie viele Tage du schon dabei bist" statt "gelernt hast": Die Streak
+     * zählt laut StreakView.swift die Tage, an denen die App offen war.
+     */
+    lead: "Session starten, Zeit läuft, Unterbrechungen werden mitgezählt. Danach siehst du schwarz auf weiß, wie lange du wirklich am Stück gearbeitet hast — und wie viele Tage du schon dabei bist.",
+    media: "right",
+    layout: "handkarten",
+    shots: [
+      {
+        title: "Fokus",
+        caption: "Laufende Session,\nUnterbrechungen gezählt",
+        file: "fokus.png",
+        src: null,
+        alt: "Eine laufende Lernsession in Studytab mit gezählten Unterbrechungen",
+      },
+      {
+        title: "Track",
+        caption: "Wochenbalken und\nVerlauf",
+        file: "track.png",
+        src: null,
+        alt: "Der Track-Tab in Studytab mit Wochenbalken der Lernzeit",
+      },
+      {
+        title: "Karteikarten",
+        caption: "Sets anlegen\nund lernen",
+        file: "lernen.png",
+        src: null,
+        alt: "Der Karteikarten-Lernmodus in Studytab",
+      },
+      {
+        title: "Streak",
+        caption: "Serie, Bestwert\nund Kalender",
+        file: "streak.png",
+        src: null,
+        alt: "Die Streak-Übersicht in Studytab mit laufender Serie und Kalender",
+      },
+    ],
+  },
+  {
+    id: "noten",
+    kicker: "Noten",
+    title: "Du trägst die Note ein. Den Schnitt hast du schon.",
+    /*
+     * Der stärkste Satz der Seite und der einzige echte Funktions-
+     * unterschied: Periode.swift stellt ausdrücklich fest, dass nur
+     * Deutschland "Halbjahr" sagt — Österreich und die Schweiz "Semester".
+     * Eine deutsche App rechnet einem Österreicher das Falsche aus.
+     */
+    lead: "Schularbeit, Mitarbeit, Gewichtung — und gerechnet wird mit Semester, so wie es in Österreich zählt. Nicht mit Halbjahr, wie die Apps von nebenan.",
+    media: "left",
+    layout: "haupt-neben",
+    shots: [
+      {
+        title: "Noten im Fach",
+        caption: "Notenliste und\nSchnitt pro Semester",
+        file: "fach-noten.png",
+        src: null,
+        alt: "Die Notenliste eines Fachs in Studytab mit dem Schnitt für das Semester",
+      },
+      {
+        title: "Note eintragen",
+        caption: "Schularbeit oder\nMitarbeit, gewichtet",
+        file: "note-eintragen.png",
+        src: null,
+        alt: "Eine neue Note wird in Studytab eingetragen",
+      },
+    ],
   },
 ];
 
@@ -284,9 +447,27 @@ export type LegalSection = {
   note: string;
   /** Was schon feststeht — am Projekt nachgeprüft, nicht behauptet. */
   facts?: string[];
+  /** Beschriftete Angaben. Werte in ‹ › sind noch Platzhalter. */
+  angaben?: { label: string; wert: string }[];
   /** Die offenen Stellen. Leeres Array = dieser Abschnitt ist fertig. */
   todo: string[];
 };
+
+/**
+ * Die Betreiberangaben — einmal hier, verwendet von Impressum UND
+ * Datenschutzerklärung. Zwei Kopien laufen früher oder später auseinander,
+ * und dann steht in einem der beiden Rechtstexte eine veraltete Adresse.
+ * Genau so löst es die App auch (`enum Betreiber` in ImpressumView.swift),
+ * und die ‹ ›-Schreibweise für offene Stellen ist von dort übernommen.
+ *
+ * Medieninhaber ist Jonathan: Von den dreien ist er der Einzige, der
+ * volljährig ist und damit allein haften kann.
+ */
+export const betreiber = {
+  name: "‹Jonathans vollständiger Vor- und Nachname›",
+  adresse: "‹Straße Hausnummer, PLZ Ort, Österreich›",
+  email: "‹Kontakt-E-Mail eintragen›",
+} as const;
 
 export type LegalDoc = {
   kicker: string;
@@ -317,25 +498,22 @@ export const legal: {
     sections: [
       {
         heading: "Medieninhaber und Diensteanbieter",
-        note: "Wer die Seite betreibt, mit einer Anschrift, an die man tatsächlich zustellen kann. Ein Postfach genügt dafür nicht.",
-        todo: [
-          "Vollständige Namen aller drei — im Impressum reichen Vornamen nicht.",
-          "Anschrift mit Straße, Hausnummer, Postleitzahl und Ort. Wenn es keine andere gibt, ist das eine Privatadresse. Das ist der unangenehme Teil, und genau deshalb steht der nächste Abschnitt hier.",
+        note: "Wer die Seite betreibt, mit einer Anschrift, an die man tatsächlich zustellen kann. Ein Postfach genügt dafür nicht. Medieninhaber ist Jonathan — von den dreien ist er der Einzige, der volljährig ist und damit allein haften kann.",
+        angaben: [
+          { label: "Name", wert: betreiber.name },
+          { label: "Anschrift", wert: betreiber.adresse },
+          { label: "E-Mail", wert: betreiber.email },
         ],
-      },
-      {
-        heading: "Wer haftet, wenn ihr noch nicht volljährig seid",
-        note: "Keine Formalität, sondern die Frage, die vor dem Livegang zuerst geklärt gehört: Ein Impressum braucht jemanden, der rechtlich einsteht. Bei Minderjährigen sind das üblicherweise die Erziehungsberechtigten, die dann mit Namen und Anschrift als Medieninhaber dastehen.",
         todo: [
-          "Klären, ob alle drei volljährig sind.",
-          "Falls nicht: mit den Erziehungsberechtigten sprechen — oder mit der HTL Spengergasse, ob die Schule das Projekt trägt. Bei Schulprojekten ist das der übliche Weg und erspart euch die Privatadresse im Netz.",
+          "Die drei Angaben oben ersetzen. Sie stehen in lib/site.ts unter `betreiber` — an einer Stelle, Impressum und Datenschutz ziehen mit.",
+          "Jonathan muss wissen: Die Anschrift steht danach öffentlich im Netz, und er haftet allein für alles auf der Seite — auch für das, was Oliver und Anton schreiben.",
         ],
       },
       {
         heading: "Kontakt",
-        note: "§ 5 ECG verlangt eine E-Mail-Adresse, unter der ihr wirklich erreichbar seid. Für Presse ist sie ohnehin die wichtigste Angabe auf dieser Seite.",
+        note: "§ 5 ECG verlangt eine E-Mail-Adresse, unter der ihr wirklich erreichbar seid. Für Presse ist sie ohnehin die wichtigste Angabe auf dieser Seite. Sie muss nicht auf studytab.at enden — ein gemeinsames Gratis-Postfach erfüllt die Vorschrift genauso.",
         todo: [
-          "Die E-Mail-Adresse eintragen. Sie fehlt im ganzen Projekt noch — auch »Schreib uns« im Team-Block und »Kontakt« in der Fußzeile zeigen derzeit ins Leere.",
+          "Adresse eintragen. Sie fehlt im ganzen Projekt noch — auch »Schreib uns« im Team-Block und »Kontakt« in der Fußzeile zeigen derzeit ins Leere.",
         ],
       },
       {
@@ -388,17 +566,27 @@ export const legal: {
       },
       {
         heading: "Verantwortlicher",
-        note: "Art. 13 Abs. 1 lit. a: wer über diese Daten entscheidet — Name, Anschrift, E-Mail-Adresse. Dieselben Angaben wie im Impressum.",
-        todo: ["Übernehmen, sobald das Impressum steht."],
+        note: "Art. 13 Abs. 1 lit. a: wer über diese Daten entscheidet. Dieselben Angaben wie im Impressum — sie stehen im Code nur einmal und erscheinen hier automatisch mit.",
+        angaben: [
+          { label: "Name", wert: betreiber.name },
+          { label: "Anschrift", wert: betreiber.adresse },
+          { label: "E-Mail", wert: betreiber.email },
+        ],
+        todo: ["Füllt sich von selbst, sobald `betreiber` in lib/site.ts steht."],
       },
       {
         heading: "Welche Daten erhoben werden",
-        note: "Beide Sätze sind am Code nachgeprüft: app/actions.ts und lib/signups.ts.",
+        note: "Alle vier Sätze sind am Code nachgeprüft: app/actions.ts, lib/signups.ts und lib/absender.ts.",
         facts: [
-          "Genau ein Feld: die E-Mail-Adresse aus dem Anmeldeformular, dazu der Zeitpunkt der Anmeldung.",
+          "Genau ein Feld gibst du an: die E-Mail-Adresse aus dem Anmeldeformular. Dazu wird der Zeitpunkt der Anmeldung gespeichert.",
           "Das Formular hat ein zweites, unsichtbares Feld, das Bots abfängt. Wird es ausgefüllt, wird nichts gespeichert.",
+          "Damit niemand das Formular massenhaft mit erfundenen Adressen befüllt, wird zu jeder Anmeldung eine Kennung des Absenders abgelegt. Sie ist ein nicht zurückrechenbarer Prüfwert aus deiner IP-Adresse und einem Geheimnis des Servers — die IP-Adresse selbst wird weder gespeichert noch protokolliert.",
+          "Diese Kennung dient allein dem Zählen der Anmeldungen pro Stunde. Sie lässt sich keiner Person zuordnen und verschwindet mit deiner Abmeldung.",
         ],
-        todo: ["Gegenprüfen, sobald sich am Formular etwas ändert."],
+        todo: [
+          "Gegenprüfen, sobald sich am Formular etwas ändert.",
+          "Formulierung zur Absender-Kennung von jemandem prüfen lassen: Rechtsgrundlage ist hier nicht die Einwilligung, sondern das berechtigte Interesse nach Art. 6 Abs. 1 lit. f DSGVO — Schutz vor Missbrauch.",
+        ],
       },
       {
         heading: "Zweck und Rechtsgrundlage",

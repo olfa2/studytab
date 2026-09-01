@@ -1,7 +1,8 @@
 "use server";
 
-import { saveSignup } from "@/lib/signups";
-import type { SignupState } from "@/lib/signup-state";
+import { abmelden, saveSignup, zuVieleAnmeldungen } from "@/lib/signups";
+import { absenderKennung } from "@/lib/absender";
+import type { AbmeldeState, SignupState } from "@/lib/signup-state";
 
 /** Bewusst großzügig — die Adresse muss zustellbar sein, nicht schön. */
 function looksLikeEmail(value: string): boolean {
@@ -31,8 +32,25 @@ export async function subscribe(
     };
   }
 
+  /*
+   * Bremse gegen massenhaftes Eintragen. Steht bewusst NACH der Prüfung
+   * der Adresse: Wer sich vertippt, soll das erfahren, statt auf eine
+   * Grenze zu laufen, die er gar nicht ausgelöst hat.
+   *
+   * Die Kennung ist ein Hash aus Server-Geheimnis und IP — die IP selbst
+   * wird weder gespeichert noch protokolliert (lib/absender.ts).
+   */
+  const absender = await absenderKennung();
+
+  if (await zuVieleAnmeldungen(absender)) {
+    return {
+      status: "error",
+      message: "Das waren gerade viele. Probier es in einer Stunde nochmal.",
+    };
+  }
+
   try {
-    await saveSignup(email);
+    await saveSignup(email, absender);
   } catch (error) {
     console.error("Anmeldung konnte nicht gespeichert werden:", error);
     return {
@@ -42,4 +60,33 @@ export async function subscribe(
   }
 
   return { status: "ok" };
+}
+
+/**
+ * Die Abmeldung hinter /abmelden/<schluessel>.
+ *
+ * Warum ein Knopf und nicht einfach beim Aufrufen der Seite: Das Löschen
+ * ist endgültig, und Mailprogramme und Messenger rufen Links im Hintergrund
+ * auf, um eine Vorschau zu bauen. Ohne Knopf hätte so ein Vorschau-Abruf
+ * Leute abgemeldet, die den Link nie angeklickt haben.
+ */
+export async function abmeldenAusfuehren(
+  _previous: AbmeldeState,
+  formData: FormData,
+): Promise<AbmeldeState> {
+  const schluessel = String(formData.get("schluessel") ?? "").trim();
+
+  try {
+    await abmelden(schluessel);
+  } catch (error) {
+    console.error("Abmeldung fehlgeschlagen:", error);
+    return { status: "error" };
+  }
+
+  /*
+   * Auch bei unbekanntem Schlüssel „fertig". Wer zweimal klickt, ist beim
+   * zweiten Mal schon abgemeldet — das ist kein Fehler. Und es verhindert,
+   * dass jemand über die Antwort herausfindet, welche Schlüssel es gibt.
+   */
+  return { status: "fertig" };
 }

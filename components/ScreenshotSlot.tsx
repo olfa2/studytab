@@ -30,19 +30,24 @@ export default function ScreenshotSlot({
             priority={index === 0}
           />
         ) : (
-          <Placeholder screen={screen} index={index} />
+          <Placeholder screen={screen} />
         )}
       </div>
     </div>
   );
 }
 
-function Placeholder({ screen, index }: { screen: Screen; index: number }) {
+/**
+ * Der Platzhalter nennt den Dateinamen, unter dem das Bild erwartet wird.
+ * Wer die Seite ansieht und wer fotografiert, sind hier nicht dieselbe
+ * Person — der Dateiname im Kasten erspart die Rückfrage.
+ */
+function Placeholder({ screen }: { screen: Screen }) {
   return (
     <div className="ph-surface slot-placeholder">
-      <div className="slot-placeholder__kicker">Screenshot {index + 1}</div>
       <div className="slot-placeholder__title display">{screen.title}</div>
       <div className="slot-placeholder__caption">{screen.caption}</div>
+      <div className="slot-placeholder__file">{screen.file}</div>
       <div className="slot-placeholder__size">
         {SCREENSHOT_SIZE.width} × {SCREENSHOT_SIZE.height}
       </div>

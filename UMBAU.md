@@ -1,332 +1,464 @@
 # Umbau der Studytab-Landingpage — Arbeitsauftrag
 
-Dieser Auftrag ist in 18 Phasen gegliedert. **Arbeite genau eine Phase pro
+**Neu geschrieben am 1. September 2026.** Die alte Fassung war ein
+Reparaturauftrag für eine zurückhaltende Visitenkarte. `gedanken.md` ist
+jetzt die Richtlinie, und sie will etwas anderes: mehr Funktionen, mehr
+Werbung, mehr Bewegung. Was aus der alten Fassung erledigt ist, steht unter
+„Was schon steht".
+
+Dieser Auftrag ist in 19 Phasen gegliedert. **Arbeite genau eine Phase pro
 Durchgang ab, dann halte an.** Zeige, was sich geändert hat, und warte auf
-Freigabe, bevor du die nächste Phase beginnst. Beginne keine Phase, die noch
-nicht freigegeben ist, und fasse keine Phasen zusammen.
+Freigabe. Fasse keine Phasen zusammen.
 
 ---
 
 ## Worum es geht
 
-Studytab ist eine iOS-App für Noten, Mitschriften und Karteikarten, gemacht für
-das österreichische Schulsystem. Gebaut haben sie drei Schüler aus Österreich.
-Die App ist noch nicht veröffentlicht (`site.released === false`), deshalb
-sammelt die Seite E-Mail-Adressen für die Start-Benachrichtigung.
+Studytab ist eine iOS-App für das österreichische Schulsystem, gebaut von
+**Oliver, Jonathan und Anton** an der HTL Spengergasse. Sie ist noch nicht
+veröffentlicht, und **es gibt bewusst kein öffentliches Startdatum.**
+
+*Warum keins:* Ein genanntes Datum ist ein Versprechen. Solange der Scanner
+ein Platzhalter ist, das Impressum der App leer und Apples Prüfung Tage
+dauert, wäre es ein Versprechen auf Verdacht. Reißt es, beschädigt das genau
+die Ehrlichkeit, mit der die Seite wirbt. Die Dringlichkeit kommt deshalb
+nicht aus einem Zähler, sondern aus dem, was die Seite anbietet: **eine
+einzige Mail, genau dann, wenn es losgeht.**
 
 **Zielgruppen:** Schüler (kommen über geteilte Links, meist am Handy) und
 Presse/Wettbewerbe (Jugend Innovativ, Schulpreise, Lokalzeitung).
 
-**Ziel der Seite:** überzeugen, die App zu wollen. Das ist eine Änderung —
-vorher lautete das Ziel „erstmal einfach existieren". Deshalb holt Phase 11 eine
-Entscheidung zurück, die unter dem alten Ziel richtig war.
+**Ziel der Seite:** überzeugen, die App zu wollen — und bis zum Start
+Adressen sammeln.
+
+### Was sich gegenüber der alten Fassung geändert hat
+
+| | vorher | jetzt |
+|---|---|---|
+| Tonfall | keine Werbesprache | **Werbesprache erwünscht** |
+| Funktionen | „Drei Dinge, mehr nicht." | **vier Sektionen** |
+| Gestaltung | statisch, ein Akzent | **mehr Farbe, Scroll-Animationen** |
+| Handlungsaufruf | Formular, einmal | **Formular, zweimal — und es funktioniert wirklich** |
+
+---
+
+## Die eine Regel, die alles überlebt
+
+> **Keine Behauptung ohne Deckung im Code.**
+
+Werbesprache heißt: *lauter* werden, nicht *unwahrer*. Der Ton darf
+übertreiben, die Fakten nicht. Ein Abgleich mit dem App-Repo am 1. September
+2026 hat drei Dinge gefunden, die auf der Seite nichts zu suchen haben:
+
+- **Keine KI-Lernkarten.** Im App-Code steht dazu nichts. Sie sind als
+  Bezahlfunktion geplant — geplant ist nicht gebaut, und Geplantes gehört
+  nicht auf die Seite.
+- **Keine Handysperre.** `FokusView.swift` sagt selbst, dass keine iOS-App
+  das Telefon sperren darf. Sie hält den Bildschirm wach und **zählt
+  Unterbrechungen**. Genau das ist das Verkaufsargument, nicht mehr.
+- **Kein echter Kamera-Scanner.** `ScanView.swift` ist im Code als
+  Platzhalter markiert: Auslöser-Knopf und Foto-Upload, keine Live-Kamera.
+
+Das ist keine Bremse, sondern euer Vorteil: Die Datenschutz-Aussagen der
+Seite sind am Repo geprüft und stimmen alle. Eine Seite, die nur wahre
+Sachen laut sagt, hält jeder Nachfrage stand — auch der einer Jury.
 
 ---
 
 ## Grundregeln — gelten in jeder Phase
 
-**Texte.** Sämtliche Texte stehen in `lib/site.ts`. Es gibt keinen Text, der nur
-im JSX steht, und das soll so bleiben.
+**Texte.** Sämtliche Texte stehen in `lib/site.ts`. Es gibt keinen Text, der
+nur im JSX steht, und das soll so bleiben. Das gilt auch für neue Sektionen.
 
-**Das Band-System.** Jeder Abschnitt in `app/globals.css` ist ein `.band` mit
-gleicher Anatomie: `band__kicker` → `band__title` → `band__lead` → Inhalt.
-Größen kommen ausschließlich aus den Tokens `--t-h1` bis `--t-meta`, die in
-`:root` und noch einmal im Desktop-Block ab `@media (min-width: 1024px)` gesetzt
-sind. **Setze nie eine feste Schriftgröße an einem einzelnen Abschnitt.** Wenn
-eine Größe fehlt, gehört sie in die Skala.
+**Das Band-System.** Jeder Abschnitt in `app/globals.css` ist ein `.band`
+mit gleicher Anatomie: `band__kicker` → `band__title` → `band__lead` →
+Inhalt. Größen kommen ausschließlich aus den Tokens `--t-h1` bis `--t-meta`
+und `--t-figure`, gesetzt in `:root` und noch einmal ab
+`@media (min-width: 1024px)`. **Setze nie eine feste Schriftgröße an einem
+einzelnen Abschnitt.** Fehlt eine Größe, gehört sie in die Skala.
 
-**Farben.** Aus `ios/Studyo/DesignSystem/Color+Theme.swift` abgeleitet:
+**Farben.** Mehr Farbe ist erlaubt — aber nicht beliebig. Aus
+`ios/Studyo/DesignSystem/Color+Theme.swift` bleibt bindend:
 
-- Grün (`--green`, `--green-deep`) gehört **ausschließlich den Noten** und der
-  Bestätigung des Anmeldeformulars. Nie als Marken- oder Flächenfarbe.
-- Blau (`--blue`) ist die Aktionsfarbe: Knöpfe und Links.
-- Genau ein dunkles Band auf der Seite (Datenschutz).
-- Keine Farbverläufe, keine farbigen Schlagschatten.
+- **Grün gehört den Noten.** In der App ist es „bewusst an die beste Note
+  gekoppelt und NICHT an die Marke". Nie als Markenfarbe.
+- **Blau ist die Aktionsfarbe.** Knöpfe und Links.
+- Neue Farben dürfen dazukommen, wenn sie **aus dem App-Design-System**
+  stammen — etwa `--card-back` (Ozeanblau, der Hauptakzent der App).
+- Keine Farbverläufe außer den in der App vorhandenen, keine farbigen
+  Schlagschatten.
 
-**Mobil ist maßgeblich** (390 px breit), Desktop ab 1024 px ist die Ableitung.
-Die mobile Reihenfolge ist derzeit besser als die auf dem Desktop — beim Umbau
-nicht versehentlich angleichen.
+**Mobil ist maßgeblich** (390 px breit), Desktop ab 1024 px ist die
+Ableitung. Die mobile Reihenfolge nicht versehentlich an den Desktop
+angleichen.
+
+**Bewegung.** Entschieden: **produktzeigend, plus genau ein dekoratives
+Mittel.** Screenshots sliden herein, der Pfeil vom Scannen zum Zuweisen
+läuft, Zahlen zählen hoch — Bewegung, die die App vorführt. Dazu als
+einziges Schmuckmittel ein sanftes Einblenden der Abschnitte beim Scrollen.
+Kein Parallax, keine wandernden Farbflächen.
+
+*Warum so:* Ihr wollt technisch versiert wirken. Dekorative Effekte sind
+der Normalzustand jeder Baukastenseite — sie beweisen nichts. Eine
+Animation, die einen Ablauf erklärt, kann nur jemand bauen, der das Produkt
+versteht. Das ist der Unterschied, den eine Jury sieht.
+
+**`prefers-reduced-motion` ist Pflicht**, nicht Kür. Jede Animation braucht
+eine ruhige Fassung. Der Block steht schon in `app/globals.css`.
 
 **Entwicklungsserver.** `npx next dev --webpack` benutzen, **nicht**
 `npm run dev`. Turbopack scheitert auf win32/arm64, weil die nativen
-SWC-Bindings von einer Application-Control-Policy blockiert werden; nur die
-WASM-Bindings laden, und damit läuft Turbopack nicht.
+SWC-Bindings von einer Application-Control-Policy blockiert werden.
 
-**Zeilenenden.** `app/globals.css` hat CRLF. Wer die Datei mit einem Skript
-bearbeitet, muss sie erhalten.
-
-**Nach jeder Phase:** `npx tsc --noEmit` muss sauber sein, die Seite muss unter
-`http://localhost:3000` mit HTTP 200 antworten, und du prüfst bei 390 px und
-1440 px.
+**Nach jeder Phase:** `npx tsc --noEmit` sauber, alle Routen HTTP 200,
+Prüfung bei 390 px und 1440 px.
 
 ---
 
-## Block A — Ohne das darf die Seite nirgends auftauchen
+## Was schon steht
 
-### Phase 1 — Teamnamen und Schule eintragen
+Aus der alten Fassung erledigt und weiterhin gültig:
 
-**Ziel:** `team.names` und `team.school` in `lib/site.ts` durch die echten
-Angaben ersetzen.
-
-**Warum:** Der Team-Block ist für Presse und Jurys das Überzeugendste auf der
-Seite und sagt derzeit „Vorname, Vorname und Vorname · Schule, Ort".
-
-**Fertig, wenn:** `grep -n "Vorname" lib/site.ts` nichts mehr findet.
-
-**Wenn die Angaben fehlen:** frag danach, statt etwas zu erfinden.
-
-### Phase 2 — Einen erreichbaren Kontakt schaffen
-
-**Ziel:** Die Links auf `/kontakt` müssen ankommen. Entweder eine Route
-`app/kontakt/page.tsx` anlegen oder in `lib/site.ts` auf ein `mailto:`
-umstellen — betrifft `team.contact.href` und den Fußzeilen-Link.
-
-**Warum:** „Schreib uns" ist der einzige Kontakt-Aufruf der Seite und führt ins
-Leere. Im ganzen Projekt steht keine E-Mail-Adresse. Presse kann das Team
-derzeit nicht erreichen.
-
-**Fertig, wenn:** ein Klick auf „Schreib uns" und auf „Kontakt" in der Fußzeile
-zu einem funktionierenden Ziel führt.
-
-### Phase 3 — Impressum und Datenschutzerklärung
-
-**Ziel:** `app/impressum/page.tsx` und `app/datenschutz/page.tsx` anlegen.
-
-**Warum:** Ein Impressum verlangt § 5 ECG für österreichische Websites. Das
-Anmeldeformular erhebt E-Mail-Adressen, also verlangt Art. 13 DSGVO eine
-Information bei der Erhebung. Derzeit verlinkt die Seite auf eine
-Datenschutzerklärung, die es nicht gibt — einen Abschnitt unter der Überschrift
-„Deine Inhalte gehören dir."
-
-**Warnung:** Erfinde keine Rechtstexte und keine Betreiberdaten. Lege das Gerüst
-an, markiere die auszufüllenden Stellen deutlich und weise darauf hin, dass die
-Inhalte von den drei Betreibern kommen müssen.
-
-**Fertig, wenn:** beide Routen mit HTTP 200 antworten und aus der Fußzeile
-erreichbar sind.
+- **Teamnamen und Schule** in `lib/site.ts`
+- **Impressum und Datenschutz** als Gerüst mit markierten Lücken
+  (`/impressum`, `/datenschutz`, `components/LegalPage.tsx`)
+- **Vorschaubild für geteilte Links** — 1200 × 630, `metadataBase`,
+  Twitter-Card. Zieht Schlagzeile und Name automatisch aus `lib/site.ts`,
+  ändert sich also mit Phase 5 von selbst mit.
+- **Die Größenskala** inklusive `--t-figure`
+- **Die Screenshot-Liste** — am App-Repo abgeglichen, an Anton und Jonathan
+  weitergegeben. Die elf Dateinamen stehen in Phase 8.
 
 ---
 
-## Block B — Größte Wirkung, geringster Aufwand
+## Block A — Ohne das darf die Seite nicht live
 
-### Phase 4 — Die Schnittzahl unter die Schlagzeile setzen
+### Phase 1 — Betreiberdaten und Kontakt
 
-**Ziel:** `.average__value` von 54 px auf etwa 32 px (mobil) und von 62 px auf
-etwa 40 px (Desktop) verkleinern.
+**Ziel:** `site.contact.email` anlegen, die Lücken in `legal.impressum` und
+`legal.datenschutz` füllen, `/kontakt` auflösen.
 
-**Warum:** Die Zahl ist derzeit in beiden Breiten größer als die Überschrift —
-mobil 54 px gegen 34 px, also das 1,59-fache. Sie ist zugleich die einzige
-gesättigte Farbe im oberen Seitendrittel und steht allein auf einer umrandeten
-Fläche. Deshalb landet der Blick zuerst dort: auf einer erfundenen Note, die
-einem neuen Besucher nichts sagt. Die Überschrift muss unbestritten das Größte
-auf der Seite sein.
+**Warum:** § 5 ECG verlangt ein Impressum, Art. 13 DSGVO eine Information
+bei der Erhebung. Beides ist derzeit ein Gerüst. „Schreib uns" im Team-Block
+und „Kontakt" in der Fußzeile zeigen ins Leere.
 
-**Fertig, wenn:** in beiden Breiten `--t-h1` größer ist als `.average__value`.
+**Wer als Medieninhaber dasteht, ist geklärt:** Von den dreien ist nur
+**Jonathan volljährig.** Damit ist er der Einzige, der ohne
+Erziehungsberechtigte für Impressum und Datenschutzerklärung haften kann.
 
-### Phase 5 — Dem Knopf die einzige Farbe oben geben
+**Gebraucht wird also:** Jonathans vollständiger Name, seine ladungsfähige
+Anschrift und eine E-Mail-Adresse, die er liest.
 
-**Ziel:** In der Schnitt-Karte das Grün auf die normale Schriftfarbe
-zurücknehmen; höchstens die Zahl selbst darf noch leicht abgesetzt sein. Der
-blaue Anmeldeknopf soll in der ersten Bildschirmhöhe die einzige gesättigte
-Farbe sein.
+**Bevor das jemand einträgt — zwei Dinge, die Jonathan wissen muss:**
+1. Die Anschrift steht danach **öffentlich im Netz.** Wenn es keine andere
+   gibt, ist es seine Privatadresse.
+2. Er haftet allein für das, was auf der Seite steht — auch für das, was
+   Oliver und Anton schreiben.
 
-**Warum:** Die auffälligste Farbe der Seite markiert gerade etwas, das man nicht
-anklicken kann. Blau bedeutet in diesem System „hier wird gehandelt" — dann muss
-es dort auch allein stehen.
+**Deshalb vorher fragen:** ob die HTL Spengergasse das Projekt als
+Medieninhaber trägt. Bei Schulprojekten ist das der übliche Weg, es verteilt
+die Verantwortung und erspart die Privatadresse. Ein Nein kostet nichts.
 
-**Fertig, wenn:** oberhalb des Screenshot-Bands nur noch der Knopf gesättigt ist.
+**Abkürzung:** `ios/Studyo/Views/ImpressumView.swift` hat
+**Unternehmensgegenstand und Blattlinie schon ausformuliert**, deutsch und
+englisch. Übernehmen statt neu schreiben. Und: `enum Betreiber` in der App
+hat dieselben Lücken — einmal ausfüllen deckt App und Website.
 
-### Phase 6 — Vorschaubild für geteilte Links
+**Fertig, wenn:** beide Rechtstexte ohne Warnkasten auskommen und ein Klick
+auf „Schreib uns" ankommt.
 
-**Ziel:** In `app/layout.tsx` ein Open-Graph-Bild (1200 × 630) und
-`metadataBase` ergänzen, dazu eine Twitter-Card. Das Bild entweder über
-`app/opengraph-image.tsx` erzeugen oder als Datei unter `public/` ablegen.
+### Phase 2 — Die Anmeldung muss wirklich speichern
 
-**Warum:** Derzeit stehen dort Titel, Beschreibung und Sprache, aber kein Bild.
-Wer den Link in WhatsApp, Discord, eine Instagram-Nachricht oder eine
-Presse-Mail einfügt, bekommt einen nackten blauen Link. Die Seite ist zum Teilen
-gebaut, und genau der Teil fehlt, der Teilen nach etwas aussehen lässt.
+**Ziel:** `lib/signups.ts` durch eine Speicherung ersetzen, die auf Vercel
+funktioniert.
 
-**Fertig, wenn:** der gerenderte Quelltext `og:image` mit absoluter URL enthält.
+**Warum:** Die Funktion schreibt in eine Datei. Vercels Dateisystem ist
+schreibgeschützt — **jede Anmeldung bricht dort mit „Hat gerade nicht
+geklappt" ab.** Ihr verliert genau die Adressen, für die die Seite gebaut
+ist. Der Code markiert die Stelle selbst als Austauschpunkt.
 
----
+**Naheliegend:** Ihr benutzt für die App bereits **Supabase**. Eine Tabelle
+mehr kostet nichts und hält die Daten dort, wo eure anderen auch liegen —
+und die Datenschutzerklärung muss dann nur einen Dienst nennen statt zwei.
 
-## Block C — Das Produktbild
+**Fertig, wenn:** eine Anmeldung auf der Vercel-Adresse ankommt und
+nachweislich gespeichert ist.
 
-> **Achtung, Kette.** Die Phasen 8, 9 und 10 betreffen dieselbe Stelle. Phase 8
-> ist nur die Zwischenlösung, falls Phase 9 verschoben wird; wird Phase 9
-> gemacht, entfällt Phase 8 ersatzlos. Phase 10 ersetzt beide, sobald echte
-> Bilder vorliegen. **Baue nicht zweimal dasselbe.**
+### Phase 3 — Namensumstellung gegenprüfen
 
-### Phase 7 — Die Karteikarte nach oben holen
+**Ziel:** Sicherstellen, dass Website und App denselben Namen sagen.
 
-**Ziel:** `components/FlashCard.tsx` aus dem Funktionen-Band in den Einstieg
-verschieben, dorthin, wo bisher die Schnitt-Karte steht.
+**Warum:** Die App heißt im Code durchgehend **Studyo** — auch in ihren
+beiden Rechtstexten („Wie Studyo mit deinen Daten umgeht", „Wer hinter
+Studyo steht"). Die Umbenennung auf Studytab ist beschlossen. Rechtstexte
+mit falschem Produktnamen sind ein echtes Problem, kein Schönheitsfehler.
 
-**Warum:** Die Karteikarte ist das einzige Element der Seite, das sich bewegt,
-das man antippen kann und das die App vorführt statt sie zu beschreiben — genau
-das leistet sonst ein Screenshot. Ohne Fotos ist sie das beste Produktbild, das
-vorhanden ist. Derzeit steckt sie im dritten Abschnitt rechts, wo die wenigsten
-sie je sehen.
+**Auf Website-Seite zu prüfen:** ob `legal.datenschutz` auf die
+App-Erklärung verweist und ob der Verweis nach der Umbenennung noch stimmt.
 
-**Zu klären:** Wohin die Schnitt-Karte wandert. Ins Funktionen-Band zum Punkt
-„Noten" wäre naheliegend. Schlage etwas vor und halte an.
-
-**Fertig, wenn:** die Karteikarte in der ersten Bildschirmhöhe steht und sich
-weiterhin drehen lässt, auch per Tastatur.
-
-### Phase 8 — Zwischenlösung: Screenshot-Abschnitt entfernen
-
-**Nur ausführen, wenn Phase 9 verschoben wird.**
-
-**Ziel:** `components/Screens.tsx` vorübergehend aus `app/page.tsx` nehmen.
-
-**Warum:** Ein Telefonrahmen ist 268 px breit bei einem Seitenverhältnis von
-1290:2796 — rund 600 px hoch, zweimal nebeneinander. Dieser Block aus leeren,
-schraffierten Kästen ist der größte Gegenstand der ganzen Seite, dazu fast
-schwarz gerahmt und mit Schlagschatten betont; beides sind Mittel zum
-Hervorheben. Ein fehlender Abschnitt fällt niemandem auf, 600 px Leere unter der
-Überschrift „So sieht's aus" schon.
-
-**Fertig, wenn:** die Seite ohne den Abschnitt schlüssig bleibt.
-
-### Phase 9 — Den App-Bildschirm zeichnen
-
-**Ziel:** Eine vereinfachte Startseite der App in HTML und CSS nachbauen und in
-den Telefonrahmen setzen, statt auf Fotos zu warten.
-
-**Warum:** Farben, Schriften und Radien der App liegen bereits als Tokens in
-`app/globals.css`. Damit lässt sich ein erkennbares Abbild bauen, das den Rahmen
-füllt und zeigt, wie die App aussieht.
-
-**Warnung:** Das muss klar als Illustration lesbar sein und darf keinen echten
-Screenshot vortäuschen. Beschrifte es entsprechend.
-
-**Fertig, wenn:** die Rahmen gefüllt sind und `screens[].src` weiterhin `null`
-sein darf, ohne dass Schraffur sichtbar wird.
-
-### Phase 10 — Echte Screenshots einsetzen
-
-**Erst ausführen, wenn die Bilddateien vorliegen.**
-
-**Ziel:** Screenshots nach `public/screenshots/` legen und in `lib/site.ts` bei
-`screens[].src` eintragen. Ersetzt das Ergebnis von Phase 8 oder 9.
-
-**Warum:** Bei einer App überzeugt ein Screenshot mehr als jeder Satz darüber.
-
-**Nebenbei prüfen:** `screens[]` hat zwei Einträge, die README spricht von drei.
-Klären, was stimmt.
-
-**Fertig, wenn:** echte Bilder im Rahmen stehen und der Platzhalter-Hinweis
-darunter verschwunden ist.
+**Fertig, wenn:** `grep -ri "studyo"` in beiden Projekten nur noch
+historische Kommentare findet.
 
 ---
 
-## Block D — Überzeugen statt nur informieren
+## Block B — Die neue Botschaft
 
-### Phase 11 — Den Handlungsaufruf am Seitenende wiederholen
+### Phase 4 — Die Start-Mail vorbereiten
 
-**Ziel:** Nach dem Team-Block eine zweite Anmeldemöglichkeit einsetzen. Der Text
-dafür steht ungenutzt in `lib/site.ts` unter `closing`.
+**Ziel:** Den Weg von der Anmeldung bis zur einen Mail zu Ende denken und
+den Teil bauen, der heute schon gebraucht wird.
 
-**Warum:** Der Aufruf kommt derzeit nur ein einziges Mal vor, ganz oben. Wer bis
-zum Team-Block liest — also die Leute, die überzeugt sind — findet dort keine
-Möglichkeit mehr zu handeln und müsste zurückscrollen. Das tut niemand.
+**Warum:** Adressen sammeln nützt nur, wenn am Starttag jemand
+draufdrücken kann. Der Versand ist aber **kein Werkzeug, das heute laufen
+muss** — er läuft genau einmal. Deshalb wird hier nur so viel gebaut, wie
+nötig ist, und nicht mehr.
 
-**Hinweis:** Dieser Block wurde bewusst entfernt, als das Ziel „erstmal einfach
-existieren" lautete. Mit dem neuen Ziel gehört er zurück.
+**Was jetzt gebaut wird:**
+1. Ein Feld `bestaetigt_am` in der Tabelle aus Phase 2, damit später
+   nachvollziehbar ist, wer wann zugestimmt hat.
+2. Ein Feld `benachrichtigt_am`, das leer bleibt, bis die Mail raus ist.
+   Ohne das verschickt ein zweiter Durchlauf alles doppelt.
+3. Ein **Abmeldeweg**. Ein Zufallsschlüssel je Adresse und eine Route
+   `/abmelden/[schluessel]`, die den Eintrag löscht.
 
-**Fertig, wenn:** das Formular zweimal auf der Seite steht und beide Fassungen
-funktionieren.
+**Warum Punkt 3 nicht warten darf:** Unter dem Anmeldefeld steht heute
+schon „Abmelden mit einem Klick." — und es gibt keinen. Das ist eine
+Behauptung ohne Deckung, auf einer Seite, deren Verkaufsargument
+Ehrlichkeit ist. Entweder der Weg wird gebaut oder der Satz muss weg.
 
-### Phase 12 — „Bald" durch einen Zeitraum ersetzen
+**Was später kommt, nicht jetzt:** der eigentliche Versand. Bei ein paar
+hundert Adressen genügt am Starttag ein kleines Skript, das die Liste
+ausliest und über einen Dienst verschickt — mit `studytab.at` als
+Absender, weil vorher kaum ein Anbieter zustellt. **Heute wäre das
+gebaute Infrastruktur für einen einzigen Knopfdruck in Monaten.**
 
-**Ziel:** Die Statuszeile im Kopf und alle weiteren Vorkommen von „Bald im App
-Store" auf eine konkrete Angabe umstellen, etwa „Herbst 2026".
+**Fertig, wenn:** eine Anmeldung mit Zustimmungszeitpunkt gespeichert wird
+und ein Klick auf den Abmeldelink den Eintrag wirklich löscht.
 
-**Warum:** „Bald" ist nicht zitierbar. Presse braucht eine Angabe, die in einen
-Satz passt.
+### Phase 5 — Neue Schlagzeile
 
-**Wenn der Zeitraum unklar ist:** frag danach.
+**Ziel:** Schlagzeile und Lede auf die Botschaft „Überblick über deine ganze
+Schule" umstellen. Werbesprache ist erlaubt.
 
-### Phase 13 — Die Preisfrage beantworten
+**Warum:** Entschieden ist der breite Aufhänger — nicht Noten, nicht das
+Lernfeature, sondern das Ganze.
 
-**Ziel:** In einem Satz beantworten, was die App kostet — vermutlich im Einstieg
-oder direkt beim Anmeldeformular.
+**Die Gefahr dabei, und wie man sie umgeht:** „Macht Schule einfacher"
+könnte über jeder Schul-App der Welt stehen. Ein breites Versprechen muss
+im selben Atemzug **konkret belegt** werden, sonst ist es schwächer als der
+alte Satz. Der Beleg steht bereit und ist einzigartig: **Studytab rechnet
+mit Semester, nicht mit Halbjahr.** Eine deutsche App rechnet einem
+Österreicher buchstäblich das Falsche aus. Das ist kein Marketingwinkel,
+sondern ein Funktionsunterschied — und er gehört in Sichtweite der
+Schlagzeile, nicht in einen Nebensatz.
 
-**Warum:** Die Frage stellt sich jeder, und auf der ganzen Seite steht nirgends
-etwas dazu. Wenn die App gratis ist, ist das ein Argument und gehört hin.
+**Nebenbei zu reparieren:** `features[0].text` sagt „pro Halbjahr" und
+`team.text` sagt „Halbjahresschnitt". Beides widerspricht dem eigenen
+Argument.
 
-### Phase 14 — Österreich nach oben holen
+**Fertig, wenn:** die Schlagzeile groß verspricht und der Beleg dafür ohne
+Scrollen sichtbar ist.
 
-**Ziel:** Schularbeit, Mitarbeit und Semesterschnitt in Sichtweite der
-Schlagzeile bringen, statt sie in der zweiten Hälfte des Einleitungsabsatzes zu
-lassen.
+### Phase 6 — Die Preisfrage beantworten
 
-**Warum:** Das ist kein Marketing-Winkel, sondern der echte
-Funktionsunterschied — eine deutsche Konkurrenz-App rechnet mit „Halbjahr"
-buchstäblich das Falsche aus. Der stärkste Grund für die Existenz der App steht
-derzeit in einem Nebensatz, den beim Überfliegen niemand liest.
+**Ziel:** In einem Satz sagen, dass Studytab gratis ist.
+
+**Warum:** Die Frage stellt sich jeder, und auf der ganzen Seite steht
+nirgends etwas dazu. Gratis ist ein Argument und gehört groß hin.
+
+**Warnung:** Später sollen Bezahlfunktionen dazukommen (Monatsabo, etwa für
+generierte Lernkarten). **Diese Absicht darf nicht auf die Seite** — weder
+als Versprechen noch als Andeutung. „Studytab ist gratis" ist heute wahr
+und morgen für alles, was heute drin ist, immer noch wahr. Ein „vorerst
+gratis" sät nur Misstrauen, ein Versprechen auf künftige Funktionen wäre
+eine Behauptung ohne Deckung.
 
 ---
 
-## Block E — Feinschliff
+## Block C — Das neue Layout
 
-### Phase 15 — Eine Pressezeile im Team-Block
+> **Achtung, Reihenfolge.** Phase 7 baut die Gerüste, die Phasen 9 bis 12
+> füllen sie. Ohne Screenshots aus Phase 8 sind 9 bis 12 leere Kästen.
+> **Nicht vorziehen.**
 
-**Ziel:** E-Mail-Adresse und ein Logo zum Herunterladen im Team-Band ergänzen.
-Zwei Zeilen, kein eigener Abschnitt.
+### Phase 7 — Vier Funktionssektionen anlegen
 
-**Warum:** Presse und Wettbewerbe wurden als Zielgruppe genannt, brauchen aber
-keinen eigenen Bereich — nur einen erreichbaren Weg und zitierbare Fakten.
+**Ziel:** Das dreiteilige `Features`-Band durch vier eigene Bänder ersetzen:
+Fächer · Mitschriften scannen · Lernen · Noten. Erst das Gerüst, Texte und
+Bildplätze, noch keine Bilder.
 
-### Phase 16 — Über die Schulhaus-Zeile entscheiden
+**Warum:** `gedanken.md` will jede Funktion in einer eigenen Sektion mit
+eigenen Bildern statt drei Zeilen nebeneinander.
 
-**Ziel:** `site.scanLine` („Aus dem Schulhaus hergekommen? Dann bist du
-richtig.") behalten oder streichen. Der Schalter `showScanLine` steuert sie.
+**Der Bildseitenwechsel bleibt:** `band--split` entscheidet über die
+Markup-Reihenfolge, welche Seite das Bild bekommt. Abwärts abwechseln.
 
-**Warum:** Die Zeile funktioniert nur, wenn es tatsächlich Plakate oder QR-Codes
-in der Schule gibt. Wer über einen geteilten Link kommt, versteht sie nicht.
+**Fertig, wenn:** vier Bänder stehen, jedes mit Kicker, Titel, Lead und
+einem markierten Bildplatz.
 
-**Vorgehen:** Frag, ob eine Plakat-Aktion geplant ist, und entscheide danach.
+### Phase 8 — Screenshots aufnehmen und einsetzen
 
-### Phase 17 — Dem dunklen Band Konkurrenz geben
+**Ziel:** Die elf Bilder aufnehmen, nach `public/screenshots/` legen und in
+`lib/site.ts` eintragen.
 
-**Ziel:** Entweder bekommt der Handlungsaufruf eine ähnlich klare Fläche wie das
-Datenschutz-Band, oder das dunkle Band wird ruhiger.
+| Datei | Was drauf ist |
+|---|---|
+| `start.png` | Startseite: Schnitt, Suche, neueste Mitschriften |
+| `faecher-liste.png` | Fächerliste, 6–7 Fächer, jedes mit Schnitt |
+| `fach-anlegen.png` | Fach hinzufügen, Formular offen |
+| `scannen.png` | Der Scan-Screen |
+| `fach-zuweisen.png` | Ein Schritt weiter: Scan benannt, Fach-Auswahl offen |
+| `fokus.png` | Laufende Lernsession, Zeit läuft |
+| `track.png` | Track-Tab, Wochenbalken und Verlauf |
+| `lernen.png` | Karteikarten, mitten im Umdrehen |
+| `streak.png` | Streak, Serie auf 12–30 Tagen |
+| `fach-noten.png` | Fach offen, Reiter Noten, „Semester" lesbar |
+| `note-eintragen.png` | Note eintragen: Schularbeit/Mitarbeit, Gewichtung |
 
-**Warum:** Solange der Datenschutz der einzige farbliche Bruch der Seite ist,
-liegt die lauteste Geste auf einer Beruhigung statt auf einem Angebot. Das
-Design sagt dann „wir sind sicher" lauter als „du willst das".
+**Aufnahmebedingungen:** iPhone 6.7″ (1290 × 2796) · Statusleiste überall
+9:41 · helles Erscheinungsbild · Sprache Deutsch, Schulsystem **Österreich**
+(sonst steht „Halbjahr" statt „Semester" da) · Demo-Daten vorher anlegen ·
+keine echten Namen. **Alle Bilder in einer Sitzung**, sonst wandern Daten
+und Uhrzeit.
 
-**Vorgehen:** Beide Wege sind vertretbar. Schlage einen vor, begründe ihn und
-halte an.
+**Dazu, keine Screenshots:** Foto von den dreien (quer, mind. 1200 px) und
+das App-Icon als PNG in 1024 × 1024.
 
-### Phase 18 — Mehr Kontrast zwischen Überschrift und Text
+**Zwingend:** Screenshots von **`origin/main`** aufnehmen. Der lokale
+Arbeitsbaum steht auf `agent/einstellungen-vereinfacht` und kennt
+`FokusView`, `TrackView` und `SessionAbschlussView` nicht — dort fehlen
+genau die zwei stärksten Bilder. Am saubersten über
+`git worktree add ../studytab-main main`, dann bleibt der aktuelle Zweig
+unangetastet.
 
-**Ziel:** Prüfen, ob eine schmalere oder festere Überschriftenschrift neben dem
-runden Nunito den Titeln mehr Gewicht gibt.
+**Fertig, wenn:** kein Platzhalter mehr sichtbar ist.
 
-**Warum:** Baloo 2 und Nunito sind beide rund und weich, zwischen Überschrift
-und Fließtext entsteht kaum Spannung. Für Schüler passt der freundliche Ton, für
-eine Jury fehlt der Überschrift dadurch etwas Autorität.
+### Phase 9 — Sektion „Fächer"
 
-**Warnung:** Der unsicherste Punkt der Liste. Baue eine Variante zum Ansehen und
-entscheide erst danach. Wenn es nicht überzeugt, bleibt alles wie es ist — das
-ist ein gültiges Ergebnis.
+**Bilder:** `faecher-liste.png`, `fach-anlegen.png` — nebeneinander gereiht.
+**Inhalt:** Fächer anlegen, verwalten, jedes mit eigenem Schnitt.
+
+### Phase 10 — Sektion „Mitschriften scannen"
+
+**Bilder:** `scannen.png`, `fach-zuweisen.png` — mit dem **animierten
+Pfeil** dazwischen, der vom
+Scannen zum Zuweisen läuft.
+
+**Warum diese Sektion die aufwendigste sein darf:** Sie erklärt einen
+**Ablauf** statt eines Zustands. Das ist die beste Bildidee der ganzen
+Liste und der Ort, an dem sich Animationsaufwand auszahlt.
+
+**Warnung:** Kein Wort über KI-Lernkarten. Und nichts, was eine
+Live-Kamera vortäuscht — es gibt einen Auslöser und Foto-Upload.
+
+### Phase 11 — Sektion „Lernen"
+
+**Bilder:** `fokus.png`, `track.png`, `lernen.png`, `streak.png` — schief
+übereinander, wie Karten in der Hand.
+
+**Warum hier trotzdem Sorgfalt hin muss:** `gedanken.md` nennt das
+Lernfeature „nebensächlich". Der Code sagt das Gegenteil — eine laufende
+Session mit gezählten Unterbrechungen und ein Track-Tab mit Wochenbalken
+haben die wenigsten Schul-Apps. Für eine Jury ist das der beste Beleg für
+echte Software. Es führt die Seite nicht an, aber es verdient die besten
+Bilder.
+
+**Warnung:** Keine Handysperre behaupten. Und die Streak zählt Tage, an
+denen die App offen war — nicht Lernzeit. Der Text daneben darf nichts
+anderes sagen.
+
+### Phase 12 — Sektion „Noten"
+
+**Bilder:** `fach-noten.png`, `note-eintragen.png`.
+**Inhalt:** Noten pro Fach, Schnitt **pro Semester**. Hier gehört Grün hin —
+es ist die Farbe der Note, und das ist die einzige Stelle, an der es
+hingehört.
+
+**Achtung:** Es gibt keinen Noten-Tab mehr. Noten liegen im Fach
+(`FachDetailView`, dritter Reiter), der Gesamtschnitt im Profil.
+
+---
+
+## Block D — Bewegung und Farbe
+
+### Phase 13 — Abschnitte beim Scrollen einblenden
+
+**Ziel:** Das eine dekorative Mittel. Sanft, kurz, einmal pro Abschnitt.
+
+**Warnung:** Nichts, was beim ersten Bildschirm verzögert. Was oben steht,
+steht sofort da.
+
+### Phase 14 — Screenshots hereinsliden
+
+**Ziel:** Bilder kommen von der Seite herein, aus der Richtung, auf der sie
+liegen. **Abwechseln**, nicht alle gleich.
+
+### Phase 15 — Der Pfeil vom Scannen zum Zuweisen
+
+**Ziel:** Die Animation aus Phase 10 bauen. Läuft, wenn die Sektion in
+Sicht kommt.
+
+### Phase 16 — Mehr Farbe, diszipliniert
+
+**Ziel:** Den vier Sektionen Farbe geben, ohne das System zu brechen.
+
+**Erlaubt:** Farben aus `Color+Theme.swift` — etwa `--card-back`
+(Ozeanblau). Flächen, Kicker, Rahmen.
+**Nicht erlaubt:** Grün als Markenfarbe, erfundene Farben, Verläufe,
+farbige Schlagschatten.
+
+**Prüfung:** Kontrast nach WCAG AA für jeden Text auf jeder neuen Fläche.
+
+---
+
+## Block E — Abschluss
+
+### Phase 17 — Zweite Anmeldung am Seitenende
+
+**Ziel:** Nach dem Team-Block das Anmeldeformular wiederholen. Der Text
+steht ungenutzt in `lib/site.ts` unter `closing`.
+
+**Warum:** Wer bis unten liest, ist überzeugt — und findet dort derzeit
+keine Möglichkeit zu handeln.
+
+### Phase 18 — Social Media
+
+**Ziel:** Links zu TikTok, YouTube und Instagram in der Fußzeile.
+
+**Warnung:** **Erst verlinken, wenn dort etwas steht.** Ein Link auf ein
+leeres Profil schadet mehr als kein Link.
+
+### Phase 19 — Pressezeile und Prüfdurchgang
+
+**Ziel:** E-Mail und Logo zum Herunterladen im Team-Band. Dann einmal
+komplett prüfen: `prefers-reduced-motion`, Ladezeit auf einem alten
+Schulhandy, Kontraste, alle Routen, Vorschaubild auf der echten Domain.
 
 ---
 
 ## Was nicht angetastet wird
 
-- **Der Tonfall.** Nüchtern, konkret, ohne Superlative, keine Werbesprache.
-  „Eine Mail zum Start. Sonst keine." bleibt genau so.
-- **Die belegten Datenschutz-Aussagen** in `lib/site.ts`. Jeder der vier Punkte
-  ist gegen den App-Code geprüft, die Belege stehen als Kommentar dabei. Punkt 2
-  und 3 sind wortgleich mit der Datenschutz-Seite in der App und müssen es
-  bleiben — App und Seite dürfen sich nicht widersprechen.
-- **Der Aufbau des Team-Bands.** Bild links, Text rechts, viel Luft. Das
-  Verhältnis stimmt.
-- **Die mobile Reihenfolge.** Sie ist besser als die auf dem Desktop.
-- **„Drei Dinge, mehr nicht."** Die Zurückhaltung ist ein Verkaufsargument.
-  Keine vierte Funktion dazuschreiben.
+- **Die belegten Datenschutz-Aussagen.** Am App-Repo geprüft, Belege stehen
+  als Kommentar dabei. `site.privacy` und der Titel des Datenschutz-Bandes
+  sind **wortgleich** mit `DatenschutzView.swift` in der App und müssen es
+  bleiben. App und Seite dürfen sich nicht widersprechen.
+- **Grün gehört den Noten.** Auch bei mehr Farbe.
+- **Alle Texte in `lib/site.ts`.** Auch neue.
+- **Die Skala.** Keine festen Schriftgrößen an einzelnen Abschnitten.
+- **Der Aufbau des Team-Bands.** Bild links, Text rechts, viel Luft.
+- **Die mobile Reihenfolge.**
+- **Keine Behauptung ohne Deckung im Code.** Die Regel, die alles überlebt.
+
+---
+
+## Offene Punkte, die niemand vergessen darf
+
+| | Stand 1. September 2026 |
+|---|---|
+| **Domain** | `studytab.at` ist beschlossen, aber **das Geld dafür fehlt gerade.** `site.url` steht so lange auf der Vercel-Adresse — eine Zeile umstellen, sobald die Domain läuft. Kostet als `.at` im Jahr etwa so viel wie zweimal Kino; wenn ihr Preise vergleicht, achtet auf den Verlängerungspreis, nicht auf das erste Jahr. |
+| **E-Mail** | Ohne Domain kein `@studytab.at`. **Blockiert Phase 1.** Zwischenlösung: ein gemeinsames Gratis-Postfach, damit das Impressum nicht an fehlenden 15 Euro hängt. |
+| **Betreiberdaten** | Jonathan ist der Einzige, der als Medieninhaber infrage kommt. Es fehlen sein voller Name und die Anschrift — und die Antwort der Schule, ob sie das Projekt trägt. |
+| **Team-Foto** | `site.team.photo` ist bis heute `null`. Es braucht kein Fotograf zu sein: quer, mindestens 1200 px breit, ihr drei. |
+| **Screenshots** | Liste ist an Anton und Jonathan raus. Wichtig: von `origin/main` aufnehmen, sonst fehlen `fokus.png` und `track.png` — die zwei besten Bilder. |
+| **App-Umbenennung** | Erledigt sich — Anton und Jonathan machen das. |
+| **Kein Startdatum** | Bewusst so. Wenn eines genannt wird, dann erst, wenn die App eingereicht und geprüft ist — nicht vorher. |

@@ -44,6 +44,25 @@ export default function LegalPage({ doc }: { doc: LegalDoc }) {
               </p>
             ))}
 
+            {section.angaben ? (
+              <dl className="legal__angaben">
+                {section.angaben.map((angabe) => (
+                  <div className="legal__angabe" key={angabe.label}>
+                    <dt className="legal__angabe-label">{angabe.label}</dt>
+                    <dd
+                      className={
+                        angabe.wert.startsWith("‹")
+                          ? "legal__angabe-wert legal__angabe-wert--offen"
+                          : "legal__angabe-wert"
+                      }
+                    >
+                      {angabe.wert}
+                    </dd>
+                  </div>
+                ))}
+              </dl>
+            ) : null}
+
             <p className="legal__note">{section.note}</p>
 
             {section.todo.length > 0 ? (
