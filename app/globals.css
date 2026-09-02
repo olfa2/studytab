@@ -67,7 +67,7 @@
    * einmal neu — dadurch wächst die ganze Seite mit, ohne dass ein
    * einzelner Abschnitt aus der Reihe tanzen kann.
    */
-  --t-h1: 34px;
+  --t-h1: 38px;
   /*
    * Die Kennzahl in der Schnitt-Karte. Steht bewusst UNTER --t-h1 und
    * gehört in die Skala, weil sie eine eigene Rolle ist — eine Zahl,
@@ -225,7 +225,13 @@ a:hover { text-decoration: underline; text-underline-offset: 3px; }
   font-weight: 700;
   font-size: var(--t-h2);
   line-height: 1.1;
-  letter-spacing: -.02em;
+  /*
+   * Enger als vorher (-.02em). Große Schriftgrade brauchen weniger
+   * Laufweite als kleine — bei 72px sieht der Wert, der bei 34px richtig
+   * war, auseinandergefallen aus. Das ist der Unterschied, den man als
+   * "wirkt teurer" wahrnimmt, ohne ihn benennen zu können.
+   */
+  letter-spacing: -.035em;
   margin-bottom: 12px;
 }
 
@@ -625,12 +631,45 @@ a:hover { text-decoration: underline; text-underline-offset: 3px; }
 
 /* Gerätefassung mit Screenshot-Slot */
 
+/*
+ * Das Gerät. Drei Ebenen, weil ein iPhone aus drei Ebenen besteht:
+ * Titanrand, schwarze Blende, Glas.
+ *
+ * Der Verlauf am Rand ist der einzige auf der ganzen Seite. Die Regel
+ * "keine Farbverläufe" meint Markenflächen — hier wird kein Markenton
+ * gemalt, sondern eine Kante aus Metall, die oben Licht fängt und unten
+ * nicht. Deshalb ausschließlich Grauwerte: Nähme man Farbe dazu, wäre es
+ * genau das, was die Regel verbietet.
+ *
+ * Der Schatten liegt in drei Lagen statt in einer. Eine einzelne weiche
+ * Lage sieht aus wie ein Aufkleber; erst der harte Ansatz direkt an der
+ * Kante plus die weite, sehr helle Lage darunter liest sich als Gewicht.
+ */
 .phone {
   flex: 0 1 186px;
-  background: var(--frame);
+  position: relative;
+  background: linear-gradient(
+    150deg,
+    #9aa1ad 0%,
+    #4a505c 14%,
+    #23272f 38%,
+    #1b1e25 62%,
+    #4a505c 86%,
+    #a5acb8 100%
+  );
+  border-radius: 28px;
+  padding: 2px;
+  box-shadow:
+    0 1px 2px rgba(16, 20, 28, .12),
+    0 8px 18px rgba(16, 20, 28, .13),
+    0 26px 50px rgba(16, 20, 28, .14);
+}
+
+/* Die schwarze Blende zwischen Titanrand und Glas */
+.phone__rahmen {
+  background: #0a0b0e;
   border-radius: 26px;
-  padding: 7px;
-  box-shadow: 0 10px 24px rgba(28, 31, 41, .16);
+  padding: 4px;
 }
 
 /*
@@ -644,10 +683,39 @@ a:hover { text-decoration: underline; text-underline-offset: 3px; }
  * mit dem Rahmen wachsen, nicht mit der Seite.
  */
 .phone__slot {
-  border-radius: 20px;
+  position: relative;
+  border-radius: 22px;
   overflow: hidden;
   aspect-ratio: 1290 / 2796;
   container-type: inline-size;
+  /* Eine Haarlinie innen — dadurch liegt das Glas in der Blende drin */
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .07);
+}
+
+/*
+ * Die Dynamic Island, in Prozent der Glasbreite.
+ *
+ * Gerechnet am iPhone 15 Plus (430 x 932 pt, das Format der Screenshots
+ * oben): Die Insel ist 125 pt breit, 36 pt hoch und sitzt 11 pt unter der
+ * Oberkante. In Anteilen der Breite sind das 29%, 8.4% und 2.6% — und
+ * weil das Glas ein Container ist, stimmen diese Anteile bei jeder
+ * Telefongröße auf der Seite, vom 121px-Handkartenfächer bis zum
+ * 300px-Gerät im Einstieg. Ohne eine einzige Ausnahmeregel.
+ *
+ * Sie liegt ÜBER dem Screenshot, weil sie auf einem echten Gerät auch
+ * über dem Bild liegt: Ein iOS-Screenshot enthält die Fläche, aber nicht
+ * die Aussparung.
+ */
+.phone__insel {
+  position: absolute;
+  top: 2.6cqw;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 29cqw;
+  height: 8.4cqw;
+  border-radius: 999px;
+  background: #06070a;
+  z-index: 2;
 }
 
 .phone__shot {
@@ -892,32 +960,6 @@ a:hover { text-decoration: underline; text-underline-offset: 3px; }
   text-underline-offset: 3px;
 }
 
-/* --------------------------------------------------------------- Fuß -- */
-
-.footer {
-  margin-top: var(--band-gap);
-  margin-left: calc(var(--shell) * -1);
-  margin-right: calc(var(--shell) * -1);
-  padding: 22px var(--shell) 24px;
-  background: var(--surface);
-}
-
-.footer__bar {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px 12px;
-  align-items: center;
-  font-size: 13px;
-  color: var(--muted);
-}
-
-.footer__dot { color: var(--line-strong); }
-
-.footer__copyright {
-  margin-left: auto;
-  color: var(--soft);
-}
-
 /* Der wortgleiche Satz aus der App, unter den vier Punkten im dunklen Band */
 .privacy__satz {
   margin-top: 22px;
@@ -1101,7 +1143,7 @@ a:hover { text-decoration: underline; text-underline-offset: 3px; }
     --shell: 64px;
 
     /* Dieselben Marken, größer — die ganze Seite wächst auf einmal mit */
-    --t-h1: 56px;
+    --t-h1: 72px;
     --t-figure: 40px;
     --t-h2: 34px;
     --t-h3: 20px;
@@ -1227,12 +1269,44 @@ a:hover { text-decoration: underline; text-underline-offset: 3px; }
 
   .phone {
     flex: 0 1 268px;
-    padding: 9px;
-    border-radius: 34px;
-    box-shadow: 0 14px 32px rgba(28, 31, 41, .16);
+    padding: 2.5px;
+    border-radius: 38px;
+    box-shadow:
+      0 2px 4px rgba(16, 20, 28, .12),
+      0 12px 26px rgba(16, 20, 28, .13),
+      0 38px 70px rgba(16, 20, 28, .15);
   }
 
-  .phone__slot { border-radius: 26px; }
+  .phone__rahmen { border-radius: 35.5px; padding: 5px; }
+
+  /*
+   * Die Tasten. Erst ab dieser Größe — bei 132px breiten Handkarten
+   * wären es 2px-Splitter, die man für einen Darstellungsfehler hält.
+   */
+  .phone::before,
+  .phone::after {
+    content: "";
+    position: absolute;
+    width: 2px;
+    border-radius: 2px;
+    background: linear-gradient(#8d95a1, #545b68);
+  }
+
+  /* Lautstärke links */
+  .phone::before {
+    left: -1.5px;
+    top: 21%;
+    height: 11%;
+  }
+
+  /* Standby rechts */
+  .phone::after {
+    right: -1.5px;
+    top: 26%;
+    height: 9%;
+  }
+
+  .phone__slot { border-radius: 29px; }
 
   /*
    * Nur die Schraffur wird gröber. Die Textgrößen macht `cqw` oben — sie
@@ -1262,21 +1336,6 @@ a:hover { text-decoration: underline; text-underline-offset: 3px; }
   .team__meta { font-size: 15px; margin-bottom: 14px; }
   .team__placeholder-text { font-size: 20px; }
   .team__placeholder-kicker, .team__placeholder-size { font-size: 10px; }
-
-  /* Fuß */
-
-  .footer {
-    margin: var(--band-gap) 0 0;
-    padding: 22px 0 0;
-    background: none;
-    border-top: 1px solid var(--line);
-  }
-
-  .footer__bar {
-    gap: 16px;
-    font-size: 14px;
-    flex-wrap: nowrap;
-  }
 
   /* Rechtstexte — nur Abstände, die Größen macht die Skala oben mit */
 
@@ -1337,16 +1396,20 @@ a:hover { text-decoration: underline; text-underline-offset: 3px; }
 .phone { min-width: 0; }
 
 /*
- * Die Bildspalte fährt auf dem Desktop 40px von der Seite herein. Bei
- * Fensterbreiten knapp über 1120px (die Seite ist genau so breit und
- * zentriert) ragt sie dabei kurz über den Fensterrand — und der Browser
- * hängt für die Dauer der Bewegung einen waagrechten Scrollbalken an.
+ * Der waagrechte Beschnitt sitzt am Körper, nicht am Seitengerüst.
  *
- * `clip` statt `hidden`: `hidden` würde aus der Seite einen
- * Scroll-Container machen und damit `position: sticky` im Inneren
- * unbrauchbar. `clip` schneidet nur ab.
+ * Zwei Dinge müssen abgeschnitten werden: die 40px, die eine Bildspalte
+ * beim Hereinfahren über den Rand ragt, und die paar Pixel, die eine
+ * vollbreite Fläche wegen der Scrollbalkenbreite über `100vw` zu weit
+ * reicht. Am Seitengerüst wäre der Beschnitt aber genau die Kante, an
+ * der die vollbreiten Flächen ausbrechen wollen — dort hätte er sie
+ * wieder auf Spaltenbreite zurückgeschnitten.
+ *
+ * `clip` statt `hidden`: `hidden` würde daraus einen Scroll-Container
+ * machen und `position: sticky` im Inneren unbrauchbar. `clip`
+ * schneidet nur ab.
  */
-.page { overflow-x: clip; }
+body { overflow-x: clip; }
 
 /* ---------------------------------------------------------------- Farbe -- */
 
@@ -1631,7 +1694,7 @@ a:hover { text-decoration: underline; text-underline-offset: 3px; }
  * das laut Color+Theme.swift "an die beste Note gekoppelt und NICHT an
  * die Marke" gehört, und nicht das Aktionsblau, das den Knöpfen gehört.
  */
-.band--intro {
+.ozean {
   background: var(--card-back);
   color: #fff;
   border-radius: var(--radius-lg);
@@ -1646,17 +1709,17 @@ a:hover { text-decoration: underline; text-underline-offset: 3px; }
  *   100% Weiß ->  5.70:1   Schlagzeile, Beschriftung
  * WCAG AA verlangt 4.5:1. Der kleinste Wert liegt darüber.
  */
-.band--intro .band__kicker {
+.ozean .band__kicker {
   color: color-mix(in srgb, #fff 88%, var(--card-back));
 }
 
-.band--intro .band__title--page { color: #fff; }
+.ozean .band__title { color: #fff; }
 
-.band--intro .band__lead {
+.ozean .band__lead {
   color: color-mix(in srgb, #fff 90%, var(--card-back));
 }
 
-.band--intro .signup__label { color: #fff; }
+.ozean .signup__label { color: #fff; }
 
 /*
  * Der Knopf dreht sich um: weiß auf Ozean statt Aktionsblau. #2563eb auf
@@ -1664,30 +1727,30 @@ a:hover { text-decoration: underline; text-underline-offset: 3px; }
  * Fläche versinken, und er ist das Einzige auf diesem Bildschirm, das man
  * anfassen kann. Weiß ist hier die auffälligste verfügbare Farbe.
  */
-.band--intro .cta__button {
+.ozean .cta__button {
   background: #fff;
   color: var(--card-back);
 }
 
-.band--intro .signup__input { border-color: rgba(255, 255, 255, .35); }
+.ozean .signup__input { border-color: rgba(255, 255, 255, .35); }
 
-.band--intro .signup__input:focus-visible {
+.ozean .signup__input:focus-visible {
   border-color: #fff;
   outline-color: #fff;
 }
 
 /* Rot auf Ozean ist unlesbar — die Fehlermeldung wird stattdessen hell */
-.band--intro .signup__error {
+.ozean .signup__error {
   color: color-mix(in srgb, #fff 84%, #c0392b);
   font-weight: 700;
 }
 
-.band--intro .zusagen {
+.ozean .zusagen {
   color: #fff;
   border-top-color: rgba(255, 255, 255, .24);
 }
 
-.band--intro .zusagen__punkt + .zusagen__punkt::before {
+.ozean .zusagen__punkt + .zusagen__punkt::before {
   color: rgba(255, 255, 255, .45);
 }
 
@@ -1788,4 +1851,507 @@ a:hover { text-decoration: underline; text-underline-offset: 3px; }
 
   /* Desktop hängt 26px heraus statt 18px */
   .shots[data-layout="haupt-neben"] { padding-bottom: 30px; }
+}
+
+/* ==========================================================================
+   Politur (Block F)
+
+   Was eine Seite nach Schulprojekt aussehen lässt, sind selten die großen
+   Entscheidungen — es sind die Stellen, an denen niemand zu Ende gedacht
+   hat. Hier stehen vier davon:
+
+     Der Kopf war eine Sackgasse    -> Wegweiser, klebt mit
+     Die Seite hörte einfach auf    -> Abschluss-Fläche, klammert mit dem Einstieg
+     Die Fußzeile war eine Zeile    -> zwei Ebenen, Marke zuerst
+     Vier Spalten zu schmal         -> zwei mal zwei, lesbare Zeilenlänge
+   ========================================================================== */
+
+/* ------------------------------------------------------------- Der Kopf -- */
+
+/*
+ * Der Kopf klebt oben. Der Einstieg füllt den ganzen ersten Bildschirm;
+ * ohne mitlaufenden Kopf wäre die Wortmarke nach einem Wisch verschwunden
+ * und käme erst am Seitenende wieder.
+ *
+ * `.page` steht auf `overflow-x: clip`. Das ist der Grund, warum dort
+ * `clip` und nicht `hidden` steht: `hidden` würde aus der Seite einen
+ * Scroll-Container machen, und `position: sticky` hätte nichts mehr, an
+ * dem es kleben könnte. `clip` schneidet nur ab.
+ */
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  margin-inline: calc(50% - 50vw);
+  padding-inline: max(var(--shell), calc(50vw - 560px + var(--shell)));
+  /*
+   * Deckend, nicht milchig. Mit 86% Deckkraft und Weichzeichner sah es
+   * gut aus, solange heller Inhalt darunterlief — sobald das dunkle
+   * Datenschutz-Band durchzog, schimmerte dessen weiße Schrift als
+   * grauer Schleier durch die Kopfzeile, und beide Texte lagen
+   * unleserlich übereinander. Eine Kopfzeile, unter der auch dunkle
+   * Flächen durchlaufen, kann nicht durchsichtig sein.
+   */
+  background: var(--page);
+  border-bottom: 1px solid var(--line);
+}
+
+/*
+ * Sprungmarken landen sonst unter der Kopfzeile. Die Marke sitzt an der
+ * Überschrift des Abschnitts (id={section.id} in FeatureBand), also
+ * gehört der Versatz auch dorthin.
+ */
+.band__title { scroll-margin-top: 96px; }
+
+/* Die Wortmarke ist jetzt ein Link nach oben und darf nicht unterstreichen */
+.header__brand:hover { text-decoration: none; }
+
+/*
+ * Ganz oben braucht der Kopf keine Kante — dort steht er auf demselben
+ * Grund wie die Seite. Erst wenn Inhalt darunter durchläuft, muss er sich
+ * absetzen. `animation-timeline: scroll()` misst dafür die Scrollposition
+ * des Dokuments; ohne Unterstützung bleibt die Kante schlicht immer da,
+ * was richtig aussieht, nur weniger fein.
+ */
+@keyframes kopf-absetzen {
+  from {
+    background: color-mix(in srgb, var(--page) 0%, transparent);
+    border-bottom-color: transparent;
+  }
+  to {
+    background: var(--page);
+    border-bottom-color: var(--line);
+  }
+}
+
+@supports (animation-timeline: scroll()) {
+  .header {
+    animation: kopf-absetzen linear both;
+    animation-timeline: scroll();
+    animation-range: 0 90px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .header { animation: none; }
+}
+
+/*
+ * Der Wegweiser. Mobil fällt er weg: Auf 390px stünden vier weitere
+ * Wörter neben Wortmarke und Status, die Zeile bräche um, und der Kopf
+ * wäre doppelt so hoch wie sein Nutzen. Wer auf dem Handy liest, scrollt
+ * ohnehin — die Seite ist dafür gebaut.
+ */
+.header__nav { display: none; }
+
+/* --------------------------------------------------- Der Abschluss-Block -- */
+
+/*
+ * Ozean wie der Einstieg. Die beiden Flächen klammern die Seite: Was
+ * dazwischen liegt, liest sich dadurch als ein Text mit Anfang und Ende
+ * statt als eine Reihe von Abschnitten, die irgendwann aufhört.
+ */
+.band--abschluss {
+  background: var(--card-back);
+  border-radius: var(--radius-lg);
+  padding: var(--band-pad);
+  text-align: center;
+}
+
+.abschluss__body {
+  max-width: 32rem;
+  margin: 0 auto;
+}
+
+/* Mittig gesetzt heißt: auch die Textblöcke mittig, nicht nur die Zeilen */
+.abschluss__body .band__lead {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.band--abschluss .signup { margin-bottom: 0; }
+
+/* --------------------------------------------------------- Die Fußzeile -- */
+
+.footer {
+  margin-top: var(--band-gap);
+  margin-inline: calc(50% - 50vw);
+  padding-block: 26px 28px;
+  padding-inline: max(var(--shell), calc(50vw - 560px + var(--shell)));
+  background: var(--surface);
+  border-top: 1px solid var(--line);
+}
+
+.footer__marke {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 18px;
+}
+
+.footer__logo {
+  width: 30px;
+  height: 30px;
+  border-radius: 9px;
+  display: block;
+}
+
+.footer__name {
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.footer__bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 14px;
+  font-size: 13px;
+  color: var(--muted);
+  padding-top: 16px;
+  border-top: 1px solid var(--hairline);
+}
+
+.footer__links {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 14px;
+}
+
+/*
+ * Der Trenner sitzt am Link selbst statt als eigenes Element dazwischen —
+ * dann bricht er sauber mit um, und die Fußzeile braucht kein Fragment
+ * mehr im Markup.
+ */
+.footer__link + .footer__link::before {
+  content: "·";
+  color: var(--line-strong);
+  margin-right: 14px;
+}
+
+.footer__link:hover { color: var(--ink); }
+
+.footer__copyright {
+  color: var(--soft);
+  margin-left: auto;
+}
+
+/* ------------------------------------------------- Anfassbare Stellen -- */
+
+/*
+ * Ein sichtbarer Fokusring auf allem, was man mit der Tastatur erreicht.
+ * Vorher hatte ihn nur das Eingabefeld; Links und Knöpfe zeigten den
+ * Standardring des Browsers, der auf farbigem Grund verschwindet.
+ */
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid var(--blue);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+.ozean a:focus-visible,
+.ozean button:focus-visible { outline-color: #fff; }
+
+/* Der Knopf gibt beim Drücken nach — ohne Bewegung fühlt er sich tot an */
+.cta__button { transition: transform .12s ease, filter .12s ease; }
+.cta__button:active:not(:disabled) { transform: translateY(1px); }
+
+@media (prefers-reduced-motion: reduce) {
+  .cta__button { transition: none; }
+}
+
+/* -------------------------------------------------------------- Desktop -- */
+
+@media (min-width: 1024px) {
+  .header {
+    padding-top: 16px;
+    padding-bottom: 16px;
+    gap: 28px;
+  }
+
+  .header__nav {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    margin-left: 12px;
+    margin-right: auto;
+  }
+
+  .header__navlink {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--muted);
+    white-space: nowrap;
+  }
+
+  .header__navlink:hover {
+    color: var(--ink);
+    text-decoration: none;
+  }
+
+  /*
+   * Der Einstieg schließt direkt an den klebenden Kopf an und muss
+   * dessen Höhe abziehen, sonst reicht er über die Kante hinaus und die
+   * nächste Sektion lugt doch wieder herein. Kopf neu: 16 + 44 + 16
+   * plus Kante = 77px.
+   */
+  .band--intro {
+    min-height: calc(100vh - 78px);
+    min-height: calc(100svh - 78px);
+  }
+
+  .abschluss__body { max-width: 36rem; }
+
+  /*
+   * Vier Spalten waren auf 880px Innenbreite je 170px breit — "Beim
+   * Einrichten kannst du auf »Für jetzt überspringen« tippen." brach
+   * dort auf sechs Fetzen um. Zwei mal zwei gibt jeder Spalte gut das
+   * Doppelte und damit eine Zeilenlänge, die man lesen kann.
+   */
+  .claims {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 30px 56px;
+  }
+
+  .footer { padding-block: 34px 36px; }
+  .footer__marke { margin-bottom: 22px; }
+  .footer__logo { width: 34px; height: 34px; border-radius: 10px; }
+  .footer__name { font-size: 19px; }
+  .footer__bar { padding-top: 20px; font-size: 14px; }
+}
+
+/* ==========================================================================
+   Vollflächig, Gitter, Korn (Block H)
+
+   Aus dem Vergleich mit fünf Seiten — Knowunity, Vaia, Scoolio, Linear,
+   Raycast — kamen drei Befunde, und alle drei stehen hier:
+
+   1. KEINE dieser Seiten setzt Farbe in eine abgerundete Karte innerhalb
+      einer Spalte. Alle gehen von Fensterkante zu Fensterkante. Eine
+      Karte in einer Spalte ist das Erkennungszeichen eines Baukastens.
+
+   2. Vaia zeigt im Einstieg ein Bento-Gitter: farbige Kacheln, je eine
+      Aussage, das Bildschirmfoto läuft unten aus der Kachel heraus.
+      Angeschnitten wirkt dichter als sauber gerahmt.
+
+   3. Raycast legt ein feines Korn über die Farbflächen. Das ist der
+      billigste große Qualitätssprung, den es gibt: kein Bild, kein
+      Paket, ein paar Zeilen CSS.
+   ========================================================================== */
+
+:root {
+  /*
+   * Das Korn. Ein Rauschfilter als SVG in der Datei selbst — keine Datei,
+   * die geladen werden muss, und damit auch kein zweiter Ladevorgang auf
+   * einem langsamen Schulhandy.
+   *
+   * Es wird mit `background-blend-mode: soft-light` unter die Farbe
+   * gemischt statt als eigene Ebene darübergelegt. Dadurch braucht es
+   * kein zusätzliches Element im Markup und kann keine Klickfläche
+   * verdecken.
+   */
+  --korn: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='k'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23k)' opacity='0.4'/%3E%3C/svg%3E");
+
+  /*
+   * Zwei Schattenrezepte statt bisher vier verschiedener. Beide liegen in
+   * mehreren Lagen: Eine einzelne weiche Lage sieht aus wie ein
+   * Aufkleber, erst der harte Ansatz direkt an der Kante liest sich als
+   * Gewicht.
+   */
+  --schatten-karte:
+    0 1px 2px rgba(16, 20, 28, .05),
+    0 10px 30px rgba(16, 20, 28, .07);
+  --schatten-geraet:
+    0 1px 2px rgba(16, 20, 28, .12),
+    0 8px 18px rgba(16, 20, 28, .13),
+    0 26px 50px rgba(16, 20, 28, .14);
+}
+
+/* ------------------------------------------------------- Vollflächig -- */
+
+/*
+ * Der Ausbruch aus der Spalte.
+ *
+ * `.page` ist 1120px breit und zentriert. `margin-inline: calc(50% - 50vw)`
+ * zieht die Fläche von der Spaltenkante bis zur Fensterkante — 50% meint
+ * die halbe Spalte, 50vw das halbe Fenster, die Differenz ist genau der
+ * Weg nach außen.
+ *
+ * Das `padding-inline` schiebt den Inhalt danach wieder auf die
+ * Spaltenkante zurück: Die Farbe geht bis zum Rand, der Text bleibt in
+ * der Flucht mit allem anderen auf der Seite. Ohne diese zweite Zeile
+ * klebte die Schlagzeile am Fensterrand.
+ *
+ * 560px ist die halbe Seitenbreite (1120 / 2).
+ */
+.band--intro,
+.band--abschluss,
+.band--dark {
+  margin-inline: calc(50% - 50vw);
+  padding-inline: max(var(--shell), calc(50vw - 560px + var(--shell)));
+  border-radius: 0;
+  background-image: var(--korn);
+  background-blend-mode: soft-light;
+}
+
+.band--intro,
+.band--abschluss {
+  padding-block: 30px;
+}
+
+.band--dark { padding-block: 30px; }
+
+/* --------------------------------------------------------- Das Gitter -- */
+
+.band--bento .band__body {
+  max-width: 32ch;
+  margin: 0 auto 22px;
+  text-align: center;
+}
+
+.band--bento .band__kicker { justify-content: center; }
+
+.bento {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 14px;
+}
+
+/*
+ * Eine Kachel. Text oben, Gerät unten — und das Gerät ist höher als der
+ * Platz, der ihm bleibt. Genau das ist der Anschnitt: `overflow: hidden`
+ * an der Kachel schneidet es ab, statt die Kachel wachsen zu lassen.
+ */
+.kachel {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+  padding: 22px 22px 0;
+  min-height: 356px;
+  color: #fff;
+  background-color: var(--kachel-grund);
+  background-image: var(--korn);
+  background-blend-mode: soft-light;
+  transition: transform .18s ease;
+}
+
+.kachel:hover { text-decoration: none; transform: translateY(-3px); }
+
+@media (prefers-reduced-motion: reduce) {
+  .kachel { transition: none; }
+  .kachel:hover { transform: none; }
+}
+
+/*
+ * Drei Töne im Wechsel. Vier gleichfarbige Kacheln wären eine Tabelle.
+ * Welche Kachel welchen Ton trägt, steht in lib/site.ts unter `kachel` —
+ * hier stehen nur die Werte, und alle drei kennt die App.
+ */
+.kachel[data-ton="ozean"] { --kachel-grund: var(--card-back); }
+.kachel[data-ton="dunkel"] { --kachel-grund: var(--frame); }
+.kachel[data-ton="note"] { --kachel-grund: var(--green-deep); }
+
+.kachel__kicker {
+  font-family: var(--mono);
+  font-size: var(--t-kicker);
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, #fff 74%, transparent);
+  margin-bottom: 8px;
+}
+
+.kachel__titel {
+  font-size: var(--t-h3);
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -.02em;
+  max-width: 18ch;
+}
+
+/*
+ * Die Höhe hier ist kleiner als das Gerät hoch ist — der Rest läuft
+ * unten aus der Kachel heraus und wird abgeschnitten. `flex-start`
+ * verhindert, dass Flexbox das Gerät stattdessen staucht.
+ */
+/*
+ * `height: 0` statt einer festen Höhe am Kachelboden.
+ *
+ * Mit `margin-top: auto` stand der Block unten in der Kachel — und
+ * zwischen Titel und Gerät klaffte eine halbe Kachelhöhe Farbe. Jetzt
+ * beginnt das Gerät direkt unter dem Text, trägt aber selbst nichts zur
+ * Höhe bei: Die Kachel ist genau so hoch, wie `min-height` sagt, und
+ * alles darunter schneidet ihr `overflow: hidden` ab.
+ *
+ * `flex-start` verhindert, dass Flexbox das Gerät stattdessen staucht.
+ */
+.kachel__bild {
+  margin-top: 22px;
+  height: 0;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.kachel__bild .phone { flex: 0 0 228px; }
+
+/* Im Anschnitt stört der Hinweis unter dem Rahmen nur */
+.kachel__bild .shots__note { display: none; }
+
+/* -------------------------------------------------- Das Zeichen unten -- */
+
+/*
+ * Das App-Zeichen groß im Abschluss. Es ist das Einzige auf der Seite,
+ * das nach dem Laden im App Store auf dem Startbildschirm wieder
+ * auftaucht — Things baut seinen ganzen Einstieg darum. Bei uns klebte
+ * es als 38px-Marke im Kopf und kam sonst nicht vor.
+ */
+.abschluss__zeichen {
+  width: 68px;
+  height: 68px;
+  border-radius: 18px;
+  display: block;
+  margin: 0 auto 18px;
+  box-shadow: var(--schatten-geraet);
+}
+
+/* ------------------------------------------------- Schatten vereinheitlicht -- */
+
+.phone { box-shadow: var(--schatten-geraet); }
+.average { box-shadow: var(--schatten-karte); }
+
+/* -------------------------------------------------------------- Desktop -- */
+
+@media (min-width: 1024px) {
+  .band--intro,
+  .band--abschluss { padding-block: 40px; }
+
+  .band--dark { padding-block: 72px; }
+
+  .bento {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+
+  .kachel {
+    min-height: 404px;
+    padding: 30px 30px 0;
+  }
+
+  .kachel__bild { margin-top: 28px; }
+  .kachel__bild .phone { flex: 0 0 262px; }
+
+  .band--bento .band__body { max-width: 36ch; margin-bottom: 30px; }
+
+  .abschluss__zeichen {
+    width: 84px;
+    height: 84px;
+    border-radius: 22px;
+    margin-bottom: 24px;
+  }
 }

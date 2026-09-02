@@ -81,6 +81,23 @@ export type FeatureSection = {
    * Karten unterscheiden sich in Farbe und Bildseite voneinander.
    */
   form: "geteilt" | "karte" | "breit";
+  /**
+   * Der Grund der Kachel im Bento-Gitter unter dem Einstieg.
+   *
+   * Das Gitter ist die Kurzfassung der vier Abschnitte: eine Aussage, ein
+   * Bildschirmfoto, das unten aus der Kachel herausläuft. Ein
+   * angeschnittenes Bild wirkt dichter als ein sauber gerahmtes — und es
+   * verrät nebenbei nicht, dass darin noch ein Platzhalter steckt.
+   *
+   * Die Farben wechseln absichtlich zwischen hell und dunkel ab: Vier
+   * gleichfarbige Kacheln wären eine Tabelle, kein Gitter.
+   *
+   * `ozean`   Hauptakzent der App (accent600)
+   * `dunkel`  dieselbe Fläche wie das Datenschutz-Band
+   * `note`    Grün — nur die Noten-Kachel, aus demselben Grund wie
+   *           beim Akzent oben: In der App ist Grün die Notenfarbe.
+   */
+  kachel: "ozean" | "dunkel" | "note";
   shots: Screen[];
 };
 
@@ -257,6 +274,19 @@ export const site = {
   },
 
   /**
+   * Das Bento-Gitter direkt unter dem Einstieg: die Kurzfassung der vier
+   * Abschnitte, bevor sie einzeln ausgebreitet werden.
+   *
+   * Der Kicker ist die einzige neue Textzeile — Titel und Beschriftung der
+   * Kacheln kommen aus `featureSections`, damit Gitter und Abschnitte
+   * nicht auseinanderlaufen können.
+   */
+  bento: {
+    kicker: "Alles drin",
+    title: "Vier Dinge, eine App.",
+  },
+
+  /**
    * Der Abschluss-Block ganz unten — die zweite und letzte Gelegenheit
    * zu handeln, nachdem der Hero längst weggescrollt ist.
    */
@@ -401,6 +431,7 @@ export const featureSections: FeatureSection[] = [
     layout: "gestaffelt",
     akzent: "ozean",
     form: "geteilt",
+    kachel: "ozean",
     shots: [
       {
         title: "Fächerliste",
@@ -427,6 +458,7 @@ export const featureSections: FeatureSection[] = [
     layout: "gegenueber",
     akzent: "ozean",
     form: "karte",
+    kachel: "dunkel",
     shots: [
       {
         title: "Aufnehmen",
@@ -467,6 +499,7 @@ export const featureSections: FeatureSection[] = [
     layout: "handkarten",
     akzent: "ozean",
     form: "breit",
+    kachel: "ozean",
     shots: [
       {
         title: "Fokus",
@@ -524,6 +557,7 @@ export const featureSections: FeatureSection[] = [
     layout: "haupt-neben",
     akzent: "note",
     form: "karte",
+    kachel: "note",
     shots: [
       {
         title: "Noten im Fach",

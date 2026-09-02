@@ -2,12 +2,23 @@ import Image from "next/image";
 import { SCREENSHOT_SIZE, type Screen } from "@/lib/site";
 
 /**
- * Ein iPhone-Rahmen mit einem Screenshot-Slot.
+ * Ein iPhone mit einem Screenshot darin.
  *
- * Solange `screen.src` null ist, steht hier der Platzhalter im echten
+ * Drei verschachtelte Ebenen, weil ein Telefon aus drei Ebenen besteht:
+ *
+ *   .phone           der Titanrand — die schmale helle Kante außen
+ *   .phone__rahmen   die schwarze Blende dahinter
+ *   .phone__slot     das Glas, in dem der Screenshot liegt
+ *
+ * Vorher war es ein schwarzes Rechteck mit einem Schatten. Bei einer
+ * Seite, die eine iPhone-App verkauft, ist der Gerätemockup das Erste,
+ * woran man Handarbeit von Bausatz unterscheidet — und elf Bildplätze
+ * heißt: Der Rahmen entscheidet über den Eindruck der halben Seite.
+ *
+ * Solange `screen.src` null ist, steht im Glas der Platzhalter im echten
  * Screenshot-Format (1290 × 2796). Sobald ein Pfad in `lib/site.ts`
- * eingetragen ist, rendert an derselben Stelle das Bild — die Fassung,
- * die Maße und der Beschnitt bleiben gleich.
+ * eingetragen ist, rendert an derselben Stelle das Bild — Fassung, Maße
+ * und Beschnitt bleiben gleich.
  */
 export default function ScreenshotSlot({
   screen,
@@ -18,20 +29,32 @@ export default function ScreenshotSlot({
 }) {
   return (
     <div className="phone">
-      <div className="phone__slot">
-        {screen.src ? (
-          <Image
-            className="phone__shot"
-            src={screen.src}
-            alt={screen.alt}
-            width={SCREENSHOT_SIZE.width}
-            height={SCREENSHOT_SIZE.height}
-            sizes="(min-width: 1024px) 232px, 186px"
-            priority={index === 0}
-          />
-        ) : (
-          <Placeholder screen={screen} />
-        )}
+      <div className="phone__rahmen">
+        <div className="phone__slot">
+          {screen.src ? (
+            <Image
+              className="phone__shot"
+              src={screen.src}
+              alt={screen.alt}
+              width={SCREENSHOT_SIZE.width}
+              height={SCREENSHOT_SIZE.height}
+              sizes="(min-width: 1024px) 232px, 186px"
+              priority={index === 0}
+            />
+          ) : (
+            <Placeholder screen={screen} />
+          )}
+
+          {/*
+           * Die Dynamic Island. Sie liegt ÜBER dem Screenshot, weil sie
+           * auf einem echten Gerät auch über dem Bild liegt: Ein
+           * iOS-Screenshot enthält die Fläche, aber nicht die Aussparung.
+           * Ihre Maße stehen in `cqw` — Prozent der Glasbreite — und
+           * stimmen dadurch bei jeder Telefongröße auf der Seite, vom
+           * 121px-Handkartenfächer bis zum 300px-Einstieg.
+           */}
+          <span className="phone__insel" aria-hidden="true" />
+        </div>
       </div>
     </div>
   );

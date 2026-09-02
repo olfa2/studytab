@@ -1,23 +1,30 @@
 import Image from "next/image";
-import { site } from "@/lib/site";
+import { featureSections, site } from "@/lib/site";
 
 /**
- * Der Kopf: Wortmarke links, Status rechts.
+ * Der Kopf: Wortmarke, Wegweiser, Status.
  *
- * Vorher klebte er oben und blendete per Scroll-Messung einen zweiten
- * Anmelde-Button ein, sobald das Feld im Einstieg weggescrollt war. Das
- * ist Conversion-Möbel und passt nicht zu einer Seite, deren Zweck es
- * ist, zu existieren und verlinkbar zu sein — die Anmeldung steht einmal
- * im Einstieg, das genügt.
+ * Vorher standen hier nur Logo und "Bald im App Store". Auf einer Seite,
+ * die nach dem Einstieg noch fünf Bildschirmhöhen weitergeht, war das
+ * eine Sackgasse: Alle vier Funktionsabschnitte haben längst eine
+ * Sprungmarke (`aria-labelledby` in FeatureBand), aber nichts führte
+ * hin. Die Beschriftungen sind die Kicker der Abschnitte — sie kommen
+ * aus lib/site.ts und bleiben damit automatisch in Deckung.
  *
- * Damit fallen der Scroll-Listener, beide Zustände und die Kennungen
- * `HERO_CTA_ID` und `CLOSING_ID` weg; die Komponente braucht kein
- * "use client" mehr.
+ * Der Kopf klebt jetzt oben. Der Einstieg füllt den ersten Bildschirm;
+ * ohne mitlaufenden Kopf wäre die Wortmarke nach einem Wisch weg und
+ * käme erst am Seitenende wieder — bei einer Seite, deren Zweck es ist,
+ * sich einzuprägen, ist das der falsche Handel.
+ *
+ * Vorher blendete er per Scroll-Messung einen zweiten Anmelde-Button
+ * ein. Das ist Conversion-Möbel und bleibt draußen: Die zweite
+ * Gelegenheit steht jetzt als eigener Abschluss-Abschnitt am Ende, wo
+ * sie hingehört.
  */
 export default function Header() {
   return (
     <header className="header">
-      <div className="header__brand">
+      <a className="header__brand" href="#top">
         <Image
           className="header__logo"
           src={site.logo}
@@ -27,7 +34,20 @@ export default function Header() {
           priority
         />
         <span className="header__name display">{site.name}</span>
-      </div>
+      </a>
+
+      {/*
+       * Nur ab Tablet-Breite. Auf 390px stünden vier weitere Wörter
+       * neben Wortmarke und Status — die Zeile bräche um, und der Kopf
+       * wäre doppelt so hoch wie der Inhalt darunter wert ist.
+       */}
+      <nav className="header__nav" aria-label="Abschnitte">
+        {featureSections.map((section) => (
+          <a className="header__navlink" key={section.id} href={`#${section.id}`}>
+            {section.kicker}
+          </a>
+        ))}
+      </nav>
 
       {site.released ? (
         <a className="header__link" href={site.appStoreUrl}>

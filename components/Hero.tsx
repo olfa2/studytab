@@ -18,7 +18,7 @@ import ScreenshotSlot from "./ScreenshotSlot";
  */
 export default function Hero() {
   return (
-    <section className="band band--intro">
+    <section className="band band--intro ozean">
       <div className="band__body">
         {site.showScanLine ? (
           <p className="band__kicker">{site.scanLine}</p>

@@ -1,7 +1,9 @@
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";
+import Bento from "@/components/Bento";
 import FeatureBand from "@/components/FeatureBand";
 import PrivacySection from "@/components/PrivacySection";
+import ClosingCta from "@/components/ClosingCta";
 import Team from "@/components/Team";
 import Footer from "@/components/Footer";
 import { featureSections } from "@/lib/site";
@@ -18,14 +20,17 @@ import { featureSections } from "@/lib/site";
  * Eintrag; gemacht wird es per `order` im CSS, damit mobil überall zuerst
  * der Text steht.
  *
- * Der Abschluss-Block mit der zweiten Anmeldung fehlt noch — er ist
- * Phase 17. `site.closing` liegt dafür bereit.
+ * Der Abschluss-Block steht jetzt hinter dem Team: Wer bis dorthin
+ * liest, ist überzeugt und fand vorher keine Möglichkeit mehr zu
+ * handeln — das Anmeldefeld stand nur im Einstieg, also vor allen
+ * Argumenten.
  */
 export default function Home() {
   return (
     <main className="page">
       <Header />
       <Hero />
+      <Bento />
 
       {featureSections.map((section) => (
         <FeatureBand key={section.id} section={section} />
@@ -33,6 +38,7 @@ export default function Home() {
 
       <PrivacySection />
       <Team />
+      <ClosingCta />
       <Footer />
     </main>
   );
