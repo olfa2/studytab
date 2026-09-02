@@ -18,7 +18,7 @@ export default function Team() {
 
   return (
     <section className="band band--split" aria-labelledby="team">
-      <div className="band__visual">
+      <div className="band__visual" data-reveal="bild">
         <div className="team__photo">
           {team.photo ? (
             <Image
@@ -43,7 +43,7 @@ export default function Team() {
         </div>
       </div>
 
-      <div className="band__body">
+      <div className="band__body" data-reveal="text">
         <p className="band__kicker">{team.kicker}</p>
         <h2 className="band__title display" id="team">
           {team.title}

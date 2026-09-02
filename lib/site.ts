@@ -46,6 +46,41 @@ export type FeatureSection = {
    * `haupt-neben`  eines groß, das zweite kleiner und versetzt davor
    */
   layout: "gestaffelt" | "gegenueber" | "handkarten" | "haupt-neben";
+  /**
+   * Die Akzentfarbe der Sektion. Nur zwei Werte, und das mit Absicht:
+   * Das Farbsystem der App kennt keine vier gleichrangigen Akzente, und
+   * vier erfundene wären ein Regenbogen statt eines Systems.
+   *
+   * `ozean`  Der Hauptakzent der App (accent600, #0b6d9e). Der Normalfall.
+   * `note`   Grün. NUR für die Noten-Sektion. In Color+Theme.swift ist
+   *          Grün ausdrücklich "an die beste Note gekoppelt und NICHT an
+   *          die Marke" — in der Noten-Sektion bedeutet es also genau
+   *          das, was es in der App bedeutet. Überall sonst wäre es eine
+   *          Markenfarbe, und die darf Grün nicht werden.
+   *
+   * Die Hex-Werte stehen in app/globals.css, nicht hier. Hier steht die
+   * Entscheidung, welche Sektion welchen Akzent trägt.
+   */
+  akzent: "ozean" | "note";
+  /**
+   * Die Grundform der Sektion. Vier Abschnitte in derselben Form —
+   * Text links, Telefone rechts, abwechselnd — lesen sich ab dem zweiten
+   * Mal als Vorlage: Man weiß schon, was kommt, und hört auf hinzusehen.
+   * Verschiedene Screenshot-Anordnungen retten das nicht, weil die
+   * Silhouette des Abschnitts jedes Mal dieselbe bleibt.
+   *
+   * `geteilt`  Zwei Spalten, Bilder in einer getönten Fläche daneben.
+   *            Die Grundform, an der sich die anderen messen.
+   * `karte`    Der ganze Abschnitt ist eine getönte Karte mit Rahmen.
+   *            Von außen eine völlig andere Silhouette als `geteilt`.
+   * `breit`    Volle Breite, Text mittig darüber, Bilder groß darunter.
+   *            Bricht die Zweispaltigkeit auf und gibt der Seite Luft.
+   *
+   * Die Reihenfolge geteilt → karte → breit → karte ist Absicht: Keine
+   * zwei benachbarten Abschnitte haben dieselbe Form, und die beiden
+   * Karten unterscheiden sich in Farbe und Bildseite voneinander.
+   */
+  form: "geteilt" | "karte" | "breit";
   shots: Screen[];
 };
 
@@ -364,6 +399,8 @@ export const featureSections: FeatureSection[] = [
     lead: "Leg deine Fächer einmal an — danach hat jedes seinen eigenen Schnitt, seine eigenen Mitschriften, seine eigenen Karteikarten. Du tippst auf Mathe und hast alles, was Mathe ist.",
     media: "right",
     layout: "gestaffelt",
+    akzent: "ozean",
+    form: "geteilt",
     shots: [
       {
         title: "Fächerliste",
@@ -388,6 +425,8 @@ export const featureSections: FeatureSection[] = [
     lead: "Heft aufschlagen, Foto machen, Fach auswählen. Mehr ist es nicht. Und am Abend vor der Schularbeit suchst du nicht erst, wo die Stunde von letzter Woche geblieben ist.",
     media: "left",
     layout: "gegenueber",
+    akzent: "ozean",
+    form: "karte",
     shots: [
       {
         title: "Aufnehmen",
@@ -426,6 +465,8 @@ export const featureSections: FeatureSection[] = [
     lead: "Karteikarten für den Stoff, Sessions für die Zeit. Studytab sperrt dein Handy nicht — das darf keine App auf dem iPhone. Es zählt stattdessen mit, wie oft du rausgehst, und zeigt dir danach schwarz auf weiß, wie lange du wirklich am Stück gearbeitet hast — und wie viele Tage du schon dabei bist.",
     media: "right",
     layout: "handkarten",
+    akzent: "ozean",
+    form: "breit",
     shots: [
       {
         title: "Fokus",
@@ -474,8 +515,15 @@ export const featureSections: FeatureSection[] = [
      * Rechnung dahinter.
      */
     lead: "Jede Note mit ihrer Gewichtung — eine Schularbeit zählt anders als eine Mitarbeitsnote, und der Schnitt rechnet sich sofort neu. Und zwar pro Semester, so wie dein Zeugnis es tut. Nicht pro Halbjahr, wie die Apps von nebenan.",
-    media: "left",
+    /*
+     * Von "left" auf "right" gedreht. Mitschriften ist die andere Karte
+     * und hat das Bild links — zwei Karten mit dem Bild auf derselben
+     * Seite wären wieder dasselbe Bild zweimal. So spiegeln sie sich.
+     */
+    media: "right",
     layout: "haupt-neben",
+    akzent: "note",
+    form: "karte",
     shots: [
       {
         title: "Noten im Fach",

@@ -17,6 +17,7 @@ export default function PrivacySection() {
     <section
       className="band band--dark"
       aria-labelledby="datenschutz"
+      data-reveal="text"
     >
       <p className="band__kicker">{block.kicker}</p>
 

@@ -527,7 +527,7 @@ a:hover { text-decoration: underline; text-underline-offset: 3px; }
   justify-content: flex-start;
 }
 
-.hero__shot .phone { flex: 0 0 196px; }
+.hero__shot .phone { flex: 0 1 196px; }
 
 /*
  * Die Bilder einer Funktions-Sektion.
@@ -585,7 +585,7 @@ a:hover { text-decoration: underline; text-underline-offset: 3px; }
 }
 
 .shots[data-layout="handkarten"] .phone {
-  flex: 0 0 132px;
+  flex: 0 1 132px;
   transform-origin: bottom center;
 }
 
@@ -605,10 +605,10 @@ a:hover { text-decoration: underline; text-underline-offset: 3px; }
   align-items: flex-end;
 }
 
-.shots[data-layout="haupt-neben"] .phone:nth-child(1) { flex: 0 0 200px; }
+.shots[data-layout="haupt-neben"] .phone:nth-child(1) { flex: 0 1 200px; }
 
 .shots[data-layout="haupt-neben"] .phone:nth-child(2) {
-  flex: 0 0 132px;
+  flex: 0 1 132px;
   margin-left: -40px;
   margin-bottom: -18px;
   z-index: 2;
@@ -626,7 +626,7 @@ a:hover { text-decoration: underline; text-underline-offset: 3px; }
 /* Gerätefassung mit Screenshot-Slot */
 
 .phone {
-  flex: 0 0 186px;
+  flex: 0 1 186px;
   background: var(--frame);
   border-radius: 26px;
   padding: 7px;
@@ -1160,7 +1160,7 @@ a:hover { text-decoration: underline; text-underline-offset: 3px; }
   .zusagen__punkt + .zusagen__punkt::before { margin-right: 18px; }
 
   .hero__shot { margin-top: 0; justify-content: center; }
-  .hero__shot .phone { flex: 0 0 268px; }
+  .hero__shot .phone { flex: 0 1 268px; }
 
   .average { margin-top: 0; padding: 26px; }
   /* .average__value braucht hier nichts mehr — --t-figure wächst oben mit */
@@ -1208,25 +1208,25 @@ a:hover { text-decoration: underline; text-underline-offset: 3px; }
   .shots { gap: 20px; }
 
   .shots[data-layout="gestaffelt"] { gap: 18px; }
-  .shots[data-layout="gestaffelt"] .phone { flex: 0 0 210px; }
+  .shots[data-layout="gestaffelt"] .phone { flex: 0 1 210px; }
   .shots[data-layout="gestaffelt"] .phone:nth-child(2) { margin-top: 52px; }
 
   .shots[data-layout="gegenueber"] { gap: 46px; }
-  .shots[data-layout="gegenueber"] .phone { flex: 0 0 196px; }
+  .shots[data-layout="gegenueber"] .phone { flex: 0 1 196px; }
   .shots[data-layout="gegenueber"] .phone:nth-child(2) { margin-top: 34px; }
 
-  .shots[data-layout="handkarten"] .phone { flex: 0 0 178px; }
+  .shots[data-layout="handkarten"] .phone { flex: 0 1 178px; }
   .shots[data-layout="handkarten"] .phone + .phone { margin-left: -58px; }
 
-  .shots[data-layout="haupt-neben"] .phone:nth-child(1) { flex: 0 0 268px; }
+  .shots[data-layout="haupt-neben"] .phone:nth-child(1) { flex: 0 1 268px; }
   .shots[data-layout="haupt-neben"] .phone:nth-child(2) {
-    flex: 0 0 176px;
+    flex: 0 1 176px;
     margin-left: -54px;
     margin-bottom: -26px;
   }
 
   .phone {
-    flex: 0 0 268px;
+    flex: 0 1 268px;
     padding: 9px;
     border-radius: 34px;
     box-shadow: 0 14px 32px rgba(28, 31, 41, .16);
@@ -1284,4 +1284,508 @@ a:hover { text-decoration: underline; text-underline-offset: 3px; }
   .legal__section { margin-top: 40px; }
   .legal__todo { padding-left: 18px; margin-top: 14px; }
   .legal__back { margin-top: 44px; }
+}
+
+/* ==========================================================================
+   Bewegung und Farbe (Block D)
+
+   ZWEI ENTSCHEIDUNGEN, die alles darunter erklären:
+
+   1. Die Bewegung läuft OHNE JAVASCRIPT.
+      `animation-timeline: view()` bindet eine Animation an die Position
+      des Elements im Sichtfenster statt an eine Uhr. Kein
+      IntersectionObserver, kein Client-Component, kein viertes Paket —
+      die Datenschutzerklärung sagt "hängt an drei Paketen", und das
+      bleibt wahr.
+
+   2. Der Ruhezustand ist IMMER der sichtbare.
+      Nirgends steht `opacity: 0` als Grundzustand. Das Verstecken
+      passiert ausschließlich im `from`-Block der Keyframes. Fällt die
+      Animation aus irgendeinem Grund weg — alter Browser, reduzierte
+      Bewegung, blockiertes CSS-Feature —, steht der Inhalt einfach da.
+      Andersherum gebaut wäre eine leere Seite die Folge, und genau so
+      verschwinden Landingpages mit Einblend-Effekten regelmäßig.
+   ========================================================================== */
+
+/* ---------------------------------------- Telefone dürfen schrumpfen -- */
+
+/*
+ * Alle .phone-Regeln oben standen auf `flex: 0 0 Xpx` — die Null in der
+ * Mitte verbietet das Schrumpfen. Bei 390px Fensterbreite bleiben nach
+ * dem Seitenrand 350px übrig, und drei der vier Anordnungen brauchten
+ * mehr:
+ *
+ *   gestaffelt   186 + 12 + 186     = 384px   (34px zu breit)
+ *   gegenueber   186 + 34 + 186     = 406px   (56px zu breit)
+ *   handkarten   4 x 132 - 3 x 46   = 390px   (40px zu breit)
+ *   haupt-neben  200 + 132 - 40     = 292px   (passt)
+ *
+ * Auf dem Desktop dasselbe: Die Bildspalte ist 460px breit, die
+ * Handkarten brauchten 4 x 178 - 3 x 58 = 538px. Ein waagrechter
+ * Überlauf auf jeder Fenstergröße, seit die Anordnungen gebaut wurden.
+ *
+ * Aufgefallen ist er erst jetzt, weil die getönte Fläche darunter ihm
+ * eine Kante gibt: Vorher ragten die Telefone über nichts hinaus, jetzt
+ * würden sie sichtbar aus ihrem Feld stehen.
+ *
+ * Behoben an der Wurzel — alle zwölf Regeln stehen jetzt auf
+ * `flex: 0 1 Xpx`. Ein Nachtrag hier unten hätte nicht gereicht: Die
+ * Layout-Regeln sind spezifischer und hätten ihn überstimmt. Die Maße
+ * bleiben, wo Platz ist; nur im Engen geben die Fassungen nach, und
+ * `aspect-ratio` am Slot hält dabei die Form.
+ */
+.phone { min-width: 0; }
+
+/*
+ * Die Bildspalte fährt auf dem Desktop 40px von der Seite herein. Bei
+ * Fensterbreiten knapp über 1120px (die Seite ist genau so breit und
+ * zentriert) ragt sie dabei kurz über den Fensterrand — und der Browser
+ * hängt für die Dauer der Bewegung einen waagrechten Scrollbalken an.
+ *
+ * `clip` statt `hidden`: `hidden` würde aus der Seite einen
+ * Scroll-Container machen und damit `position: sticky` im Inneren
+ * unbrauchbar. `clip` schneidet nur ab.
+ */
+.page { overflow-x: clip; }
+
+/* ---------------------------------------------------------------- Farbe -- */
+
+/*
+ * Genau zwei Akzente, beide aus dem App-Design-System. Welche Sektion
+ * welchen trägt, steht in lib/site.ts unter `akzent` — hier stehen nur
+ * die Werte.
+ *
+ * Kontrast nachgerechnet (WCAG AA verlangt 4.5:1 für Text dieser Größe):
+ *   #0b6d9e auf #ffffff  5.70:1   auf #f5f7fa  5.31:1   bestanden
+ *   #0b6b52 auf #ffffff  4.95:1   auf #f5f7fa  4.61:1   bestanden
+ *
+ * Das helle Grün --green (#12a877) käme auf 3.05:1 und ist deshalb hier
+ * NICHT verwendet. Es steht weiterhin nur an der Anmelde-Bestätigung,
+ * wo es als Fläche und nicht als Text auftritt.
+ */
+.band--feature { --akzent: var(--card-back); }
+.band--feature[data-akzent="note"] { --akzent: var(--green-deep); }
+
+/*
+ * Der Kicker war auf der ganzen Seite grau. Jetzt trägt er die Farbe der
+ * Sektion — die billigste Art, vier Abschnitte auseinanderzuhalten, ohne
+ * eine einzige Fläche einzufärben. Davor eine kurze Linie als Anker: Sie
+ * gibt dem Abschnitt einen sichtbaren Anfang, auch wenn der Titel gerade
+ * oben aus dem Bild läuft.
+ */
+.band--feature .band__kicker {
+  color: var(--akzent);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.band--feature .band__kicker::before {
+  content: "";
+  width: 22px;
+  height: 3px;
+  border-radius: 2px;
+  background: var(--akzent);
+  flex: none;
+}
+
+/*
+ * Die Bildspalte bekommt eine sehr leise getönte Fläche. Sie trennt die
+ * Telefone vom Seitengrund, ohne eine zweite Karte zu bauen: 5% Farbe
+ * auf Weiß, dazu ein Rahmen aus derselben Farbe. Beides ist unter
+ * "Flächen, Rahmen" ausdrücklich erlaubt — ein Verlauf oder ein farbiger
+ * Schlagschatten wäre es nicht.
+ *
+ * `color-mix` statt eines neuen Hex-Werts: Damit hängt der Ton an der
+ * Akzentfarbe. Wer oben --card-back ändert, ändert die Fläche mit, und
+ * es kann keine Farbe entstehen, die im App-System nicht vorkommt.
+ */
+.band--feature[data-form="geteilt"] .band__visual,
+.band--feature[data-form="breit"] .band__visual {
+  background: color-mix(in srgb, var(--akzent) 7%, var(--surface));
+  border: 1px solid color-mix(in srgb, var(--akzent) 18%, var(--line));
+  border-radius: var(--radius-lg);
+  padding: 20px 16px 16px;
+}
+
+/* --------------------------------------------- Phase 13: Abschnitte -- */
+
+@keyframes einblenden {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* -------------------------------------------- Phase 14: Screenshots -- */
+
+/*
+ * Die Bilder kommen von der Seite herein, auf der sie liegen — rechte
+ * Bildspalte von rechts, linke von links. Deshalb zwei Keyframes statt
+ * einer mit umgedrehtem Vorzeichen: `data-media` steht am Band, und die
+ * Richtung soll direkt daran hängen.
+ *
+ * NUR AB 1024px. Mobil stapelt alles untereinander, es gibt kein Links
+ * und kein Rechts mehr — und eine waagrechte Bewegung im engen Fenster
+ * ist genau der Weg, auf dem Seiten sich einen Seitwärts-Scrollbalken
+ * einhandeln. Mobil steigen die Bilder auf, so wie der Text.
+ */
+@keyframes herein-von-rechts {
+  from { opacity: 0; transform: translateX(40px); }
+  to   { opacity: 1; transform: none; }
+}
+
+@keyframes herein-von-links {
+  from { opacity: 0; transform: translateX(-40px); }
+  to   { opacity: 1; transform: none; }
+}
+
+/*
+ * Der Versatz der einzelnen Telefone. Nur `opacity` — die Fassungen
+ * tragen bereits ein `transform: rotate()` aus ihrer Anordnung, und ein
+ * zweites transform würde es ersetzen statt sich damit zu addieren. Der
+ * Versatz entsteht stattdessen über verschobene `animation-range` je
+ * nth-child weiter unten.
+ */
+@keyframes auftauchen {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* ---------------------------------------------- Phase 15: Der Pfeil -- */
+
+.scan-pfeil {
+  position: absolute;
+  left: 50%;
+  top: 42%;
+  transform: translate(-50%, -50%);
+  width: 34px;
+  height: auto;
+  stroke: var(--akzent);
+  pointer-events: none;
+  z-index: 3;
+}
+
+/* Der Pfeil liegt in der reservierten Lücke — `.shots` ist sein Bezug */
+.shots[data-layout="gegenueber"] { position: relative; }
+
+.scan-pfeil__bogen,
+.scan-pfeil__spitze { fill: none; }
+
+/*
+ * `pathLength="1"` im SVG normiert die Länge des Bogens auf 1. Deshalb
+ * genügt hier `stroke-dasharray: 1`, ohne die Pfadlänge in JavaScript
+ * ausmessen zu müssen, wie es die üblichen Anleitungen tun.
+ */
+@keyframes bogen-zeichnen {
+  from { stroke-dashoffset: 1; }
+  to   { stroke-dashoffset: 0; }
+}
+
+@keyframes spitze-setzen {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* ------------------------------------- Der Anschluss ans Scrollen -- */
+
+/*
+ * Alles Vorstehende sind nur Keyframes — ohne den Block hier passiert
+ * nichts. Das `@supports` ist die Sicherung: Kennt der Browser
+ * `animation-timeline` nicht, gilt keine einzige Regel daraus, und die
+ * Seite steht still und vollständig da.
+ *
+ * `animation-range: entry X% cover Y%` heißt: Die Animation beginnt,
+ * wenn X% des Elements ins Bild geragt sind, und ist fertig, sobald es
+ * Y% des Sichtfensters durchlaufen hat. Was beim Laden schon im Bild
+ * steht, ist damit sofort am Ende der Animation, also sichtbar. Der
+ * Einstieg trägt kein `data-reveal` und ist von alldem unberührt: Was
+ * oben steht, steht sofort da.
+ */
+@supports (animation-timeline: view()) {
+  [data-reveal] {
+    animation: einblenden linear both;
+    animation-timeline: view();
+    animation-range: entry 8% cover 26%;
+  }
+
+  /* Die Bilder starten einen Tick später als der Text daneben */
+  [data-reveal="bild"] {
+    animation-range: entry 12% cover 32%;
+  }
+
+  .band--feature .shots .phone {
+    animation: auftauchen linear both;
+    animation-timeline: view();
+  }
+
+  .band--feature .shots .phone:nth-child(1) { animation-range: entry 14% cover 26%; }
+  .band--feature .shots .phone:nth-child(2) { animation-range: entry 18% cover 30%; }
+  .band--feature .shots .phone:nth-child(3) { animation-range: entry 22% cover 34%; }
+  .band--feature .shots .phone:nth-child(4) { animation-range: entry 26% cover 38%; }
+
+  /*
+   * Der Pfeil läuft NACH den beiden Telefonen: erst der Bogen, dann die
+   * Spitze. Das ist die Reihenfolge, die den Ablauf erzählt — zuerst der
+   * Weg, dann das Ziel. Beide Bereiche liegen hinter denen der Bilder.
+   */
+  .scan-pfeil__bogen {
+    stroke-dasharray: 1;
+    animation: bogen-zeichnen linear both;
+    animation-timeline: view();
+    animation-range: entry 26% cover 40%;
+  }
+
+  .scan-pfeil__spitze {
+    animation: spitze-setzen linear both;
+    animation-timeline: view();
+    animation-range: cover 38% cover 44%;
+  }
+}
+
+/*
+ * Ohne `view()`-Unterstützung zeichnet sich der Bogen nicht — dann darf
+ * er auch nicht als angefangene Linie liegenbleiben. Die Strichelung
+ * steht deshalb ausschließlich im `@supports`-Block oben und hier gar
+ * nicht: Der Pfeil ist ohne Animation einfach ein fertiger Pfeil.
+ */
+
+/* ---------------------------------------------------- Ruhige Fassung -- */
+
+/*
+ * `prefers-reduced-motion` ist Pflicht. Weil der Ruhezustand überall der
+ * sichtbare ist, genügt `animation: none` — es muss nichts zurückgesetzt
+ * werden. Wichtig: KEIN `transform: none` an `.phone`. Die Drehungen der
+ * Anordnungen sind Layout, keine Bewegung, und würden damit verschwinden.
+ */
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal],
+  .band--feature .shots .phone,
+  .scan-pfeil__bogen,
+  .scan-pfeil__spitze {
+    animation: none;
+  }
+}
+
+/* ------------------------------------------------------------- Desktop -- */
+
+@media (min-width: 1024px) {
+  .band--feature[data-form="geteilt"] .band__visual,
+  .band--feature[data-form="breit"] .band__visual { padding: 26px 22px 22px; }
+
+  .scan-pfeil { width: 46px; }
+
+  /*
+   * Erst hier gibt es eine linke und eine rechte Spalte — und damit eine
+   * Richtung, aus der ein Bild hereinkommen kann.
+   */
+  @supports (animation-timeline: view()) {
+    /*
+     * Nur die geteilte Form. In der Karte läge die Bildfläche sonst
+     * während der Bewegung über dem Kartenrand, und die breite Sektion
+     * hat gar keine Seite, aus der etwas hereinkommen könnte. Beide
+     * steigen stattdessen auf — was den Rhythmus zusätzlich bricht.
+     */
+    .band--feature[data-form="geteilt"][data-media="right"] [data-reveal="bild"] {
+      animation-name: herein-von-rechts;
+    }
+
+    .band--feature[data-form="geteilt"][data-media="left"] [data-reveal="bild"] {
+      animation-name: herein-von-links;
+    }
+  }
+}
+
+/* ==========================================================================
+   Farbe und Form (Block E)
+
+   Vorher war die Seite hellgrau von oben bis unten, mit einem blauen Knopf
+   und einem dunklen Band kurz vor Schluss. Vier Funktionsabschnitte in
+   exakt derselben Silhouette — Text auf einer Seite, Telefone auf der
+   anderen, abwechselnd — lasen sich ab dem zweiten Mal als Vorlage.
+
+   Der Farb-Rhythmus der Seite ist jetzt:
+
+     Kopf          hell
+     Einstieg      OZEAN, weiße Schrift, füllt den ersten Bildschirm
+     Fächer        hell, getönte Bildfläche          Form: geteilt
+     Mitschriften  getönte Karte, Bild links         Form: karte
+     Lernen        volle Breite, Text mittig         Form: breit
+     Noten         grün getönte Karte, Bild rechts   Form: karte
+     Datenschutz   schwarz
+     Team          hell
+     Fußzeile      weiß
+
+   Keine zwei benachbarten Abschnitte haben dieselbe Form, und die zwei
+   dunklen Blöcke liegen weit auseinander. Alle Farben stammen aus
+   Color+Theme.swift oder sind per `color-mix` daraus abgeleitet — es
+   kommt kein Hex-Wert dazu, den die App nicht kennt.
+   ========================================================================== */
+
+/* ------------------------------------------------- Der Einstieg in Ozean -- */
+
+/*
+ * Der Einstieg ist die einzige Fläche der Seite, auf der eine gesättigte
+ * Farbe großflächig steht. Das ist die Stelle, an der es sich lohnt: Der
+ * erste Bildschirm entscheidet, ob jemand weiterscrollt.
+ *
+ * Ozean (#0b6d9e) ist der Hauptakzent der App (accent600) — nicht Grün,
+ * das laut Color+Theme.swift "an die beste Note gekoppelt und NICHT an
+ * die Marke" gehört, und nicht das Aktionsblau, das den Knöpfen gehört.
+ */
+.band--intro {
+  background: var(--card-back);
+  color: #fff;
+  border-radius: var(--radius-lg);
+  padding: var(--band-pad);
+}
+
+/*
+ * Helligkeiten als Mischung mit der Grundfarbe statt als neue Hex-Werte.
+ * Nachgerechnet gegen #0b6d9e (relative Leuchtdichte 0.1342):
+ *   88% Weiß  ->  4.82:1   Kicker, Zusicherungen
+ *   90% Weiß  ->  5.05:1   Lead
+ *   100% Weiß ->  5.70:1   Schlagzeile, Beschriftung
+ * WCAG AA verlangt 4.5:1. Der kleinste Wert liegt darüber.
+ */
+.band--intro .band__kicker {
+  color: color-mix(in srgb, #fff 88%, var(--card-back));
+}
+
+.band--intro .band__title--page { color: #fff; }
+
+.band--intro .band__lead {
+  color: color-mix(in srgb, #fff 90%, var(--card-back));
+}
+
+.band--intro .signup__label { color: #fff; }
+
+/*
+ * Der Knopf dreht sich um: weiß auf Ozean statt Aktionsblau. #2563eb auf
+ * #0b6d9e wären zwei Blautöne übereinander — der Knopf würde in der
+ * Fläche versinken, und er ist das Einzige auf diesem Bildschirm, das man
+ * anfassen kann. Weiß ist hier die auffälligste verfügbare Farbe.
+ */
+.band--intro .cta__button {
+  background: #fff;
+  color: var(--card-back);
+}
+
+.band--intro .signup__input { border-color: rgba(255, 255, 255, .35); }
+
+.band--intro .signup__input:focus-visible {
+  border-color: #fff;
+  outline-color: #fff;
+}
+
+/* Rot auf Ozean ist unlesbar — die Fehlermeldung wird stattdessen hell */
+.band--intro .signup__error {
+  color: color-mix(in srgb, #fff 84%, #c0392b);
+  font-weight: 700;
+}
+
+.band--intro .zusagen {
+  color: #fff;
+  border-top-color: rgba(255, 255, 255, .24);
+}
+
+.band--intro .zusagen__punkt + .zusagen__punkt::before {
+  color: rgba(255, 255, 255, .45);
+}
+
+/* ------------------------------------------------------ Form: die Karte -- */
+
+/*
+ * Der ganze Abschnitt ist eine getönte Karte. Von außen eine völlig
+ * andere Silhouette als die geteilte Form daneben — und der Ton macht
+ * sichtbar, dass hier ein Abschnitt anfängt und aufhört.
+ *
+ * 7-8% statt der 5% von vorher: Fünf Prozent auf Weiß sind auf einem
+ * Schulhandy bei Tageslicht schlicht nicht zu sehen gewesen. Der Text
+ * darauf bleibt --ink und damit weit über jedem Kontrast-Grenzwert.
+ */
+.band--feature[data-form="karte"] {
+  background: color-mix(in srgb, var(--akzent) 8%, var(--surface));
+  border: 1px solid color-mix(in srgb, var(--akzent) 20%, var(--line));
+  border-radius: var(--radius-lg);
+  padding: var(--band-pad);
+}
+
+/* ----------------------------------------------------- Form: die Breite -- */
+
+/*
+ * Volle Breite, Text mittig darüber, Bilder groß darunter. Bricht als
+ * einzige Sektion die Zweispaltigkeit — und steht mit Absicht in der
+ * Mitte der vier, wo der Blick sonst abschaltet.
+ */
+.band--breit { display: block; }
+
+.band--breit .band__body {
+  max-width: 56ch;
+  margin: 0 auto;
+  text-align: center;
+}
+
+/* Der Kicker ist eine Flexzeile (Linie + Text) und muss mit zentriert werden */
+.band--breit .band__kicker { justify-content: center; }
+
+.band--breit .band__lead {
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 0;
+}
+
+.band--breit .band__visual { margin-top: 24px; }
+
+/*
+ * Bei „haupt-neben" hängt das kleine Telefon per `margin-bottom: -18px`
+ * unten aus dem Kasten heraus — das ist der Versatz, der die Anordnung
+ * ausmacht. Der Hinweis darunter steht aber im normalen Fluss und weiß
+ * davon nichts: Er lief quer unter der Fassung durch und war zur Hälfte
+ * verdeckt. Der Ausgleich gehört an den Kasten, nicht an den Hinweis —
+ * sonst rutscht er wieder, sobald jemand den Versatz ändert.
+ */
+.shots[data-layout="haupt-neben"] { padding-bottom: 22px; }
+
+.band--breit .shots { justify-content: center; }
+
+/* -------------------------------------------------------------- Desktop -- */
+
+@media (min-width: 1024px) {
+  /*
+   * Der Einstieg füllt den ersten Bildschirm.
+   *
+   * Vorher endete die Textspalte bei 490px, das Telefon bei 660px, und
+   * darunter stand die nächste Sektion schon zur Hälfte im Bild. Man sah
+   * den Anfang von etwas, bevor man den Einstieg zu Ende gelesen hatte.
+   *
+   * Die 120px sind der Kopf: 22px Abstand oben, 44px Logo, 40px darunter,
+   * plus etwas Luft. Was danach kommt, liegt sicher unter der Kante —
+   * zwischen Einstieg und nächster Sektion stehen noch --band-gap (72px).
+   *
+   * Zwei Zeilen, nicht eine: `svh` rechnet mit der kleinen Fassung des
+   * Sichtfensters (Adressleiste eingeblendet) und ist damit die
+   * verlässliche Größe. Browser, die `svh` nicht kennen, überspringen die
+   * zweite Zeile und behalten `vh`.
+   */
+  .band--intro {
+    min-height: calc(100vh - 120px);
+    min-height: calc(100svh - 120px);
+    align-items: center;
+    align-content: center;
+  }
+
+  /*
+   * Das Telefon wächst mit. Bei 300px Breite ist es 650px hoch und füllt
+   * die Karte — vorher standen 268px Telefon in 780px Karte, und die
+   * Bildspalte sah aus, als hätte man sie vergessen.
+   */
+  .band--intro .hero__shot .phone { flex: 0 1 300px; }
+
+  /* In der breiten Sektion dürfen die Handkarten größer aufgefächert sein */
+  .band--breit .shots[data-layout="handkarten"] .phone { flex: 0 1 214px; }
+  .band--breit .shots[data-layout="handkarten"] .phone + .phone { margin-left: -68px; }
+
+  .band--breit .band__visual { margin-top: 34px; }
+
+  /* Desktop hängt 26px heraus statt 18px */
+  .shots[data-layout="haupt-neben"] { padding-bottom: 30px; }
 }
