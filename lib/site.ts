@@ -66,7 +66,7 @@ export const site = {
    *
    * SOBALD studytab.at läuft: diese eine Zeile umstellen, sonst nichts.
    */
-  url: "https://studytab.vercel.app",
+  url: "https://studytab-real.vercel.app",
 
   /**
    * Der Seitentitel. Steht im Tab, in der Suche und im Vorschaubild.
