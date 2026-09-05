@@ -2,12 +2,8 @@
 
 import { abmelden, saveSignup, zuVieleAnmeldungen } from "@/lib/signups";
 import { absenderKennung } from "@/lib/absender";
+import { looksLikeEmail } from "@/lib/email";
 import type { AbmeldeState, SignupState } from "@/lib/signup-state";
-
-/** Bewusst großzügig — die Adresse muss zustellbar sein, nicht schön. */
-function looksLikeEmail(value: string): boolean {
-  return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(value) && value.length <= 254;
-}
 
 export async function subscribe(
   _previous: SignupState,
