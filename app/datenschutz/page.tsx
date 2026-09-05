@@ -5,6 +5,7 @@ import { legal, site } from "@/lib/site";
 /* Wie im Impressum: nicht indexieren, solange Lücken offen sind. */
 export const metadata: Metadata = {
   title: `${legal.datenschutz.title} — ${site.name}`,
+  alternates: { canonical: "/datenschutz" },
   robots: { index: false, follow: true },
 };
 

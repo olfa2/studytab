@@ -30,6 +30,18 @@ export const metadata: Metadata = {
   metadataBase: new URL(site.url),
   title: site.metaTitle,
   description: site.lede,
+  /*
+   * Die kanonische Adresse. Ohne sie zählt eine Suchmaschine dieselbe
+   * Seite unter jeder Variante, unter der sie erreichbar ist — mit und
+   * ohne abschließenden Schrägstrich, mit angehängten Kampagnen-Parametern
+   * aus einem geteilten Link — als mehrere konkurrierende Seiten, die sich
+   * gegenseitig die Platzierung wegnehmen.
+   *
+   * Relativ angegeben: Das metadataBase oben macht daraus die vollständige
+   * Adresse. Beim Umzug auf studytab.at bleibt es deshalb bei der einen
+   * Zeile in lib/site.ts.
+   */
+  alternates: { canonical: "/" },
   openGraph: {
     title: site.metaTitle,
     description: site.lede,

@@ -143,9 +143,6 @@ export const site = {
   /** Die Zeile "Aus dem Schulhaus hergekommen?" ein-/ausblenden (Prop `scanZeile` im Design) */
   showScanLine: true,
 
-  /** Sekunden, bis sich die Karteikarte von selbst dreht (Prop `flipSekunden` im Design) */
-  flipSeconds: 3.4,
-
   /*
    * Die Schlagzeile verspricht das Ganze, nicht eine Funktion — das ist die
    * Entscheidung hinter dem Umbau. Kurz genug, dass sie nach einmal Lesen
@@ -194,18 +191,6 @@ export const site = {
 
   /* Wortgleich mit der Datenschutz-Seite in der App (DatenschutzView.swift) */
   privacy: "Kein Tracking, keine Werbung, kein Verkauf von Daten.",
-
-  average: {
-    label: "Dein Schnitt",
-    value: "1,7",
-    /*
-     * "Semester", nicht "Halbjahr": Periode.swift stellt ausdrücklich fest,
-     * dass nur Deutschland "Halbjahr" sagt — Österreich und die Schweiz
-     * "Semester", unabhängig von der Oberflächensprache.
-     */
-    term: "1. Semester · 7 Fächer",
-    note: "Neu gerechnet, sobald eine Note dazukommt.",
-  },
 
   /**
    * Die Anmeldung für die Start-Benachrichtigung.
@@ -335,15 +320,6 @@ export const site = {
   /** Steht unter jedem Bildplatz, solange noch kein echtes Bild da ist. */
   placeholderNote:
     "Platzhalter — hier kommen die echten Screenshots aus der App hinein (1290 × 2796)",
-
-  flashcard: {
-    frontLabel: "Geschichte · Frage",
-    question: "Wann war der Wiener Kongress?",
-    hint: "Tippen zum Umdrehen",
-    backLabel: "Geschichte · Antwort",
-    answer: "1814 / 15",
-    backHint: "Gewusst? Dann kommt sie später wieder.",
-  },
 
   footer: {
     links: [
@@ -543,8 +519,6 @@ export const featureSections: FeatureSection[] = [
   },
 ];
 
-/** Seitenverhältnis eines iPhone-Screenshots (6.7") */
-export const SCREENSHOT_RATIO = "1290 / 2796";
 export const SCREENSHOT_SIZE = { width: 1290, height: 2796 };
 
 /* ==========================================================================

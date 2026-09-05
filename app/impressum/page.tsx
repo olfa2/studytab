@@ -10,6 +10,7 @@ import { legal, site } from "@/lib/site";
  */
 export const metadata: Metadata = {
   title: `${legal.impressum.title} — ${site.name}`,
+  alternates: { canonical: "/impressum" },
   robots: { index: false, follow: true },
 };
 

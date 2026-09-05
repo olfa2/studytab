@@ -15,9 +15,29 @@
   /* Text */
   --ink: #1c1f29;
   --ink-2: #333846;
+  /*
+   * Die drei hellen Graustufen tragen ausschließlich Text — Trenner und
+   * Haarlinien nehmen --line-strong. Alle drei müssen deshalb den
+   * Kontrastwert für Fließtext erreichen, und zwei taten es nicht:
+   *
+   *   vorher                    auf #f5f7fa   AA verlangt 4,5:1
+   *     --muted #4e5563           6,88:1      bestanden
+   *     --faint #6f7686           4,26:1      knapp durchgefallen
+   *     --soft  #9aa1af           2,39:1      deutlich durchgefallen
+   *
+   *   jetzt
+   *     --muted #4e5563           6,88:1      unverändert
+   *     --faint #5c6373           5,61:1
+   *     --soft  #697080           4,62:1
+   *
+   * --soft trug das Copyright in der Fußzeile, den Kicker im Team-Block,
+   * die Platzhalterschrift im Eingabefeld und die Beschriftungen in den
+   * Rechtstexten. Der Abstand zwischen den Stufen bleibt, die ganze
+   * Leiter ist nur nach unten gerückt.
+   */
   --muted: #4e5563;
-  --faint: #6f7686;
-  --soft: #9aa1af;
+  --faint: #5c6373;
+  --soft: #697080;
 
   /*
    * Flächen und Linien — eins zu eins aus dem App-Design-System
@@ -329,57 +349,6 @@ a:hover { text-decoration: underline; text-underline-offset: 3px; }
  * damit genau die Verwendung von Grün als Markenfarbe, die
  * Color+Theme.swift ausschließt. Jetzt trägt Grün nur noch die Zahl.
  */
-.average {
-  background: var(--surface);
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
-  padding: 22px;
-  margin-top: 26px;
-}
-
-.average__label {
-  font-family: var(--mono);
-  font-size: var(--t-kicker);
-  letter-spacing: .14em;
-  text-transform: uppercase;
-  color: var(--soft);
-  margin-bottom: 8px;
-}
-
-.average__value {
-  font-weight: 800;
-  font-size: var(--t-figure);
-  line-height: .9;
-  /*
-   * Normale Schriftfarbe, kein Grün mehr. Die auffälligste Farbe der
-   * Seite markierte hier etwas, das man nicht anklicken kann — in
-   * diesem System heißt Farbe „hier wird gehandelt", und das ist der
-   * Anmeldeknopf. Abgesetzt bleibt die Zahl trotzdem, nur über die
-   * Hierarchie statt über den Farbton: --ink ist der kräftigste Ton
-   * der Karte, dazu Gewicht 800 und --t-figure. Label, Zeitraum und
-   * Notiz darunter stehen in --soft, --ink-2 und --muted.
-   */
-  color: var(--ink);
-  margin-bottom: 14px;
-}
-
-.average__term {
-  font-size: 13.5px;
-  font-weight: 700;
-  color: var(--ink-2);
-  margin-bottom: 4px;
-  padding-top: 14px;
-  border-top: 1px solid var(--hairline);
-}
-
-.average__note {
-  font-size: 13px;
-  color: var(--muted);
-  line-height: 1.4;
-}
-
-/* ----------------------------------------------------------------- CTA -- */
-
 .cta { margin-bottom: 14px; }
 
 .cta__row {
@@ -482,13 +451,6 @@ a:hover { text-decoration: underline; text-underline-offset: 3px; }
   overflow: hidden;
   clip-path: inset(50%);
   white-space: nowrap;
-}
-
-.signup__note {
-  font-size: 12px;
-  color: var(--soft);
-  line-height: 1.4;
-  margin-top: 10px;
 }
 
 .signup__error {
@@ -775,89 +737,10 @@ a:hover { text-decoration: underline; text-underline-offset: 3px; }
 .slot-placeholder__size {
   font-family: var(--mono);
   font-size: clamp(6px, 4.4cqw, 10px);
-  color: var(--soft);
+  /* Auf der Schraffur (#e8ebf0) reicht --soft nicht — dort braucht es --muted */
+  color: var(--muted);
 }
 
-
-/* ---------------------------------------------------------- Karteikarte -- */
-
-.flash {
-  perspective: 900px;
-  width: 100%;
-}
-
-.flash__inner {
-  position: relative;
-  height: 152px;
-  transform-style: preserve-3d;
-  transition: transform .85s cubic-bezier(.4, 0, .2, 1);
-  cursor: pointer;
-  border: 0;
-  padding: 0;
-  background: none;
-  width: 100%;
-  text-align: left;
-  font: inherit;
-  color: inherit;
-  display: block;
-}
-
-.flash__inner[data-flipped="true"] { transform: rotateY(180deg); }
-
-.flash__face {
-  position: absolute;
-  inset: 0;
-  backface-visibility: hidden;
-  border-radius: var(--radius);
-  padding: 18px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-
-.flash__face--front {
-  background: var(--surface);
-  border: 1px solid var(--line);
-}
-
-.flash__face--back {
-  transform: rotateY(180deg);
-  background: var(--card-back);
-  color: #fff;
-}
-
-.flash__label {
-  font-family: var(--mono);
-  font-size: 10px;
-  letter-spacing: .12em;
-  text-transform: uppercase;
-  color: var(--soft);
-}
-
-.flash__face--back .flash__label { color: #96cfe9; }
-
-.flash__question {
-  font-weight: 700;
-  font-size: 19px;
-  line-height: 1.2;
-}
-
-.flash__answer {
-  font-weight: 700;
-  font-size: 26px;
-  line-height: 1.15;
-}
-
-.flash__hint {
-  font-size: 11.5px;
-  color: var(--soft);
-}
-
-.flash__face--back .flash__hint { color: #c0e2f4; }
-
-@media (prefers-reduced-motion: reduce) {
-  .flash__inner { transition: none; }
-}
 
 /* ---------------------------------------------------------- Datenschutz -- */
 
@@ -925,7 +808,7 @@ a:hover { text-decoration: underline; text-underline-offset: 3px; }
   font-size: 9px;
   letter-spacing: .16em;
   text-transform: uppercase;
-  color: #8a91a0;
+  color: var(--muted);
 }
 
 .team__placeholder-text {
@@ -938,7 +821,7 @@ a:hover { text-decoration: underline; text-underline-offset: 3px; }
 .team__placeholder-size {
   font-family: var(--mono);
   font-size: 9px;
-  color: var(--soft);
+  color: var(--muted);
 }
 
 .team__meta {
@@ -1204,11 +1087,6 @@ a:hover { text-decoration: underline; text-underline-offset: 3px; }
   .hero__shot { margin-top: 0; justify-content: center; }
   .hero__shot .phone { flex: 0 1 268px; }
 
-  .average { margin-top: 0; padding: 26px; }
-  /* .average__value braucht hier nichts mehr — --t-figure wächst oben mit */
-  .average__term { font-size: 15px; }
-  .average__note { font-size: 14px; }
-
   /* Start-Benachrichtigung: Feld und Button nebeneinander */
 
   .signup { margin-bottom: 16px; max-width: 540px; }
@@ -1233,7 +1111,6 @@ a:hover { text-decoration: underline; text-underline-offset: 3px; }
     justify-content: center;
   }
 
-  .signup__note { font-size: 13px; }
   .signup__ok { font-size: 17px; padding: 18px 22px; }
 
   .cta__row { gap: 16px; }
@@ -1316,13 +1193,6 @@ a:hover { text-decoration: underline; text-underline-offset: 3px; }
   .slot-placeholder {
     background: repeating-linear-gradient(45deg, var(--ph-a) 0 11px, var(--ph-b) 11px 22px);
   }
-
-  .flash__inner { height: 210px; }
-  .flash__face { padding: 22px; }
-  .flash__label { font-size: 10px; }
-  .flash__question { font-size: 22px; }
-  .flash__answer { font-size: 30px; }
-  .flash__hint { font-size: 12px; }
 
   /* Datenschutz */
 
@@ -2183,7 +2053,6 @@ button:focus-visible {
 /* ------------------------------------------------- Schatten vereinheitlicht -- */
 
 .phone { box-shadow: var(--schatten-geraet); }
-.average { box-shadow: var(--schatten-karte); }
 
 /* -------------------------------------------------------------- Desktop -- */
 
