@@ -1,6 +1,5 @@
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";
-import Bento from "@/components/Bento";
 import FeatureBand from "@/components/FeatureBand";
 import PrivacySection from "@/components/PrivacySection";
 import ClosingCta from "@/components/ClosingCta";
@@ -30,7 +29,6 @@ export default function Home() {
     <main className="page">
       <Header />
       <Hero />
-      <Bento />
 
       {featureSections.map((section) => (
         <FeatureBand key={section.id} section={section} />

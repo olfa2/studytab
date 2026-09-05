@@ -1452,25 +1452,6 @@ body { overflow-x: clip; }
   flex: none;
 }
 
-/*
- * Die Bildspalte bekommt eine sehr leise getönte Fläche. Sie trennt die
- * Telefone vom Seitengrund, ohne eine zweite Karte zu bauen: 5% Farbe
- * auf Weiß, dazu ein Rahmen aus derselben Farbe. Beides ist unter
- * "Flächen, Rahmen" ausdrücklich erlaubt — ein Verlauf oder ein farbiger
- * Schlagschatten wäre es nicht.
- *
- * `color-mix` statt eines neuen Hex-Werts: Damit hängt der Ton an der
- * Akzentfarbe. Wer oben --card-back ändert, ändert die Fläche mit, und
- * es kann keine Farbe entstehen, die im App-System nicht vorkommt.
- */
-.band--feature[data-form="geteilt"] .band__visual,
-.band--feature[data-form="breit"] .band__visual {
-  background: color-mix(in srgb, var(--akzent) 7%, var(--surface));
-  border: 1px solid color-mix(in srgb, var(--akzent) 18%, var(--line));
-  border-radius: var(--radius-lg);
-  padding: 20px 16px 16px;
-}
-
 /* --------------------------------------------- Phase 13: Abschnitte -- */
 
 @keyframes einblenden {
@@ -1631,9 +1612,6 @@ body { overflow-x: clip; }
 /* ------------------------------------------------------------- Desktop -- */
 
 @media (min-width: 1024px) {
-  .band--feature[data-form="geteilt"] .band__visual,
-  .band--feature[data-form="breit"] .band__visual { padding: 26px 22px 22px; }
-
   .scan-pfeil { width: 46px; }
 
   /*
@@ -1642,16 +1620,14 @@ body { overflow-x: clip; }
    */
   @supports (animation-timeline: view()) {
     /*
-     * Nur die geteilte Form. In der Karte läge die Bildfläche sonst
-     * während der Bewegung über dem Kartenrand, und die breite Sektion
-     * hat gar keine Seite, aus der etwas hereinkommen könnte. Beide
-     * steigen stattdessen auf — was den Rhythmus zusätzlich bricht.
+     * Die breite Sektion bleibt aussen vor: Sie hat gar keine Seite, aus
+     * der etwas hereinkommen könnte, und steigt deshalb auf wie der Text.
      */
-    .band--feature[data-form="geteilt"][data-media="right"] [data-reveal="bild"] {
+    .band--feature:not([data-form="breit"])[data-media="right"] [data-reveal="bild"] {
       animation-name: herein-von-rechts;
     }
 
-    .band--feature[data-form="geteilt"][data-media="left"] [data-reveal="bild"] {
+    .band--feature:not([data-form="breit"])[data-media="left"] [data-reveal="bild"] {
       animation-name: herein-von-links;
     }
   }
@@ -1752,24 +1728,6 @@ body { overflow-x: clip; }
 
 .ozean .zusagen__punkt + .zusagen__punkt::before {
   color: rgba(255, 255, 255, .45);
-}
-
-/* ------------------------------------------------------ Form: die Karte -- */
-
-/*
- * Der ganze Abschnitt ist eine getönte Karte. Von außen eine völlig
- * andere Silhouette als die geteilte Form daneben — und der Ton macht
- * sichtbar, dass hier ein Abschnitt anfängt und aufhört.
- *
- * 7-8% statt der 5% von vorher: Fünf Prozent auf Weiß sind auf einem
- * Schulhandy bei Tageslicht schlicht nicht zu sehen gewesen. Der Text
- * darauf bleibt --ink und damit weit über jedem Kontrast-Grenzwert.
- */
-.band--feature[data-form="karte"] {
-  background: color-mix(in srgb, var(--akzent) 8%, var(--surface));
-  border: 1px solid color-mix(in srgb, var(--akzent) 20%, var(--line));
-  border-radius: var(--radius-lg);
-  padding: var(--band-pad);
 }
 
 /* ----------------------------------------------------- Form: die Breite -- */
@@ -2205,104 +2163,6 @@ button:focus-visible {
 
 .band--dark { padding-block: 30px; }
 
-/* --------------------------------------------------------- Das Gitter -- */
-
-.band--bento .band__body {
-  max-width: 32ch;
-  margin: 0 auto 22px;
-  text-align: center;
-}
-
-.band--bento .band__kicker { justify-content: center; }
-
-.bento {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 14px;
-}
-
-/*
- * Eine Kachel. Text oben, Gerät unten — und das Gerät ist höher als der
- * Platz, der ihm bleibt. Genau das ist der Anschnitt: `overflow: hidden`
- * an der Kachel schneidet es ab, statt die Kachel wachsen zu lassen.
- */
-.kachel {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-  border-radius: var(--radius-lg);
-  padding: 22px 22px 0;
-  min-height: 356px;
-  color: #fff;
-  background-color: var(--kachel-grund);
-  background-image: var(--korn);
-  background-blend-mode: soft-light;
-  transition: transform .18s ease;
-}
-
-.kachel:hover { text-decoration: none; transform: translateY(-3px); }
-
-@media (prefers-reduced-motion: reduce) {
-  .kachel { transition: none; }
-  .kachel:hover { transform: none; }
-}
-
-/*
- * Drei Töne im Wechsel. Vier gleichfarbige Kacheln wären eine Tabelle.
- * Welche Kachel welchen Ton trägt, steht in lib/site.ts unter `kachel` —
- * hier stehen nur die Werte, und alle drei kennt die App.
- */
-.kachel[data-ton="ozean"] { --kachel-grund: var(--card-back); }
-.kachel[data-ton="dunkel"] { --kachel-grund: var(--frame); }
-.kachel[data-ton="note"] { --kachel-grund: var(--green-deep); }
-
-.kachel__kicker {
-  font-family: var(--mono);
-  font-size: var(--t-kicker);
-  letter-spacing: .16em;
-  text-transform: uppercase;
-  color: color-mix(in srgb, #fff 74%, transparent);
-  margin-bottom: 8px;
-}
-
-.kachel__titel {
-  font-size: var(--t-h3);
-  font-weight: 700;
-  line-height: 1.15;
-  letter-spacing: -.02em;
-  max-width: 18ch;
-}
-
-/*
- * Die Höhe hier ist kleiner als das Gerät hoch ist — der Rest läuft
- * unten aus der Kachel heraus und wird abgeschnitten. `flex-start`
- * verhindert, dass Flexbox das Gerät stattdessen staucht.
- */
-/*
- * `height: 0` statt einer festen Höhe am Kachelboden.
- *
- * Mit `margin-top: auto` stand der Block unten in der Kachel — und
- * zwischen Titel und Gerät klaffte eine halbe Kachelhöhe Farbe. Jetzt
- * beginnt das Gerät direkt unter dem Text, trägt aber selbst nichts zur
- * Höhe bei: Die Kachel ist genau so hoch, wie `min-height` sagt, und
- * alles darunter schneidet ihr `overflow: hidden` ab.
- *
- * `flex-start` verhindert, dass Flexbox das Gerät stattdessen staucht.
- */
-.kachel__bild {
-  margin-top: 22px;
-  height: 0;
-  display: flex;
-  align-items: flex-start;
-  justify-content: center;
-}
-
-.kachel__bild .phone { flex: 0 0 228px; }
-
-/* Im Anschnitt stört der Hinweis unter dem Rahmen nur */
-.kachel__bild .shots__note { display: none; }
-
 /* -------------------------------------------------- Das Zeichen unten -- */
 
 /*
@@ -2332,21 +2192,6 @@ button:focus-visible {
   .band--abschluss { padding-block: 40px; }
 
   .band--dark { padding-block: 72px; }
-
-  .bento {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
-  }
-
-  .kachel {
-    min-height: 404px;
-    padding: 30px 30px 0;
-  }
-
-  .kachel__bild { margin-top: 28px; }
-  .kachel__bild .phone { flex: 0 0 262px; }
-
-  .band--bento .band__body { max-width: 36ch; margin-bottom: 30px; }
 
   .abschluss__zeichen {
     width: 84px;
