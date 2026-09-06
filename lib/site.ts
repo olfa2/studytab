@@ -217,7 +217,14 @@ export const site = {
    * Sie steht vor dem Release anstelle des Download-Buttons.
    */
   signup: {
-    label: "Sag mir Bescheid, wenn Studytab da ist",
+    /*
+     * Die Beschriftung war aus der Sicht des Besuchers geschrieben —
+     * "Sag mir Bescheid, wenn Studytab da ist" liest sich wie ein Befehl
+     * an die App und beantwortet keine der zwei Fragen, die vor dem
+     * Eintragen im Weg stehen: Was soll ich hier hineinschreiben, und
+     * was bekomme ich dafuer? Jetzt steht beides in der Zeile.
+     */
+    label: "E-Mail eintragen — wir melden uns genau einmal, sobald Studytab da ist",
     /** Kurzfassung für den Abschluss-Block, dort nur für Screenreader */
     labelShort: "E-Mail-Adresse",
     placeholder: "deine@adresse.at",

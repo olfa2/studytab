@@ -77,7 +77,7 @@ aus `featureSections` — sie stehen nicht doppelt im Code.
 
 | Was | Text | Pfad |
 |---|---|---|
-| Beschriftung über dem Feld | Sag mir Bescheid, wenn Studytab da ist | `site.signup.label` |
+| Beschriftung über dem Feld | E-Mail eintragen — wir melden uns genau einmal, sobald Studytab da ist | `site.signup.label` |
 | Kurzfassung (nur Screenreader) | E-Mail-Adresse | `site.signup.labelShort` |
 | Graue Schrift im Feld | deine@adresse.at | `site.signup.placeholder` |
 | Knopf | Sag mir Bescheid | `site.signup.button` |
