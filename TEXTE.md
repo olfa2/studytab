@@ -65,13 +65,13 @@ aus `featureSections` — sie stehen nicht doppelt im Code.
 
 `site.headline`
 
-> Deine ganze Schule. Auf einem Bildschirm.
+> Deine ganze Schule in einer App.
 
 ### Vorspann
 
 `site.lede`
 
-> Noten, Mitschriften, Karteikarten und deine Lernzeit — alles in einer App.
+> Noten, Mitschriften, Karteikarten und deine Lernzeit.
 
 ### Anmeldeformular
 
@@ -521,7 +521,7 @@ WhatsApp oder Discord schickt.
 | Was | Text | Pfad |
 |---|---|---|
 | Seitentitel | Studytab — Noten, Mitschriften und Lernzeit für Österreich | `site.metaTitle` |
-| Beschreibung | Noten, Mitschriften, Karteikarten und deine Lernzeit — alles in einer App. | `site.lede` |
+| Beschreibung | Noten, Mitschriften, Karteikarten und deine Lernzeit. | `site.lede` |
 | Alt-Text des Bildes | Studytab — die App für Noten, Mitschriften, Karteikarten und Lernzeit, gemacht fürs österreichische Schulsystem | `site.og.alt` |
 | Zeile im Bild | Noten · Mitschriften · Karteikarten · Lernzeit | `site.og.features` |
 

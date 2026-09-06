@@ -152,15 +152,17 @@ export const site = {
   showScanLine: false,
 
   /*
-   * Die Schlagzeile verspricht das Ganze, nicht eine Funktion — das ist die
-   * Entscheidung hinter dem Umbau. Kurz genug, dass sie nach einmal Lesen
-   * hängenbleibt, und kurz genug fürs Vorschaubild beim Teilen.
+   * Die Schlagzeile verspricht das Ganze, nicht eine Funktion. Kurz genug,
+   * dass sie nach einmal Lesen hängenbleibt, und kurz genug fürs
+   * Vorschaubild beim Teilen.
    *
-   * Der frühere Satz "Du trägst die Note ein. Den Schnitt hast du schon."
-   * ist nicht verloren: Er steht jetzt über der Noten-Sektion, also genau
-   * dort, wo er wörtlich zutrifft.
+   * Ein Satz statt zwei: "Deine ganze Schule. Auf einem Bildschirm." hatte
+   * einen Punkt in der Mitte, und der zweite Halbsatz sagte nichts, was der
+   * erste nicht schon versprach — ein Bildschirm ist keine Zusage, sondern
+   * nur der Ort, an dem alles liegt. "In einer App" ist dieselbe Länge und
+   * benennt das Produkt.
    */
-  headline: "Deine ganze Schule. Auf einem Bildschirm.",
+  headline: "Deine ganze Schule in einer App.",
   /*
    * Ein breites Versprechen muss im selben Atemzug belegt werden, sonst ist
    * es schwächer als ein konkretes. Der Beleg ist der einzige echte
@@ -174,7 +176,14 @@ export const site = {
    * überspringen" umgehen lässt (AccountFlowView.swift). Freiwillig ist es,
    * nicht abwesend — und es steht jetzt im Datenschutz-Band, wo es hingehört.
    */
-  lede: "Noten, Mitschriften, Karteikarten und deine Lernzeit — alles in einer App.",
+  /*
+   * Endete auf "— alles in einer App." und stand damit unter einer
+   * Schlagzeile, die genau das schon sagt. Zwei Zeilen untereinander mit
+   * derselben Aussage heben sich gegenseitig auf: Die zweite liest sich
+   * dann als Wiederholung statt als Beleg. Übrig bleibt, was die
+   * Schlagzeile NICHT sagt — nämlich was "die ganze Schule" konkret ist.
+   */
+  lede: "Noten, Mitschriften, Karteikarten und deine Lernzeit.",
 
   /**
    * Die Beschreibung für Suchmaschinen und Link-Vorschauen.
