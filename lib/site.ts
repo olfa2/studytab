@@ -140,8 +140,16 @@ export const site = {
   released: false,
   appStoreUrl: "",
 
-  /** Die Zeile "Aus dem Schulhaus hergekommen?" ein-/ausblenden (Prop `scanZeile` im Design) */
-  showScanLine: true,
+  /**
+   * Die Zeile "Aus dem Schulhaus hergekommen?" ein-/ausblenden.
+   *
+   * Auf false gestellt: Sie stand über der Schlagzeile und sprach nur
+   * die Handvoll Leute an, die über einen QR-Code aus dem Schulhaus
+   * kommen — für alle anderen war sie eine Frage, auf die sie nicht
+   * gemeint waren. Der Text bleibt unten stehen; ein `true` hier holt
+   * ihn zurück, falls doch Zettel im Schulhaus hängen.
+   */
+  showScanLine: false,
 
   /*
    * Die Schlagzeile verspricht das Ganze, nicht eine Funktion — das ist die
@@ -166,7 +174,19 @@ export const site = {
    * überspringen" umgehen lässt (AccountFlowView.swift). Freiwillig ist es,
    * nicht abwesend — und es steht jetzt im Datenschutz-Band, wo es hingehört.
    */
-  lede: "Noten, Mitschriften, Karteikarten und deine Lernzeit — alles in einer App. Und gerechnet wird mit Semester, so wie es in Österreich zählt.",
+  lede: "Noten, Mitschriften, Karteikarten und deine Lernzeit — alles in einer App.",
+
+  /**
+   * Die Beschreibung für Suchmaschinen und Link-Vorschauen.
+   *
+   * Getrennt vom Vorspann oben, seit dieser gekürzt wurde: Auf der Seite
+   * soll der Semester-Satz nicht mehr stehen, in der Suche ist er aber
+   * das Einzige, was Studytab von zehn deutschen Noten-Apps unterscheidet.
+   * Eine Beschreibung darf ausführlicher sein als die Seite selbst — sie
+   * wird nicht gelesen, sondern durchsucht.
+   */
+  metaDescription:
+    "Noten, Mitschriften, Karteikarten und Lernzeit in einer App — gemacht für österreichische Schulen, mit Semesterschnitt statt Halbjahr.",
   scanLine: "Aus dem Schulhaus hergekommen? Dann bist du richtig.",
 
   /**
@@ -365,14 +385,12 @@ export const featureSections: FeatureSection[] = [
     id: "faecher",
     kicker: "Deine Fächer",
     /*
-     * Der Titel hieß "Alles, was du hast — an einem Ort." — und war damit
-     * die Schlagzeile ein zweites Mal, drei Bildschirmhöhen später. Wer
-     * "Deine ganze Schule. Auf einem Bildschirm." gelesen hat, weiß das
-     * schon; die erste Sektion muss das Versprechen einlösen, nicht
-     * bestätigen. Sie zeigt jetzt, WORAN alles hängt: am Fach.
+     * Nüchtern statt pointiert. Der Titel hieß "Ein Fach. Und alles, was
+     * dazugehört." — hübsch, aber er sagt nicht, was man tun kann. Hier
+     * steht jetzt die Handlung: anlegen und verwalten.
      */
-    title: "Ein Fach. Und alles, was dazugehört.",
-    lead: "Leg deine Fächer einmal an — danach hat jedes seinen eigenen Schnitt, seine eigenen Mitschriften, seine eigenen Karteikarten. Du tippst auf Mathe und hast alles, was Mathe ist.",
+    title: "Erstelle und verwalte deine Fächer.",
+    lead: "Jedes Fach bekommt einen Namen und eine Farbe. Und danach seinen eigenen Schnitt, seine eigenen Mitschriften und seine eigenen Karteikarten.",
     media: "right",
     layout: "gestaffelt",
     akzent: "ozean",
@@ -398,7 +416,7 @@ export const featureSections: FeatureSection[] = [
     id: "mitschriften",
     kicker: "Mitschriften",
     title: "Abfotografiert. Eingeordnet. Wiedergefunden.",
-    lead: "Heft aufschlagen, Foto machen, Fach auswählen. Mehr ist es nicht. Und am Abend vor der Schularbeit suchst du nicht erst, wo die Stunde von letzter Woche geblieben ist.",
+    lead: "Heft aufschlagen, Foto machen, Fach auswählen. Am Abend vor der Schularbeit suchst du dann nicht erst, wo die Stunde von letzter Woche geblieben ist.",
     media: "left",
     layout: "gegenueber",
     akzent: "ozean",
@@ -423,7 +441,7 @@ export const featureSections: FeatureSection[] = [
   {
     id: "lernen",
     kicker: "Lernen",
-    title: "Dranbleiben, auch wenn's zäh wird.",
+    title: "Lern in Sessions.",
     /*
      * "Unterbrechungen mitgezählt" statt "Handy gesperrt": FokusView.swift
      * hält fest, dass keine iOS-App das Telefon sperren darf. Sie hält den
@@ -438,7 +456,7 @@ export const featureSections: FeatureSection[] = [
      * kein Wort erklärt hat. Vier Bilder, drei erklärt: Das fällt genau
      * dem auf, der genau hinschaut.
      */
-    lead: "Karteikarten für den Stoff, Sessions für die Zeit. Studytab sperrt dein Handy nicht — das darf keine App auf dem iPhone. Es zählt stattdessen mit, wie oft du rausgehst, und zeigt dir danach schwarz auf weiß, wie lange du wirklich am Stück gearbeitet hast — und wie viele Tage du schon dabei bist.",
+    lead: "Starte eine Lernsession und lern mit deinen Karteikarten — die legst du direkt dort an. Studytab zählt die Zeit mit, führt eine Serie über deine Lerntage und zeigt dir im Wochenverlauf, wie viel zusammengekommen ist.",
     media: "right",
     layout: "handkarten",
     akzent: "ozean",
@@ -477,7 +495,7 @@ export const featureSections: FeatureSection[] = [
   {
     id: "noten",
     kicker: "Noten",
-    title: "Du trägst die Note ein. Den Schnitt hast du schon.",
+    title: "Jederzeit Überblick über deine Noten.",
     /*
      * Der stärkste Satz der Seite und der einzige echte Funktions-
      * unterschied: Periode.swift stellt ausdrücklich fest, dass nur
@@ -490,7 +508,7 @@ export const featureSections: FeatureSection[] = [
      * Füllsel statt nach Beweis. Oben steht die Behauptung, hier die
      * Rechnung dahinter.
      */
-    lead: "Jede Note mit ihrer Gewichtung — eine Schularbeit zählt anders als eine Mitarbeitsnote, und der Schnitt rechnet sich sofort neu. Und zwar pro Semester, so wie dein Zeugnis es tut. Nicht pro Halbjahr, wie die Apps von nebenan.",
+    lead: "Trag eine Note ein — der Schnitt rechnet sich sofort neu. Schularbeiten zählen dabei anders als Tests oder Mitarbeit.",
     /*
      * Von "left" auf "right" gedreht. Mitschriften ist die andere Karte
      * und hat das Bild links — zwei Karten mit dem Bild auf derselben

@@ -29,7 +29,7 @@ const nunito = Nunito({
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
   title: site.metaTitle,
-  description: site.lede,
+  description: site.metaDescription,
   /*
    * Die kanonische Adresse. Ohne sie zählt eine Suchmaschine dieselbe
    * Seite unter jeder Variante, unter der sie erreichbar ist — mit und
@@ -44,7 +44,7 @@ export const metadata: Metadata = {
   alternates: { canonical: "/" },
   openGraph: {
     title: site.metaTitle,
-    description: site.lede,
+    description: site.metaDescription,
     url: "/",
     siteName: site.name,
     locale: "de_AT",
@@ -53,7 +53,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: site.metaTitle,
-    description: site.lede,
+    description: site.metaDescription,
   },
   icons: { icon: site.logo, apple: site.logo },
 };

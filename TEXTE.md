@@ -71,7 +71,7 @@ aus `featureSections` — sie stehen nicht doppelt im Code.
 
 `site.lede`
 
-> Noten, Mitschriften, Karteikarten und deine Lernzeit — alles in einer App. Und gerechnet wird mit Semester, so wie es in Österreich zählt.
+> Noten, Mitschriften, Karteikarten und deine Lernzeit — alles in einer App.
 
 ### Anmeldeformular
 
@@ -116,11 +116,11 @@ der Seite.
 
 **Titel**
 
-> Ein Fach. Und alles, was dazugehört.
+> Erstelle und verwalte deine Fächer.
 
 **Text**
 
-> Leg deine Fächer einmal an — danach hat jedes seinen eigenen Schnitt, seine eigenen Mitschriften, seine eigenen Karteikarten. Du tippst auf Mathe und hast alles, was Mathe ist.
+> Jedes Fach bekommt einen Namen und eine Farbe. Und danach seinen eigenen Schnitt, seine eigenen Mitschriften und seine eigenen Karteikarten.
 
 **Bilder** — Anordnung `gestaffelt`, Bildseite `right`, Akzent `ozean`
 
@@ -141,7 +141,7 @@ der Seite.
 
 **Text**
 
-> Heft aufschlagen, Foto machen, Fach auswählen. Mehr ist es nicht. Und am Abend vor der Schularbeit suchst du nicht erst, wo die Stunde von letzter Woche geblieben ist.
+> Heft aufschlagen, Foto machen, Fach auswählen. Am Abend vor der Schularbeit suchst du dann nicht erst, wo die Stunde von letzter Woche geblieben ist.
 
 **Bilder** — Anordnung `gegenueber`, Bildseite `left`, Akzent `ozean`
 
@@ -158,11 +158,11 @@ der Seite.
 
 **Titel**
 
-> Dranbleiben, auch wenn's zäh wird.
+> Lern in Sessions.
 
 **Text**
 
-> Karteikarten für den Stoff, Sessions für die Zeit. Studytab sperrt dein Handy nicht — das darf keine App auf dem iPhone. Es zählt stattdessen mit, wie oft du rausgehst, und zeigt dir danach schwarz auf weiß, wie lange du wirklich am Stück gearbeitet hast — und wie viele Tage du schon dabei bist.
+> Starte eine Lernsession und lern mit deinen Karteikarten — die legst du direkt dort an. Studytab zählt die Zeit mit, führt eine Serie über deine Lerntage und zeigt dir im Wochenverlauf, wie viel zusammengekommen ist.
 
 **Bilder** — Anordnung `handkarten`, Bildseite `right`, Akzent `ozean`
 
@@ -181,11 +181,11 @@ der Seite.
 
 **Titel**
 
-> Du trägst die Note ein. Den Schnitt hast du schon.
+> Jederzeit Überblick über deine Noten.
 
 **Text**
 
-> Jede Note mit ihrer Gewichtung — eine Schularbeit zählt anders als eine Mitarbeitsnote, und der Schnitt rechnet sich sofort neu. Und zwar pro Semester, so wie dein Zeugnis es tut. Nicht pro Halbjahr, wie die Apps von nebenan.
+> Trag eine Note ein — der Schnitt rechnet sich sofort neu. Schularbeiten zählen dabei anders als Tests oder Mitarbeit.
 
 **Bilder** — Anordnung `haupt-neben`, Bildseite `right`, Akzent `note`
 
@@ -521,7 +521,7 @@ WhatsApp oder Discord schickt.
 | Was | Text | Pfad |
 |---|---|---|
 | Seitentitel | Studytab — Noten, Mitschriften und Lernzeit für Österreich | `site.metaTitle` |
-| Beschreibung | Noten, Mitschriften, Karteikarten und deine Lernzeit — alles in einer App. Und gerechnet wird mit Semester, so wie es in Österreich zählt. | `site.lede` |
+| Beschreibung | Noten, Mitschriften, Karteikarten und deine Lernzeit — alles in einer App. | `site.lede` |
 | Alt-Text des Bildes | Studytab — die App für Noten, Mitschriften, Karteikarten und Lernzeit, gemacht fürs österreichische Schulsystem | `site.og.alt` |
 | Zeile im Bild | Noten · Mitschriften · Karteikarten · Lernzeit | `site.og.features` |
 
