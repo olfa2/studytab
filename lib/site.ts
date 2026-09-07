@@ -374,21 +374,20 @@ export const site = {
 export const heroShot: Screen = {
   title: "Startseite",
   caption: "Schnitt, Suche,\nneueste Mitschriften",
-  file: "start.png",
-  src: null,
+  file: "start.jpg",
+  src: "/screenshots/start.jpg",
   alt: "Die Startseite von Studytab mit Notenschnitt, Suche und den neuesten Mitschriften",
 };
 
 /**
  * Die vier Funktions-Sektionen. Reihenfolge = Reihenfolge auf der Seite.
  *
- * Elf Bildplätze insgesamt (mit `heroShot` oben). Alle stehen auf
- * `src: null` und rendern deshalb den Platzhalter — mit dem erwarteten
- * Dateinamen darin, damit beim Fotografieren niemand raten muss.
+ * Elf Bildplätze insgesamt (mit `heroShot` oben), alle gefüllt.
  *
- * Sobald ein Bild da ist: Datei nach `public/screenshots/` legen und
- * `src` auf `"/screenshots/" + file` setzen. Sonst ändert sich nichts,
- * der Rahmen und die Maße bleiben.
+ * Die Dateien liegen in `public/screenshots/`. Wer eines austauscht:
+ * gleiche Datei überschreiben, fertig — `file` und `src` bleiben. Wer
+ * eines auf `src: null` setzt, bekommt an seiner Stelle wieder den
+ * Platzhalter mit dem erwarteten Dateinamen darin.
  *
  * Die Texte sind auf die Schlagzeile hin überarbeitet: Die vier Sektionen
  * lösen "Deine ganze Schule" der Reihe nach ein, statt es zu wiederholen.
@@ -415,15 +414,15 @@ export const featureSections: FeatureSection[] = [
       {
         title: "Fächerliste",
         caption: "Alle Fächer,\njedes mit Schnitt",
-        file: "faecher-liste.png",
-        src: null,
+        file: "faecher-liste.jpg",
+        src: "/screenshots/faecher-liste.jpg",
         alt: "Die Fächerliste in Studytab, jedes Fach mit seinem Notenschnitt",
       },
       {
         title: "Fach anlegen",
         caption: "Name, Farbe,\nfertig",
-        file: "fach-anlegen.png",
-        src: null,
+        file: "fach-anlegen.jpg",
+        src: "/screenshots/fach-anlegen.jpg",
         alt: "Ein neues Fach wird in Studytab angelegt",
       },
     ],
@@ -441,15 +440,15 @@ export const featureSections: FeatureSection[] = [
       {
         title: "Aufnehmen",
         caption: "Seite abfotografieren\noder Foto auswählen",
-        file: "scannen.png",
-        src: null,
+        file: "scannen.jpg",
+        src: "/screenshots/scannen.jpg",
         alt: "Eine Heftseite wird in Studytab aufgenommen",
       },
       {
         title: "Einordnen",
         caption: "Benennen und\neinem Fach zuweisen",
-        file: "fach-zuweisen.png",
-        src: null,
+        file: "fach-zuweisen.jpg",
+        src: "/screenshots/fach-zuweisen.jpg",
         alt: "Eine aufgenommene Mitschrift wird in Studytab einem Fach zugewiesen",
       },
     ],
@@ -481,29 +480,29 @@ export const featureSections: FeatureSection[] = [
       {
         title: "Fokus",
         caption: "Laufende Session,\nUnterbrechungen gezählt",
-        file: "fokus.png",
-        src: null,
+        file: "fokus.jpg",
+        src: "/screenshots/fokus.jpg",
         alt: "Eine laufende Lernsession in Studytab mit gezählten Unterbrechungen",
       },
       {
         title: "Track",
         caption: "Wochenbalken und\nVerlauf",
-        file: "track.png",
-        src: null,
+        file: "track.jpg",
+        src: "/screenshots/track.jpg",
         alt: "Der Track-Tab in Studytab mit Wochenbalken der Lernzeit",
       },
       {
         title: "Karteikarten",
         caption: "Sets anlegen\nund lernen",
-        file: "lernen.png",
-        src: null,
+        file: "lernen.jpg",
+        src: "/screenshots/lernen.jpg",
         alt: "Der Karteikarten-Lernmodus in Studytab",
       },
       {
         title: "Streak",
         caption: "Serie, Bestwert\nund Kalender",
-        file: "streak.png",
-        src: null,
+        file: "streak.jpg",
+        src: "/screenshots/streak.jpg",
         alt: "Die Streak-Übersicht in Studytab mit laufender Serie und Kalender",
       },
     ],
@@ -537,23 +536,39 @@ export const featureSections: FeatureSection[] = [
     shots: [
       {
         title: "Noten im Fach",
-        caption: "Notenliste und\nSchnitt pro Semester",
-        file: "fach-noten.png",
-        src: null,
-        alt: "Die Notenliste eines Fachs in Studytab mit dem Schnitt für das Semester",
+        caption: "Notenliste und\naktueller Schnitt",
+        file: "fach-noten.jpg",
+        src: "/screenshots/fach-noten.jpg",
+        alt: "Die Notenliste eines Fachs in Studytab mit dem aktuellen Schnitt",
       },
       {
         title: "Note eintragen",
         caption: "Schularbeit oder\nMitarbeit, gewichtet",
-        file: "note-eintragen.png",
-        src: null,
+        file: "note-eintragen.jpg",
+        src: "/screenshots/note-eintragen.jpg",
         alt: "Eine neue Note wird in Studytab eingetragen",
       },
     ],
   },
 ];
 
-export const SCREENSHOT_SIZE = { width: 1290, height: 2796 };
+/*
+ * Die tatsächlichen Maße der gelieferten Dateien.
+ *
+ * Die Screenshots kamen als 735 x 1600 an, nicht in der vollen
+ * iPhone-Auflösung 1290 x 2796 — unterwegs verkleinert. Das
+ * Seitenverhältnis stimmt trotzdem fast auf die Kommastelle (0,459 gegen
+ * 0,461); der Beschnitt durch die Gerätefassung liegt unter einem halben
+ * Prozent und ist nicht zu sehen.
+ *
+ * Hier stehen die echten Maße, weil next/image daraus den Platz vor dem
+ * Laden reserviert und die Größenstufen ableitet. Ein erfundener Wert
+ * ergäbe unscharfe Bilder oder einen Sprung beim Laden.
+ *
+ * Wer später die Originale nachreicht: Dateien tauschen, diese Zahl
+ * anpassen, fertig.
+ */
+export const SCREENSHOT_SIZE = { width: 735, height: 1600 };
 
 /* ==========================================================================
    Impressum und Datenschutzerklärung

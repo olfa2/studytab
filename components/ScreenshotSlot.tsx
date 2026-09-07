@@ -38,7 +38,15 @@ export default function ScreenshotSlot({
               alt={screen.alt}
               width={SCREENSHOT_SIZE.width}
               height={SCREENSHOT_SIZE.height}
-              sizes="(min-width: 1024px) 232px, 186px"
+              /*
+               * Wie breit das Bild tatsächlich dargestellt wird — daraus
+               * wählt der Browser die passende Größenstufe. Der Wert stand
+               * auf 232px und war überholt: Das Gerät im Einstieg ist
+               * inzwischen 300px breit, die aufgefächerten Karten 262px.
+               * Ein zu kleiner Hinweis liefert ein zu kleines Bild und
+               * macht die Screenshots unscharf.
+               */
+              sizes="(min-width: 1024px) 300px, 240px"
               priority={index === 0}
             />
           ) : (

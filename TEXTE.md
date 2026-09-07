@@ -8,7 +8,7 @@ Reihenfolge, in der er auf der Seite vorkommt.
 unter dem Pfad, der über jedem Absatz steht. Eine Änderung hier
 landet nicht auf der Seite.
 
-Stand: 2026-09-06 · Adresse: https://studytab-real.vercel.app
+Stand: 2026-09-07 · Adresse: https://studytab-real.vercel.app
 
 ---
 
@@ -100,7 +100,7 @@ aus `featureSections` — sie stehen nicht doppelt im Code.
 |---|---|
 | Titel im Platzhalter | Startseite |
 | Beschriftung | Schnitt, Suche, / neueste Mitschriften |
-| Erwartete Datei | `public/screenshots/start.png` |
+| Erwartete Datei | `public/screenshots/start.jpg` |
 | Alt-Text | Die Startseite von Studytab mit Notenschnitt, Suche und den neuesten Mitschriften |
 
 ## 3 · Die vier Funktionsabschnitte
@@ -126,8 +126,8 @@ der Seite.
 
 | Titel | Beschriftung | Datei | Alt-Text |
 |---|---|---|---|
-| Fächerliste | Alle Fächer, / jedes mit Schnitt | `faecher-liste.png` | Die Fächerliste in Studytab, jedes Fach mit seinem Notenschnitt |
-| Fach anlegen | Name, Farbe, / fertig | `fach-anlegen.png` | Ein neues Fach wird in Studytab angelegt |
+| Fächerliste | Alle Fächer, / jedes mit Schnitt | `faecher-liste.jpg` | Die Fächerliste in Studytab, jedes Fach mit seinem Notenschnitt |
+| Fach anlegen | Name, Farbe, / fertig | `fach-anlegen.jpg` | Ein neues Fach wird in Studytab angelegt |
 
 ### 3.2 · Mitschriften
 
@@ -147,8 +147,8 @@ der Seite.
 
 | Titel | Beschriftung | Datei | Alt-Text |
 |---|---|---|---|
-| Aufnehmen | Seite abfotografieren / oder Foto auswählen | `scannen.png` | Eine Heftseite wird in Studytab aufgenommen |
-| Einordnen | Benennen und / einem Fach zuweisen | `fach-zuweisen.png` | Eine aufgenommene Mitschrift wird in Studytab einem Fach zugewiesen |
+| Aufnehmen | Seite abfotografieren / oder Foto auswählen | `scannen.jpg` | Eine Heftseite wird in Studytab aufgenommen |
+| Einordnen | Benennen und / einem Fach zuweisen | `fach-zuweisen.jpg` | Eine aufgenommene Mitschrift wird in Studytab einem Fach zugewiesen |
 
 ### 3.3 · Lernen
 
@@ -168,10 +168,10 @@ der Seite.
 
 | Titel | Beschriftung | Datei | Alt-Text |
 |---|---|---|---|
-| Fokus | Laufende Session, / Unterbrechungen gezählt | `fokus.png` | Eine laufende Lernsession in Studytab mit gezählten Unterbrechungen |
-| Track | Wochenbalken und / Verlauf | `track.png` | Der Track-Tab in Studytab mit Wochenbalken der Lernzeit |
-| Karteikarten | Sets anlegen / und lernen | `lernen.png` | Der Karteikarten-Lernmodus in Studytab |
-| Streak | Serie, Bestwert / und Kalender | `streak.png` | Die Streak-Übersicht in Studytab mit laufender Serie und Kalender |
+| Fokus | Laufende Session, / Unterbrechungen gezählt | `fokus.jpg` | Eine laufende Lernsession in Studytab mit gezählten Unterbrechungen |
+| Track | Wochenbalken und / Verlauf | `track.jpg` | Der Track-Tab in Studytab mit Wochenbalken der Lernzeit |
+| Karteikarten | Sets anlegen / und lernen | `lernen.jpg` | Der Karteikarten-Lernmodus in Studytab |
+| Streak | Serie, Bestwert / und Kalender | `streak.jpg` | Die Streak-Übersicht in Studytab mit laufender Serie und Kalender |
 
 ### 3.4 · Noten
 
@@ -191,8 +191,8 @@ der Seite.
 
 | Titel | Beschriftung | Datei | Alt-Text |
 |---|---|---|---|
-| Noten im Fach | Notenliste und / Schnitt pro Semester | `fach-noten.png` | Die Notenliste eines Fachs in Studytab mit dem Schnitt für das Semester |
-| Note eintragen | Schularbeit oder / Mitarbeit, gewichtet | `note-eintragen.png` | Eine neue Note wird in Studytab eingetragen |
+| Noten im Fach | Notenliste und / aktueller Schnitt | `fach-noten.jpg` | Die Notenliste eines Fachs in Studytab mit dem aktuellen Schnitt |
+| Note eintragen | Schularbeit oder / Mitarbeit, gewichtet | `note-eintragen.jpg` | Eine neue Note wird in Studytab eingetragen |
 
 Unter jedem Bildplatz, solange kein echtes Bild da ist:
 
