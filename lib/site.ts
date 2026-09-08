@@ -555,11 +555,13 @@ export const featureSections: FeatureSection[] = [
 /*
  * Die tatsächlichen Maße der gelieferten Dateien.
  *
- * Die Screenshots kamen als 735 x 1600 an, nicht in der vollen
- * iPhone-Auflösung 1290 x 2796 — unterwegs verkleinert. Das
- * Seitenverhältnis stimmt trotzdem fast auf die Kommastelle (0,459 gegen
- * 0,461); der Beschnitt durch die Gerätefassung liegt unter einem halben
- * Prozent und ist nicht zu sehen.
+ * Die Screenshots kamen verkleinert an, nicht in der vollen
+ * iPhone-Auflösung 1290 x 2796: zehn davon als 735 x 1600, start.jpg als
+ * 942 x 2048. Die Seitenverhältnisse liegen alle zwischen 0,459 und
+ * 0,460, die Gerätefassung erwartet 0,461 — der Beschnitt liegt damit
+ * unter einem halben Prozent und ist nicht zu sehen. Ein Wert für alle
+ * genügt deshalb; er dient nur dazu, den Platz vor dem Laden zu
+ * reservieren.
  *
  * Hier stehen die echten Maße, weil next/image daraus den Platz vor dem
  * Laden reserviert und die Größenstufen ableitet. Ein erfundener Wert

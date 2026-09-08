@@ -8,7 +8,7 @@ Reihenfolge, in der er auf der Seite vorkommt.
 unter dem Pfad, der über jedem Absatz steht. Eine Änderung hier
 landet nicht auf der Seite.
 
-Stand: 2026-09-07 · Adresse: https://studytab-real.vercel.app
+Stand: 2026-09-08 · Adresse: https://studytab-real.vercel.app
 
 ---
 
