@@ -8,7 +8,7 @@ Reihenfolge, in der er auf der Seite vorkommt.
 unter dem Pfad, der über jedem Absatz steht. Eine Änderung hier
 landet nicht auf der Seite.
 
-Stand: 2026-09-08 · Adresse: https://studytab-real.vercel.app
+Stand: 2026-09-09 · Adresse: https://studytab-real.vercel.app
 
 ---
 
@@ -77,7 +77,7 @@ aus `featureSections` — sie stehen nicht doppelt im Code.
 
 | Was | Text | Pfad |
 |---|---|---|
-| Beschriftung über dem Feld | E-Mail eintragen — wir melden uns genau einmal, sobald Studytab da ist | `site.signup.label` |
+| Beschriftung über dem Feld | E-Mail eintragen — wir melden uns, sobald die App im App Store verfügbar ist | `site.signup.label` |
 | Kurzfassung (nur Screenreader) | E-Mail-Adresse | `site.signup.labelShort` |
 | Graue Schrift im Feld | deine@adresse.at | `site.signup.placeholder` |
 | Knopf | Sag mir Bescheid | `site.signup.button` |

@@ -232,8 +232,15 @@ export const site = {
      * an die App und beantwortet keine der zwei Fragen, die vor dem
      * Eintragen im Weg stehen: Was soll ich hier hineinschreiben, und
      * was bekomme ich dafuer? Jetzt steht beides in der Zeile.
+     *
+     * "genau einmal" stand hier und ist absichtlich raus. Es war die
+     * Zusage, dass niemand eine Serie von Mails bekommt — was jetzt
+     * fehlt. Der Anlass steht dafuer konkreter da ("im App Store
+     * verfuegbar" statt "da ist"). Wer die Zusage zurueckwill, ohne die
+     * Zeile wieder zu verlaengern: als vierte Zusicherung unter
+     * `zusicherungen`, wo sie ohnehin gelesen wird.
      */
-    label: "E-Mail eintragen — wir melden uns genau einmal, sobald Studytab da ist",
+    label: "E-Mail eintragen — wir melden uns, sobald die App im App Store verfügbar ist",
     /** Kurzfassung für den Abschluss-Block, dort nur für Screenreader */
     labelShort: "E-Mail-Adresse",
     placeholder: "deine@adresse.at",
