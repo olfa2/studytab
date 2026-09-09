@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import { featureSections, site } from "@/lib/site";
 
 /**
@@ -24,7 +25,20 @@ import { featureSections, site } from "@/lib/site";
 export default function Header() {
   return (
     <header className="header">
-      <a className="header__brand" href="#top">
+      {/*
+       * Zur Startseite, nicht zu "#top".
+       *
+       * Die Wortmarke zeigte auf "#top" — auf der Startseite scrollt das
+       * nach oben, auf Impressum, Datenschutz und der Abmeldeseite
+       * passiert damit gar nichts Sinnvolles: Man bleibt auf der
+       * Unterseite und springt nur an deren Anfang. Ein Logo, das nicht
+       * nach Hause führt, ist auf jeder Website eine Sackgasse.
+       *
+       * `Link` auf "/" macht beides richtig: Auf einer Unterseite
+       * navigiert es zur Startseite, auf der Startseite selbst scrollt
+       * Next bei gleicher Route ohnehin nach oben.
+       */}
+      <Link className="header__brand" href="/">
         <Image
           className="header__logo"
           src={site.logo}
@@ -34,7 +48,7 @@ export default function Header() {
           priority
         />
         <span className="header__name display">{site.name}</span>
-      </a>
+      </Link>
 
       {/*
        * Nur ab Tablet-Breite. Auf 390px stünden vier weitere Wörter
