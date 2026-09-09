@@ -184,7 +184,15 @@
    * Dort ist die Spalte so breit wie das Fenster, und 40px über den Rand
    * hinaus wären fast ein Zehntel der Bildschirmbreite.
    */
-  --herein: 26px;
+  --herein: 40px;
+
+  /*
+   * Wie weit Text und Bilder beim Einblenden aufsteigen. Auf dem Handy
+   * größer als am Desktop: Dort ersetzt diese Bewegung das seitliche
+   * Hereinfahren, das auf schmalen Fenstern nicht geht (siehe unten im
+   * Desktop-Block). 16px wären dann kaum zu bemerken.
+   */
+  --aufsteigen: 26px;
 
   --schatten-karte:
     0 1px 2px rgba(16, 20, 28, .05),
@@ -1638,7 +1646,7 @@ button:focus-visible {
 /* -------------------------------------------------- Bewegung: die Bildfolgen -- */
 
 @keyframes einblenden {
-  from { opacity: 0; transform: translateY(16px); }
+  from { opacity: 0; transform: translateY(var(--aufsteigen)); }
   to   { opacity: 1; transform: none; }
 }
 
@@ -1732,26 +1740,6 @@ button:focus-visible {
    * Spitze. Das ist die Reihenfolge, die den Ablauf erzählt — zuerst der
    * Weg, dann das Ziel. Beide Bereiche liegen hinter denen der Bilder.
    */
-  /*
-   * Die Bildspalte fährt von der Seite herein, auf der sie liegt — und
-   * zwar auf jeder Bildschirmbreite. Diese Regeln standen im
-   * Desktop-Block, weil es mobil kein Links und kein Rechts gibt: Dort
-   * stapelt sich alles untereinander. Die Richtung wechselt aber trotzdem
-   * von Abschnitt zu Abschnitt, und dieser Wechsel ist auch gestapelt zu
-   * sehen — auf dem Handy war die Seite dadurch spürbar stiller als auf
-   * dem Desktop, ohne dass es dafür einen Grund gab.
-   *
-   * Die breite Sektion bleibt außen vor: Sie hat gar keine Seite, aus der
-   * etwas hereinkommen könnte, und steigt deshalb auf wie der Text.
-   */
-  .band--feature:not([data-form="breit"])[data-media="right"] [data-reveal="bild"] {
-    animation-name: herein-von-rechts;
-  }
-
-  .band--feature:not([data-form="breit"])[data-media="left"] [data-reveal="bild"] {
-    animation-name: herein-von-links;
-  }
-
   .scan-pfeil__bogen {
     stroke-dasharray: 1;
     animation: bogen-zeichnen linear both;
@@ -1811,13 +1799,42 @@ button:focus-visible {
  * bei zwei Regeln gleicher Spezifität entschied damit die Zeilennummer
  * darüber, welche gewann, und das war nicht mehr ablesbar.
  */
+/* ---------------------------------------------- Enge Fenster: Drehungen -- */
+
+/*
+ * Auf sehr schmalen Fenstern werden die Drehungen flacher.
+ *
+ * Ein gekipptes Rechteck braucht mehr Platz als ein gerades: Bei 4°
+ * Neigung ist die Hüllbox eines Telefons rund 15% breiter als das Gerät
+ * selbst, bei 8° rund 25%. Auf einem 320px-Fenster ragten die äußeren
+ * Geräte dadurch links und rechts aus der Spalte — die Seite ließ sich
+ * seitlich schieben, und nichts stand mehr in seiner Flucht.
+ *
+ * Flacher statt weg: Die Anordnungen bleiben als solche erkennbar, sie
+ * legen sich nur gerader hin. Ab 480px gelten wieder die vollen Winkel.
+ */
+@media (max-width: 479px) {
+  .shots[data-layout="gegenueber"] .phone:nth-child(1) { transform: rotate(-1.5deg); }
+  .shots[data-layout="gegenueber"] .phone:nth-child(2) { transform: rotate(1.5deg); }
+
+  .shots[data-layout="handkarten"] .phone:nth-child(1) { transform: rotate(-2.5deg); }
+  .shots[data-layout="handkarten"] .phone:nth-child(2) { transform: rotate(-1deg) translateY(-8px); }
+  .shots[data-layout="handkarten"] .phone:nth-child(3) { transform: rotate(1deg) translateY(-4px); }
+  .shots[data-layout="handkarten"] .phone:nth-child(4) { transform: rotate(2.5deg); }
+
+  /* Der Rest der Neigung braucht trotzdem noch etwas Luft */
+  .shots { padding-inline: 8px; }
+}
+
+
 @media (min-width: 1024px) {
   /* ========================================================================== */
   /* Desktop — ab 1024px                                                        */
   /* ========================================================================== */
   :root {
-    /* Mehr Platz, längerer Weg */
-    --herein: 40px;
+    /* Hier trägt das seitliche Hereinfahren die Bewegung, das Aufsteigen
+       darf dezenter sein */
+    --aufsteigen: 16px;
     --shell: 64px;
 
     /* Dieselben Marken, größer — die ganze Seite wächst auf einmal mit */
@@ -2026,6 +2043,31 @@ button:focus-visible {
 
   /* ------------------------------------------------------------- Desktop -- */
   .scan-pfeil { width: 46px; }
+
+  /*
+   * Das seitliche Hereinfahren gibt es NUR hier, und dafür gibt es einen
+   * handfesten Grund — nicht bloß einen gestalterischen.
+   *
+   * Es stand kurz auf jeder Breite. Unter 1024px ist die Bildspalte aber
+   * so breit wie die Textspalte, also fast so breit wie das Fenster: Ein
+   * Versatz von 26px schob sie bei 320px Fensterbreite von 20..300 auf
+   * 46..326. Ergebnis waren beide Beschwerden auf einmal — die Seite ließ
+   * sich seitlich schieben, und alles stand um 26px neben seiner Spalte.
+   *
+   * Auf dem Handy bleibt die Bewegung trotzdem: Text und Bilder steigen
+   * auf und blenden ein, die Telefone versetzt nacheinander, der Pfeil
+   * zeichnet sich. Was wegfällt, ist nur die Richtung — und die gibt es
+   * dort ohnehin nicht, weil alles untereinander steht.
+   */
+  @supports (animation-timeline: view()) {
+    .band--feature:not([data-form="breit"])[data-media="right"] [data-reveal="bild"] {
+      animation-name: herein-von-rechts;
+    }
+
+    .band--feature:not([data-form="breit"])[data-media="left"] [data-reveal="bild"] {
+      animation-name: herein-von-links;
+    }
+  }
 
   /* -------------------------------------------------------------- Desktop -- */
   /*
