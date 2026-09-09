@@ -174,7 +174,9 @@ export const site = {
    * "Ohne Konto, auch offline" stand hier früher und war irreführend: Beim
    * Einrichten kommt ein Konto-Schritt, der sich mit "Für jetzt
    * überspringen" umgehen lässt (AccountFlowView.swift). Freiwillig ist es,
-   * nicht abwesend — und es steht jetzt im Datenschutz-Band, wo es hingehört.
+   * nicht abwesend. Danach stand es als eigener Punkt im Datenschutz-Band
+   * und ist auch dort auf Wunsch entfernt — vom freiwilligen Konto ist auf
+   * der Seite jetzt nirgends mehr die Rede.
    */
   /*
    * Endete auf "— alles in einer App." und stand damit unter einer
@@ -301,9 +303,13 @@ export const site = {
    * war falsch: Seit August 2026 gibt es Konten mit E-Mail und Passwort
    * und automatische Cloud-Synchronisierung.
    *
+   * Der Punkt "Konto ist freiwillig" stand hier und ist auf Wunsch
+   * entfernt. Die beiden Belege dazu (AccountFlowView.swift Zeile 178 und
+   * ueberspringeAccountEinrichtung() in AppStore.swift) tragen weiterhin
+   * die Zusicherung "Auch offline" im Einstieg — wer die auch anfasst,
+   * muss dort nachsehen.
+   *
    * Belege:
-   * - Konto überspringbar  → Views/AccountFlowView.swift, Zeile 178
-   * - Lokal ohne Konto     → Store/AppStore.swift, ueberspringeAccountEinrichtung()
    * - Server in Frankfurt  → docs/verarbeitungsverzeichnis.md, Abschnitt 7
    * - Keine Tracking-SDKs  → docs/app-store-release-notes.md
    * - Löschung nach 30 Tg. → docs/verarbeitungsverzeichnis.md, Abschnitt 8
@@ -317,10 +323,6 @@ export const site = {
     title: "Deine Inhalte gehören dir.",
     lead: "Sie werden nur gespeichert, damit die App funktioniert — für nichts anderes.",
     claims: [
-      {
-        title: "Konto ist freiwillig",
-        text: "Beim Einrichten kannst du auf »Für jetzt überspringen« tippen. Dann läuft Studytab vollständig lokal auf deinem Gerät.",
-      },
       {
         title: "Server in der EU",
         text: "Mit Konto liegen deine Inhalte verschlüsselt auf Servern in Frankfurt — damit sie auf einem neuen Gerät wieder da sind.",

@@ -219,7 +219,6 @@ Belege stehen als Kommentar in `lib/site.ts`.
 
 | Punkt | Text |
 |---|---|
-| **Konto ist freiwillig** | Beim Einrichten kannst du auf »Für jetzt überspringen« tippen. Dann läuft Studytab vollständig lokal auf deinem Gerät. |
 | **Server in der EU** | Mit Konto liegen deine Inhalte verschlüsselt auf Servern in Frankfurt — damit sie auf einem neuen Gerät wieder da sind. |
 | **Kein Tracking** | Keine Werbung, kein Verkauf von Daten. Im ganzen Projekt steckt keine Analyse-, Absturz- oder Werbebibliothek. |
 | **Jederzeit löschbar** | Du kannst dein Konto in der App löschen. Nach 30 Tagen ist alles endgültig weg. |

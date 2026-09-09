@@ -2113,10 +2113,17 @@ button:focus-visible {
    * dort auf sechs Fetzen um. Zwei mal zwei gibt jeder Spalte gut das
    * Doppelte und damit eine Zeilenlänge, die man lesen kann.
    */
+  /*
+   * Drei Spalten, seit der Punkt zum Konto entfallen ist. Bei zwei
+   * Spalten bliebe eine Zelle leer, und eine leere Zelle in einem Raster
+   * sieht nach vergessenem Inhalt aus. Auf 1120px Innenbreite bleiben je
+   * rund 290px — genug für drei Zeilen Text, das war der Grund, warum
+   * hier ursprünglich von vier auf zwei Spalten umgestellt wurde.
+   */
   .claims {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 30px 56px;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px 44px;
   }
 
   .footer { padding-block: 34px 36px; }
