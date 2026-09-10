@@ -8,7 +8,7 @@ Reihenfolge, in der er auf der Seite vorkommt.
 unter dem Pfad, der über jedem Absatz steht. Eine Änderung hier
 landet nicht auf der Seite.
 
-Stand: 2026-09-09 · Adresse: https://studytab-real.vercel.app
+Stand: 2026-09-10 · Adresse: https://studytab-real.vercel.app
 
 ---
 
@@ -94,14 +94,19 @@ aus `featureSections` — sie stehen nicht doppelt im Code.
 „Auch offline" steht in `Store/AppStore.swift`, „Kein Tracking" in
 `Package.resolved`.*
 
-### Das Bild daneben
+### Das Maskottchen daneben
 
-| | |
-|---|---|
-| Titel im Platzhalter | Startseite |
-| Beschriftung | Schnitt, Suche, / neueste Mitschriften |
-| Erwartete Datei | `public/screenshots/start.jpg` |
-| Alt-Text | Die Startseite von Studytab mit Notenschnitt, Suche und den neuesten Mitschriften |
+Hier stand der Screenshot der Startseite. Seit dem Umbau des Einstiegs
+steht dort das Maskottchen, mit zwei schwebenden Karten.
+
+| Was | Text | Pfad |
+|---|---|---|
+| Alt-Text der Figur | Das Studytab-Maskottchen: ein Bär mit Notizblock, Stift und Schulrucksack | `site.hero.maskottchenAlt` |
+| Karte oben | Semesterschnitt · 1,4 | `site.hero.schnittLabel` / `schnittWert` |
+| Karte unten | 12 Tage · Lernserie | `site.hero.serieWert` / `serieLabel` |
+
+🔴 **Die beiden Zahlen sind Beispielwerte.** Es ist die einzige Stelle
+der Seite, an der eine Zahl steht, die nicht aus der App kommt.
 
 ## 3 · Die vier Funktionsabschnitte
 

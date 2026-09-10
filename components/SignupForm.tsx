@@ -1,6 +1,6 @@
 "use client";
 
-import { useActionState } from "react";
+import { useActionState, useId } from "react";
 import { subscribe } from "@/app/actions";
 import { signupInitialState } from "@/lib/signup-state";
 import { site } from "@/lib/site";
@@ -32,6 +32,7 @@ export default function SignupForm({ label, labelHidden = false }: Props) {
     signupInitialState,
   );
   const copy = site.signup;
+  const feldId = useId();
 
   if (state.status === "ok") {
     return (
@@ -46,16 +47,31 @@ export default function SignupForm({ label, labelHidden = false }: Props) {
 
   return (
     <div className="signup">
+      {/*
+       * Die Beschriftung steht ÜBER dem Formular, nicht darin.
+       *
+       * Sie war vorher Teil des Feldes, und das Feld teilt sich am
+       * Desktop eine Zeile mit dem Knopf. Damit war die Beschriftung nur
+       * so breit wie das Eingabefeld — der Satz brach auf drei Zeilen um,
+       * die letzte trug ein einzelnes Wort. Über dem Formular hat sie die
+       * ganze Spalte.
+       *
+       * `htmlFor` statt Umschließen: Die Verbindung zum Feld bleibt für
+       * Screenreader dieselbe, nur die Verschachtelung fällt weg.
+       */}
+      <label
+        className={
+          labelHidden ? "signup__label visually-hidden" : "signup__label"
+        }
+        htmlFor={feldId}
+      >
+        {label ?? copy.label}
+      </label>
+
       <form className="signup__form" action={formAction} noValidate>
-        <label className="signup__field">
-          <span
-            className={
-              labelHidden ? "signup__label visually-hidden" : "signup__label"
-            }
-          >
-            {label ?? copy.label}
-          </span>
+        <div className="signup__field">
           <input
+            id={feldId}
             className="signup__input"
             type="email"
             name="email"
@@ -65,7 +81,7 @@ export default function SignupForm({ label, labelHidden = false }: Props) {
             required
             aria-invalid={state.status === "error"}
           />
-        </label>
+        </div>
 
         {/* Honigtopf gegen Bots — für Menschen unsichtbar, für Screenreader versteckt */}
         <div className="signup__trap" aria-hidden="true">

@@ -102,6 +102,17 @@
   /* Ozeanblau — der Hauptakzent der App (accent600) */
   --card-back: #0b6d9e;
 
+  /*
+   * Die Farben des Einstiegs, aus dem Entwurf studytab-hero.html.
+   * Alle vier sind Aufhellungen des Ozeans und der Aktionsfarbe — es
+   * kommt kein Ton dazu, den das Farbsystem nicht schon kennt.
+   */
+  --schein: #ddeff9;
+  --punkt: #1c8fc4;
+  --kreis-a: #c0e2f4;
+  --kreis-b: #e6eefe;
+  --ring: rgba(11, 109, 158, .22);
+
   /* Gerätefassung und Platzhalter */
   --frame: #0f1115;
   --ph-a: #e8ebf0;
@@ -459,6 +470,11 @@ button:focus-visible {
    * "wirkt teurer" wahrnimmt, ohne ihn benennen zu können.
    */
   letter-spacing: -.035em;
+  /*
+   * Verteilt die Wörter gleichmäßig auf die Zeilen, statt die letzte mit
+   * einem Rest zu füllen. Browser ohne Unterstützung brechen wie bisher.
+   */
+  text-wrap: balance;
   margin-bottom: 12px;
 }
 
@@ -508,26 +524,28 @@ button:focus-visible {
  * Keine Farbe: Im Einstieg ist der blaue Knopf die einzige gesättigte
  * Fläche. Auffällig wird die Zeile über Größe und Gewicht.
  */
+/*
+ * Die drei Zusicherungen, aus dem Entwurf als einzelne weiße Marken statt
+ * als Zeile mit Trennpunkten. Dieselben drei Wörter an derselben Stelle —
+ * sie lesen sich nur als drei Zusagen statt als eine Aufzählung.
+ */
 .zusagen {
   list-style: none;
-  margin: 16px 0 0;
-  padding: 14px 0 0;
-  border-top: 1px solid var(--line);
+  margin: 26px 0 0;
+  padding: 0;
   display: flex;
   flex-wrap: wrap;
-  align-items: baseline;
-  gap: 6px 14px;
-  font-size: var(--t-body);
-  font-weight: 700;
-  color: var(--ink-2);
+  gap: 10px;
 }
 
-/* Der Trenner sitzt am Punkt selbst — dann bricht er sauber mit um */
-.zusagen__punkt + .zusagen__punkt::before {
-  content: "·";
-  color: var(--line-strong);
-  font-weight: 400;
-  margin-right: 14px;
+.zusagen__punkt {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 8px 14px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ink-2);
 }
 
 /*
@@ -716,13 +734,15 @@ button:focus-visible {
   font-weight: 700;
 }
 
-.ozean .zusagen {
+/*
+ * Auf der Ozean-Fläche im Abschluss werden aus den weißen Marken
+ * durchscheinende: Weiß auf Weiß wäre dort ein Block, und die Marken
+ * sollen die Fläche nicht zerschneiden.
+ */
+.ozean .zusagen__punkt {
+  background: rgba(255, 255, 255, .12);
+  border-color: rgba(255, 255, 255, .28);
   color: #fff;
-  border-top-color: rgba(255, 255, 255, .24);
-}
-
-.ozean .zusagen__punkt + .zusagen__punkt::before {
-  color: rgba(255, 255, 255, .45);
 }
 
 /* ------------------------------------------------------- Der Abschluss-Block -- */
@@ -825,9 +845,9 @@ button:focus-visible {
   font-family: var(--font-baloo), sans-serif;
   font-weight: 700;
   font-size: 18px;
-  padding: 15px 20px;
+  padding: 15px 24px;
   border: 0;
-  border-radius: 999px;
+  border-radius: 14px;
   cursor: pointer;
   display: block;
 }
@@ -873,12 +893,18 @@ button:focus-visible {
 
 .signup__field { display: block; }
 
+/*
+ * Steht seit dem neuen Einstieg ÜBER dem Formular statt darin — sie hat
+ * damit die ganze Spalte statt nur die Breite des Eingabefeldes.
+ */
 .signup__label {
   display: block;
-  font-size: 13px;
+  font-size: 13.5px;
   font-weight: 700;
+  line-height: 1.4;
   color: var(--ink);
-  margin-bottom: 7px;
+  margin-bottom: 10px;
+  max-width: 44ch;
 }
 
 .signup__input {
@@ -888,8 +914,9 @@ button:focus-visible {
   color: var(--ink);
   background: #fff;
   border: 1px solid var(--line-strong);
-  border-radius: 999px;
-  padding: 14px 20px;
+  /* Abgerundete Ecken statt Pille — aus dem Entwurf des Einstiegs */
+  border-radius: 14px;
+  padding: 15px 18px;
   outline-offset: 2px;
 }
 
@@ -945,29 +972,6 @@ button:focus-visible {
 }
 
 /* -------------------------------------------------- Bildschirme: Anordnungen -- */
-
-/*
- * Das Bild der Startseite im Einstieg. Steht dort, wo vorher die
- * Schnitt-Karte stand: Ein Screenshot zeigt die App, eine erfundene Note
- * behauptet sie nur. Mobil bekommt es Abstand nach oben, am Desktop macht
- * das die Grid-Spalte von `.band--intro`.
- */
-/*
- * Das Gerät im Einstieg stand auf dem Handy links in der Ozean-Fläche,
- * mit 150px leerem Blau daneben — die Mittigkeit galt nur ab 1024px. Es
- * sah aus, als wäre es zur Seite gerutscht.
- *
- * Jetzt mittig und größer: 236px statt 196px füllen die Fläche, ohne den
- * Seitenrand zu berühren (390px Fenster minus Seitenrand minus
- * Innenabstand der Fläche lassen 306px übrig).
- */
-.hero__shot {
-  margin-top: 26px;
-  display: flex;
-  justify-content: center;
-}
-
-.hero__shot .phone { flex: 0 1 236px; }
 
 /*
  * Die Bilder einer Funktions-Sektion.
@@ -1763,6 +1767,20 @@ button:focus-visible {
  * zurückgesetzt werden.
  */
 @media (prefers-reduced-motion: reduce) {
+  /*
+   * Die drei Schwebe-Bewegungen im Einstieg laufen endlos. Genau die
+   * sind für Menschen mit Bewegungsempfindlichkeit das Unangenehmste an
+   * einer Seite — sie hören nie auf, man kann ihnen nicht ausweichen.
+   *
+   * Die Neigung der beiden Karten steht hier noch einmal als fester
+   * Wert: Sie kam bisher aus den Bildfolgen, und ohne Animation lägen
+   * die Karten sonst schnurgerade. Die Bewegung fällt weg, das Bild
+   * bleibt.
+   */
+  .einstieg__figur { animation: none; }
+  .einstieg__karte--schnitt { animation: none; transform: rotate(-3deg); }
+  .einstieg__karte--serie { animation: none; transform: rotate(3deg); }
+
   html { scroll-behavior: auto; }
 
   /*
@@ -1799,6 +1817,245 @@ button:focus-visible {
  * bei zwei Regeln gleicher Spezifität entschied damit die Zeilennummer
  * darüber, welche gewann, und das war nicht mehr ablesbar.
  */
+/* ----------------------------------------------------- Der Einstieg -- */
+
+/*
+ * Nach dem Entwurf studytab-hero.html.
+ *
+ * Der Einstieg trug bis hierher die ganzflächige Ozean-Farbe. Jetzt steht
+ * er auf dem hellen Seitengrund, und die Farbe kommt aus einem weichen
+ * Lichtschein oben und dem Kreis hinter der Figur. Vollflächig bleibt er
+ * trotzdem — der Lichtschein muss über die Spalte hinausreichen, sonst
+ * hätte er eine sichtbare Kante.
+ */
+.band--intro {
+  position: relative;
+  background: none;
+  color: var(--ink);
+  padding-block: 0 56px;
+  isolation: isolate;
+  /*
+   * Ohne diese Zeile lässt sich die Seite auf jedem schmalen Fenster
+   * seitlich schieben: Der Lichtschein unten ist 1400px breit und reicht
+   * bei 320px Fensterbreite von -540 bis 860. Ein Pseudo-Element zählt
+   * zum überschiebbaren Bereich wie jedes andere Kind — mein Prüfskript
+   * hatte es übersehen, weil es keinen Knoten im Dokument hat.
+   *
+   * "clip" statt "hidden", wie überall in dieser Datei: "hidden" würde
+   * den Einstieg zu einem Scroll-Container machen.
+   */
+  overflow: clip;
+}
+
+/*
+ * Der Lichtschein. Ein Kreisverlauf, der nach außen in den Seitengrund
+ * ausläuft — deshalb endet er auf der Grundfarbe und nicht auf
+ * `transparent`: Ein Verlauf nach `transparent` läuft in manchen Browsern
+ * über Grau, und dann liegt ein grauer Schleier über dem Bild.
+ */
+.band--intro::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  top: -320px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 1400px;
+  height: 900px;
+  max-width: none;
+  pointer-events: none;
+  background: radial-gradient(
+    50% 50% at 50% 50%,
+    var(--schein) 0%,
+    rgba(245, 247, 250, 0) 70%
+  );
+}
+
+/* Die Release-Angabe als Marke über der Schlagzeile */
+.einstieg__marke {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 7px 14px;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: .02em;
+  color: var(--card-back);
+  margin-bottom: 20px;
+}
+
+.einstieg__punkt {
+  width: 7px;
+  height: 7px;
+  border-radius: 999px;
+  background: var(--punkt);
+  flex: none;
+}
+
+/* --------------------------------------------------------- Die Bühne -- */
+
+.einstieg__buehne {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  padding-bottom: 8px;
+  min-width: 0;
+}
+
+/*
+ * Kreis und Ring liegen deckungsgleich hinter der Figur. Beide sind
+ * quadratisch über `aspect-ratio`, damit sie bei jeder Breite rund
+ * bleiben, statt zu Ellipsen zu werden.
+ */
+.einstieg__kreis,
+.einstieg__ring {
+  position: absolute;
+  bottom: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(430px, 100%);
+  aspect-ratio: 1;
+  border-radius: 50%;
+}
+
+.einstieg__kreis { background: linear-gradient(160deg, var(--kreis-a), var(--kreis-b)); }
+
+.einstieg__ring { border: 1.5px dashed var(--ring); }
+
+.einstieg__figur {
+  position: relative;
+  width: min(380px, 92%);
+  height: auto;
+  display: block;
+  /*
+   * `drop-shadow` statt `box-shadow`: Die Figur ist freigestellt, ein
+   * Kastenschatten läge als Rechteck darunter. `drop-shadow` folgt der
+   * Silhouette.
+   */
+  filter: drop-shadow(0 26px 40px rgba(6, 69, 101, .22));
+  animation: schweben 6s ease-in-out infinite;
+}
+
+/* -------------------------------------------------- Die zwei Karten -- */
+
+.einstieg__karte {
+  position: absolute;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  box-shadow: 0 14px 30px rgba(28, 31, 41, .10);
+}
+
+.einstieg__karte--schnitt {
+  top: 6%;
+  left: -2%;
+  padding: 12px 16px;
+  animation: schweben-langsam 7s ease-in-out infinite;
+}
+
+.einstieg__karte--serie {
+  bottom: 16%;
+  right: -2%;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 11px 16px;
+  animation: schweben-langsam-2 8s ease-in-out infinite;
+}
+
+.einstieg__karte-label {
+  display: block;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--soft);
+}
+
+.einstieg__karte-zahl {
+  display: block;
+  font-size: 28px;
+  font-weight: 800;
+  letter-spacing: -.03em;
+  line-height: 1.1;
+  color: var(--card-back);
+  font-variant-numeric: tabular-nums;
+}
+
+.einstieg__flamme {
+  width: 30px;
+  height: 30px;
+  object-fit: contain;
+  display: block;
+  flex: none;
+}
+
+.einstieg__karte-wert {
+  display: block;
+  font-size: 16px;
+  font-weight: 800;
+  letter-spacing: -.02em;
+  color: var(--ink);
+}
+
+.einstieg__karte-unter {
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--soft);
+}
+
+/* ------------------------------------------------------ Das Schweben -- */
+
+/*
+ * Drei leicht verschiedene Wege und Dauern (6s, 7s, 8s). Gleich lange
+ * Schleifen würden sich immer wieder treffen, und dann sähe es aus, als
+ * hüpfte die ganze Gruppe im Takt.
+ */
+@keyframes schweben {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes schweben-langsam {
+  0%, 100% { transform: translateY(0) rotate(-3deg); }
+  50% { transform: translateY(-7px) rotate(-3deg); }
+}
+
+@keyframes schweben-langsam-2 {
+  0%, 100% { transform: translateY(0) rotate(3deg); }
+  50% { transform: translateY(-6px) rotate(3deg); }
+}
+
+/* ------------------------------------------------- Enge Fenster -- */
+
+/*
+ * Unter 560px rücken die Karten in die Bühne hinein statt über ihre
+ * Kanten hinaus. Bei -2% Versatz ragten sie sonst aus der Spalte, und
+ * genau daran hat sich die Seite schon einmal seitlich verschieben
+ * lassen.
+ */
+@media (max-width: 1023px) {
+  /*
+   * Die beiden Karten stehen im Entwurf 2% über die Kanten der Bühne
+   * hinaus. Ab 1024px hat die Bühne dafür Platz; darunter ragten sie bis
+   * an den Fensterrand und wurden dort angeschnitten. Hier sitzen sie
+   * deshalb bündig.
+   */
+  .einstieg__karte--schnitt { left: 0; top: 2%; }
+  .einstieg__karte--serie { right: 0; bottom: 10%; }
+}
+
+@media (max-width: 559px) {
+  .einstieg__karte-zahl { font-size: 24px; }
+  .einstieg__figur { width: min(300px, 80%); }
+}
+
+
 /* ---------------------------------------------- Enge Fenster: Drehungen -- */
 
 /*
@@ -1838,7 +2095,13 @@ button:focus-visible {
     --shell: 64px;
 
     /* Dieselben Marken, größer — die ganze Seite wächst auf einmal mit */
-    --t-h1: 72px;
+      /*
+     * Von 72px auf 58px. Der Einstieg hat seit dem Maskottchen zwei
+     * gleich breite Spalten statt Text plus schmaler Bildspalte — die
+     * Schlagzeile hat damit rund 470px statt 700px. Bei 72px brach sie
+     * auf drei Zeilen um, die letzte trug nur noch "App.".
+     */
+    --t-h1: 58px;
     --t-figure: 40px;
     --t-h2: 34px;
     --t-h3: 20px;
@@ -1882,14 +2145,19 @@ button:focus-visible {
   .band__lead { margin-bottom: 28px; }
 
   /*
-   * Einstieg: Text links, der Schnitt rechts. Vorher stand hier ein
-   * Zweispalter aus Text und drei Geräten — beide Spalten zu eng.
+   * Einstieg: Text links, Maskottchen rechts.
+   *
+   * `auto-fit` mit `minmax(min(100%, 420px), 1fr)` statt fester Spalten:
+   * Die zweite Spalte springt von selbst unter die erste, sobald für 420px
+   * kein Platz mehr ist — ohne dass dafür eine weitere Fenstergröße
+   * abgefragt werden muss. Aus dem Entwurf übernommen.
    */
   .band--intro {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) 320px;
-    column-gap: 64px;
-    align-items: start;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr));
+    gap: 48px;
+    align-items: center;
+    padding-top: 56px;
   }
 
   /*
@@ -1900,11 +2168,6 @@ button:focus-visible {
    */
   .band--feature[data-media="left"] .band__visual { order: -1; }
 
-  .zusagen { margin-top: 20px; padding-top: 16px; gap: 8px 18px; }
-  .zusagen__punkt + .zusagen__punkt::before { margin-right: 18px; }
-
-  .hero__shot { margin-top: 0; justify-content: center; }
-  .hero__shot .phone { flex: 0 1 268px; }
 
   /* Start-Benachrichtigung: Feld und Button nebeneinander */
 
@@ -2092,13 +2355,6 @@ button:focus-visible {
     align-items: center;
     align-content: center;
   }
-
-  /*
-   * Das Telefon wächst mit. Bei 300px Breite ist es 650px hoch und füllt
-   * die Karte — vorher standen 268px Telefon in 780px Karte, und die
-   * Bildspalte sah aus, als hätte man sie vergessen.
-   */
-  .band--intro .hero__shot .phone { flex: 0 1 300px; }
 
   /* In der breiten Sektion dürfen die Handkarten größer aufgefächert sein */
   .band--breit .shots[data-layout="handkarten"] .phone { flex: 0 1 214px; }

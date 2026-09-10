@@ -224,6 +224,31 @@ export const site = {
   privacy: "Kein Tracking, keine Werbung, kein Verkauf von Daten.",
 
   /**
+   * Der Einstieg zeigt das Maskottchen statt eines Bildschirmfotos.
+   *
+   * Vorher stand dort der Screenshot der Startseite. Ein Maskottchen ist
+   * das, was man nach einer Sekunde wiedererkennt — genau das fehlte der
+   * Seite laut Prüfbericht (Markenidentität 4 von 10). Die elf
+   * Screenshots stehen weiterhin in den vier Abschnitten darunter, dort
+   * zeigen sie auch etwas, das man verstehen kann.
+   *
+   * Die beiden schwebenden Karten tragen Beispielwerte. Das ist auf
+   * App-Seiten üblich und wurde so entschieden — es ist aber die einzige
+   * Stelle der Seite, an der eine Zahl steht, die nicht aus der App kommt.
+   * Wer hier etwas ändert, sollte das wissen.
+   */
+  hero: {
+    maskottchen: "/maskottchen.png",
+    maskottchenAlt:
+      "Das Studytab-Maskottchen: ein Bär mit Notizblock, Stift und Schulrucksack",
+    flamme: "/flamme.png",
+    schnittLabel: "Semesterschnitt",
+    schnittWert: "1,4",
+    serieWert: "12 Tage",
+    serieLabel: "Lernserie",
+  },
+
+  /**
    * Die Anmeldung für die Start-Benachrichtigung.
    * Sie steht vor dem Release anstelle des Download-Buttons.
    */
@@ -377,21 +402,12 @@ export const site = {
 } as const;
 
 /**
- * Das Bild im Einstieg. Steht allein, weil es nicht zu einer Funktion
- * gehört, sondern die ganze App zeigt.
- */
-export const heroShot: Screen = {
-  title: "Startseite",
-  caption: "Schnitt, Suche,\nneueste Mitschriften",
-  file: "start.jpg",
-  src: "/screenshots/start.jpg",
-  alt: "Die Startseite von Studytab mit Notenschnitt, Suche und den neuesten Mitschriften",
-};
-
-/**
  * Die vier Funktions-Sektionen. Reihenfolge = Reihenfolge auf der Seite.
  *
- * Elf Bildplätze insgesamt (mit `heroShot` oben), alle gefüllt.
+ * Zehn Bildplätze, alle gefüllt. Der elfte war der Screenshot im
+ * Einstieg — dort steht jetzt das Maskottchen. Die Datei
+ * public/screenshots/start.jpg liegt weiterhin im Projekt, wird aber
+ * nirgends mehr eingebunden.
  *
  * Die Dateien liegen in `public/screenshots/`. Wer eines austauscht:
  * gleiche Datei überschreiben, fertig — `file` und `src` bleiben. Wer

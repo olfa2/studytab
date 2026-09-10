@@ -7,7 +7,7 @@
  * von der Seite abweicht, ist schlimmer als keine.
  */
 import { writeFileSync } from "node:fs";
-import { site, betreiber, featureSections, heroShot, legal } from "../lib/site.ts";
+import { site, betreiber, featureSections, legal } from "../lib/site.ts";
 
 const z = [];
 const p = (...t) => z.push(...t);
@@ -87,14 +87,17 @@ eintrag("site.zusicherungen", site.zusicherungen.join(" · "));
 p("*Alle drei sind belegt: gratis ist eine Entscheidung des Teams,");
 p("„Auch offline\" steht in `Store/AppStore.swift`, „Kein Tracking\" in");
 p("`Package.resolved`.*", "");
-p("### Das Bild daneben", "");
-p("| | |");
-p("|---|---|");
-p(`| Titel im Platzhalter | ${heroShot.title} |`);
-p(`| Beschriftung | ${heroShot.caption.replace(/\n/g, " / ")} |`);
-p(`| Erwartete Datei | \`public/screenshots/${heroShot.file}\` |`);
-p(`| Alt-Text | ${heroShot.alt} |`);
+p("### Das Maskottchen daneben", "");
+p("Hier stand der Screenshot der Startseite. Seit dem Umbau des Einstiegs");
+p("steht dort das Maskottchen, mit zwei schwebenden Karten.", "");
+p("| Was | Text | Pfad |");
+p("|---|---|---|");
+p(`| Alt-Text der Figur | ${site.hero.maskottchenAlt} | \`site.hero.maskottchenAlt\` |`);
+p(`| Karte oben | ${site.hero.schnittLabel} · ${site.hero.schnittWert} | \`site.hero.schnittLabel\` / \`schnittWert\` |`);
+p(`| Karte unten | ${site.hero.serieWert} · ${site.hero.serieLabel} | \`site.hero.serieWert\` / \`serieLabel\` |`);
 p("");
+p("🔴 **Die beiden Zahlen sind Beispielwerte.** Es ist die einzige Stelle");
+p("der Seite, an der eine Zahl steht, die nicht aus der App kommt.", "");
 
 /* --------------------------------------------------- Funktionsabschnitte -- */
 p("## 3 · Die vier Funktionsabschnitte", "");
