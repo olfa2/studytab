@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { site } from "@/lib/site";
 import DownloadCta from "./DownloadCta";
+import Maskottchen from "./Maskottchen";
 
 /**
  * Der Einstieg.
@@ -70,15 +71,7 @@ export default function Hero() {
         <span className="einstieg__kreis" aria-hidden="true" />
         <span className="einstieg__ring" aria-hidden="true" />
 
-        <Image
-          className="einstieg__figur"
-          src={site.hero.maskottchen}
-          alt={site.hero.maskottchenAlt}
-          width={485}
-          height={604}
-          sizes="(min-width: 1024px) 380px, 320px"
-          priority
-        />
+        <Maskottchen className="einstieg__figur" />
 
         {/*
          * Die zwei schwebenden Karten. Ihre Zahlen sind Beispielwerte —

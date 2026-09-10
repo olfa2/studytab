@@ -97,11 +97,11 @@ aus `featureSections` — sie stehen nicht doppelt im Code.
 ### Das Maskottchen daneben
 
 Hier stand der Screenshot der Startseite. Seit dem Umbau des Einstiegs
-steht dort das Maskottchen, mit zwei schwebenden Karten.
+steht dort das Maskottchen — als flache Zeichnung in
+components/Maskottchen.tsx, nicht als Bilddatei. Daneben zwei Karten.
 
 | Was | Text | Pfad |
 |---|---|---|
-| Alt-Text der Figur | Das Studytab-Maskottchen: ein Bär mit Notizblock, Stift und Schulrucksack | `site.hero.maskottchenAlt` |
 | Karte oben | Semesterschnitt · 1,4 | `site.hero.schnittLabel` / `schnittWert` |
 | Karte unten | 12 Tage · Lernserie | `site.hero.serieWert` / `serieLabel` |
 

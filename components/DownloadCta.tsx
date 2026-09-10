@@ -14,7 +14,13 @@ import SignupForm from "./SignupForm";
  */
 export default function DownloadCta() {
   if (!site.released) {
-    return <SignupForm />;
+    /*
+     * `labelHidden`: Die Beschriftung steht nicht mehr über dem Feld.
+     * Sie bleibt aber im Markup und wird vorgelesen — ein Eingabefeld
+     * ohne Beschriftung ist für Screenreader nur "Textfeld", und die
+     * graue Schrift im Feld verschwindet beim ersten Tastendruck.
+     */
+    return <SignupForm labelHidden />;
   }
 
   return (

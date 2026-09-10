@@ -238,9 +238,12 @@ export const site = {
    * Wer hier etwas ändert, sollte das wissen.
    */
   hero: {
-    maskottchen: "/maskottchen.png",
-    maskottchenAlt:
-      "Das Studytab-Maskottchen: ein Bär mit Notizblock, Stift und Schulrucksack",
+    /*
+     * Hier standen Pfad und Alt-Text eines 3D-Renders. Die Figur ist
+     * jetzt eine flache SVG in components/Maskottchen.tsx — sie braucht
+     * keine Datei und keinen Alt-Text, weil daneben die Schlagzeile
+     * steht, die dasselbe sagt.
+     */
     flamme: "/flamme.png",
     schnittLabel: "Semesterschnitt",
     schnittWert: "1,4",
