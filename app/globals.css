@@ -208,6 +208,11 @@
     0 1px 2px rgba(16, 20, 28, .12),
     0 8px 18px rgba(16, 20, 28, .13),
     0 26px 50px rgba(16, 20, 28, .14);
+  /* Dieselben drei Lagen für die Geräte als Bild — siehe .phone--bild */
+  --schatten-bild:
+    drop-shadow(0 1px 2px rgba(16, 20, 28, .12))
+    drop-shadow(0 8px 18px rgba(16, 20, 28, .13))
+    drop-shadow(0 26px 50px rgba(16, 20, 28, .14));
 }
 
 /* ---------------------------------------------------------------- Grundlagen -- */
@@ -577,29 +582,6 @@ button:focus-visible {
 
 .band--feature[data-akzent="note"] { --akzent: var(--green-deep); }
 
-/*
- * Der Kicker war auf der ganzen Seite grau. Jetzt trägt er die Farbe der
- * Sektion — die billigste Art, vier Abschnitte auseinanderzuhalten, ohne
- * eine einzige Fläche einzufärben. Davor eine kurze Linie als Anker: Sie
- * gibt dem Abschnitt einen sichtbaren Anfang, auch wenn der Titel gerade
- * oben aus dem Bild läuft.
- */
-.band--feature .band__kicker {
-  color: var(--akzent);
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.band--feature .band__kicker::before {
-  content: "";
-  width: 22px;
-  height: 3px;
-  border-radius: 2px;
-  background: var(--akzent);
-  flex: none;
-}
-
 /* ------------------------------------------------ Bandform: die volle Breite -- */
 
 /*
@@ -614,9 +596,6 @@ button:focus-visible {
   margin: 0 auto;
   text-align: center;
 }
-
-/* Der Kicker ist eine Flexzeile (Linie + Text) und muss mit zentriert werden */
-.band--breit .band__kicker { justify-content: center; }
 
 .band--breit .band__lead {
   margin-left: auto;
@@ -1205,9 +1184,8 @@ button:focus-visible {
  * Telefongröße auf der Seite, vom 121px-Handkartenfächer bis zum
  * 300px-Gerät im Einstieg. Ohne eine einzige Ausnahmeregel.
  *
- * Sie liegt ÜBER dem Screenshot, weil sie auf einem echten Gerät auch
- * über dem Bild liegt: Ein iOS-Screenshot enthält die Fläche, aber nicht
- * die Aussparung.
+ * Nur im Platzhalter: Die Screenshots sind Gerätemockups und bringen ihre
+ * Insel selbst mit.
  */
 .phone__insel {
   position: absolute;
@@ -1221,11 +1199,35 @@ button:focus-visible {
   z-index: 2;
 }
 
-.phone__shot {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+/*
+ * Das Gerät als Bild. Die Screenshots bringen Fassung, Tasten und Insel
+ * selbst mit und haben einen durchsichtigen Grund. Titanrand, Blende und
+ * Tasten aus dem CSS fallen hier weg, sonst säße ein Telefon im Telefon.
+ *
+ * Der Schatten wandert von `box-shadow` auf `filter`: Ein Kastenschatten
+ * fällt vom Rechteck des Bildes und stünde als graue Fläche in den
+ * durchsichtigen Ecken. `drop-shadow` folgt dem Umriss des Geräts, auch
+ * beim schräg liegenden im Einstieg.
+ *
+ * `.phone.phone--bild` statt nur `.phone--bild`: Die Desktop-Regeln für
+ * `.phone` stehen weiter unten in der Datei und holten Rand, Radius und
+ * Tasten sonst zurück.
+ */
+.phone.phone--bild {
+  background: none;
+  padding: 0;
+  border-radius: 0;
+  box-shadow: none;
+  filter: var(--schatten-bild);
+}
+
+.phone.phone--bild::before,
+.phone.phone--bild::after { content: none; }
+
+.phone__bild {
   display: block;
+  width: 100%;
+  height: auto;
 }
 
 /* ---------------------------------------------- Bildschirme: der Platzhalter -- */
@@ -1898,6 +1900,48 @@ button:focus-visible {
 
 .hero__shot .phone { flex: 0 1 250px; }
 
+/*
+ * Das Startbild liegt schräg. Seine Datei ist dadurch breiter im
+ * Verhältnis (1100 x 1909 statt 820 x 1666). Die Breite ist so gewählt,
+ * dass es so hoch steht wie vorher das gerade Gerät: 304px ergeben die
+ * 528px der alten 250px-Fassung, auf dem Desktop 365px die 633px der
+ * 300px-Fassung.
+ */
+.hero__shot .phone.phone--bild { flex-basis: 304px; }
+
+/*
+ * Versuch: Auf dem Handy steht das Bild direkt unter der Schlagzeile,
+ * nicht erst nach Formular und Zusagen.
+ *
+ * Im Markup liegt das Bild hinter dem Textblock, und dort bleibt es —
+ * Screenreader lesen weiter zuerst den Text. Damit es sichtbar zwischen
+ * Schlagzeile und Lead rutschen kann, löst sich der Textblock hier per
+ * `display: contents` auf, und `order` sortiert die Teile neu. Ab 1024px
+ * gilt das nicht: Dort stehen Text und Bild nebeneinander.
+ *
+ * In einer Flex-Spalte fallen Außenabstände nicht zusammen. Die Zusagen
+ * bekommen deshalb 12px statt 26px nach oben — mit den 14px unter dem
+ * Formular ist das derselbe Abstand wie vorher.
+ *
+ * Wer den Versuch verwirft, löscht diesen einen Block.
+ */
+@media (max-width: 1023px) {
+  .band--intro {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .band--intro .band__body { display: contents; }
+
+  .band--intro .einstieg__marke { order: 1; align-self: flex-start; }
+  .band--intro .band__title--page { order: 2; }
+  .band--intro .hero__shot { order: 3; margin-block: 8px 28px; }
+  .band--intro .band__lead { order: 4; }
+  .band--intro .signup,
+  .band--intro .cta { order: 5; }
+  .band--intro .zusagen { order: 6; margin-top: 12px; }
+}
+
 /* ---------------------------------------------- Enge Fenster: Drehungen -- */
 
 /*
@@ -2246,6 +2290,7 @@ button:focus-visible {
   }
 
   .hero__shot .phone { flex: 0 1 300px; }
+  .hero__shot .phone.phone--bild { flex-basis: 365px; }
 
   .abschluss__body { max-width: 36rem; }
 

@@ -21,12 +21,19 @@ export type Screen = {
   src: string | null;
   /** Alt-Text für den echten Screenshot */
   alt: string;
+  /**
+   * Die Pixelmaße der Datei, falls sie vom Hochformat in `SCREENSHOT_SIZE`
+   * abweichen. Braucht nur das Bild im Einstieg: Dort liegt das Gerät
+   * schräg, und die Datei ist dadurch breiter.
+   */
+  size?: { width: number; height: number };
 };
 
 /** Eine der vier Funktions-Sektionen. */
 export type FeatureSection = {
   /** Anker und React-Key */
   id: string;
+  /** Name des Abschnitts im Kopf-Menü. Im Abschnitt selbst steht er nicht. */
   kicker: string;
   title: string;
   lead: string;
@@ -346,7 +353,6 @@ export const site = {
    * Solange `photo` null ist, steht dort ein Platzhalter.
    */
   team: {
-    kicker: "Wer dahintersteckt",
     title: "Ein Projekt von drei Schülern",
     /*
      * "Halbjahresschnitt" stand hier und widersprach dem, womit die Seite
@@ -386,13 +392,17 @@ export const site = {
  *
  * Es gehört zu keiner der vier Funktionen, sondern zeigt sie alle auf
  * einmal, und steht deshalb hier für sich.
+ *
+ * Als einziges Bild der Seite liegt das Gerät schräg. Die Datei hat damit
+ * ein eigenes Format und bringt es in `size` mit.
  */
 export const heroShot: Screen = {
   title: "Startseite",
   caption: "Schnitt, Suche,\nneueste Mitschriften",
-  file: "start.jpg",
-  src: "/screenshots/start.jpg",
+  file: "start.webp",
+  src: "/screenshots/start.webp",
   alt: "Die Startseite von Studytab mit Suche, den neuesten Mitschriften und den Fächern",
+  size: { width: 1100, height: 1909 },
 };
 
 /**
@@ -400,8 +410,11 @@ export const heroShot: Screen = {
  *
  * Elf Bildplätze insgesamt (mit `heroShot` oben), alle gefüllt.
  *
- * Die Dateien liegen in `public/screenshots/`. Wer eines austauscht:
- * gleiche Datei überschreiben, fertig — `file` und `src` bleiben. Wer
+ * Die Dateien liegen in `public/screenshots/`. Wer eines austauscht, gibt
+ * der neuen Datei einen neuen Namen und trägt ihn in `file` und `src` ein.
+ * Überschreiben reicht nicht: next/image speichert die verkleinerten
+ * Bilder unter ihrer Adresse und liefert bei gleichem Namen bis zu vier
+ * Stunden lang das alte Bild aus, auf dem Server wie im Browser. Wer
  * eines auf `src: null` setzt, bekommt an seiner Stelle wieder den
  * Platzhalter mit dem erwarteten Dateinamen darin.
  *
@@ -430,15 +443,15 @@ export const featureSections: FeatureSection[] = [
       {
         title: "Fächerliste",
         caption: "Alle Fächer,\njedes mit Schnitt",
-        file: "faecher-liste.jpg",
-        src: "/screenshots/faecher-liste.jpg",
+        file: "faecher-liste.webp",
+        src: "/screenshots/faecher-liste.webp",
         alt: "Die Fächerliste in Studytab, jedes Fach mit seinem Notenschnitt",
       },
       {
         title: "Fach anlegen",
         caption: "Name, Farbe,\nfertig",
-        file: "fach-anlegen.jpg",
-        src: "/screenshots/fach-anlegen.jpg",
+        file: "fach-anlegen.webp",
+        src: "/screenshots/fach-anlegen.webp",
         alt: "Ein neues Fach wird in Studytab angelegt",
       },
     ],
@@ -456,15 +469,15 @@ export const featureSections: FeatureSection[] = [
       {
         title: "Aufnehmen",
         caption: "Seite abfotografieren\noder Foto auswählen",
-        file: "scannen.jpg",
-        src: "/screenshots/scannen.jpg",
+        file: "scannen.webp",
+        src: "/screenshots/scannen.webp",
         alt: "Eine Heftseite wird in Studytab aufgenommen",
       },
       {
         title: "Einordnen",
         caption: "Benennen und\neinem Fach zuweisen",
-        file: "fach-zuweisen.jpg",
-        src: "/screenshots/fach-zuweisen.jpg",
+        file: "fach-zuweisen.webp",
+        src: "/screenshots/fach-zuweisen.webp",
         alt: "Eine aufgenommene Mitschrift wird in Studytab einem Fach zugewiesen",
       },
     ],
@@ -496,29 +509,29 @@ export const featureSections: FeatureSection[] = [
       {
         title: "Fokus",
         caption: "Laufende Session,\nUnterbrechungen gezählt",
-        file: "fokus.jpg",
-        src: "/screenshots/fokus.jpg",
+        file: "fokus.webp",
+        src: "/screenshots/fokus.webp",
         alt: "Eine laufende Lernsession in Studytab mit gezählten Unterbrechungen",
       },
       {
         title: "Track",
         caption: "Wochenbalken und\nVerlauf",
-        file: "track.jpg",
-        src: "/screenshots/track.jpg",
+        file: "track-tab.webp",
+        src: "/screenshots/track-tab.webp",
         alt: "Der Track-Tab in Studytab mit Wochenbalken der Lernzeit",
       },
       {
         title: "Karteikarten",
         caption: "Sets anlegen\nund lernen",
-        file: "lernen.jpg",
-        src: "/screenshots/lernen.jpg",
+        file: "lernen.webp",
+        src: "/screenshots/lernen.webp",
         alt: "Der Karteikarten-Lernmodus in Studytab",
       },
       {
         title: "Streak",
         caption: "Serie, Bestwert\nund Kalender",
-        file: "streak.jpg",
-        src: "/screenshots/streak.jpg",
+        file: "streak.webp",
+        src: "/screenshots/streak.webp",
         alt: "Die Streak-Übersicht in Studytab mit laufender Serie und Kalender",
       },
     ],
@@ -553,15 +566,15 @@ export const featureSections: FeatureSection[] = [
       {
         title: "Noten im Fach",
         caption: "Notenliste und\naktueller Schnitt",
-        file: "fach-noten.jpg",
-        src: "/screenshots/fach-noten.jpg",
+        file: "fach-noten.webp",
+        src: "/screenshots/fach-noten.webp",
         alt: "Die Notenliste eines Fachs in Studytab mit dem aktuellen Schnitt",
       },
       {
         title: "Note eintragen",
         caption: "Schularbeit oder\nMitarbeit, gewichtet",
-        file: "note-eintragen.jpg",
-        src: "/screenshots/note-eintragen.jpg",
+        file: "note-eintragen.webp",
+        src: "/screenshots/note-eintragen.webp",
         alt: "Eine neue Note wird in Studytab eingetragen",
       },
     ],
@@ -569,24 +582,23 @@ export const featureSections: FeatureSection[] = [
 ];
 
 /*
- * Die tatsächlichen Maße der gelieferten Dateien.
+ * Die tatsächlichen Maße der Hochformate in `public/screenshots/`.
  *
- * Die Screenshots kamen verkleinert an, nicht in der vollen
- * iPhone-Auflösung 1290 x 2796: zehn davon als 735 x 1600, start.jpg als
- * 942 x 2048. Die Seitenverhältnisse liegen alle zwischen 0,459 und
- * 0,460, die Gerätefassung erwartet 0,461 — der Beschnitt liegt damit
- * unter einem halben Prozent und ist nicht zu sehen. Ein Wert für alle
- * genügt deshalb; er dient nur dazu, den Platz vor dem Laden zu
- * reservieren.
+ * Die Screenshots sind fertige Gerätemockups: iPhone-Fassung, Tasten und
+ * Dynamic Island stecken im Bild, der Grund ist durchsichtig. Die
+ * Vorlagen (1419 x 2796) hatten rundum einen leeren Rand. Der ist
+ * abgeschnitten, damit die Breiten der Anordnungen in app/globals.css
+ * das Gerät meinen und nicht Gerät plus Luft. Danach auf 820px Breite
+ * verkleinert und als WebP gespeichert — genug für das größte Telefon
+ * der Sektionen (268px) auf einem Bildschirm mit dreifacher Dichte.
  *
  * Hier stehen die echten Maße, weil next/image daraus den Platz vor dem
  * Laden reserviert und die Größenstufen ableitet. Ein erfundener Wert
  * ergäbe unscharfe Bilder oder einen Sprung beim Laden.
  *
- * Wer später die Originale nachreicht: Dateien tauschen, diese Zahl
- * anpassen, fertig.
+ * Das Bild im Einstieg hat ein eigenes Format, siehe `heroShot.size`.
  */
-export const SCREENSHOT_SIZE = { width: 735, height: 1600 };
+export const SCREENSHOT_SIZE = { width: 820, height: 1666 };
 
 /* ==========================================================================
    Impressum und Datenschutzerklärung

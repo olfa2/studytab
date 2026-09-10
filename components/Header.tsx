@@ -9,8 +9,7 @@ import { featureSections, site } from "@/lib/site";
  * die nach dem Einstieg noch fünf Bildschirmhöhen weitergeht, war das
  * eine Sackgasse: Alle vier Funktionsabschnitte haben längst eine
  * Sprungmarke (`aria-labelledby` in FeatureBand), aber nichts führte
- * hin. Die Beschriftungen sind die Kicker der Abschnitte — sie kommen
- * aus lib/site.ts und bleiben damit automatisch in Deckung.
+ * hin. Die Beschriftungen kommen aus `kicker` in lib/site.ts.
  *
  * Der Kopf klebt jetzt oben. Der Einstieg füllt den ersten Bildschirm;
  * ohne mitlaufenden Kopf wäre die Wortmarke nach einem Wisch weg und

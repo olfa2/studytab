@@ -100,7 +100,7 @@ aus `featureSections` — sie stehen nicht doppelt im Code.
 |---|---|
 | Titel | Startseite |
 | Beschriftung | Schnitt, Suche, / neueste Mitschriften |
-| Datei | `public/screenshots/start.jpg` |
+| Datei | `public/screenshots/start.webp` |
 | Alt-Text | Die Startseite von Studytab mit Suche, den neuesten Mitschriften und den Fächern |
 
 ## 3 · Die vier Funktionsabschnitte
@@ -110,7 +110,7 @@ der Seite.
 
 ### 3.1 · Deine Fächer
 
-**Beschriftung**
+**Menüpunkt im Kopf**
 
 > Deine Fächer
 
@@ -126,12 +126,12 @@ der Seite.
 
 | Titel | Beschriftung | Datei | Alt-Text |
 |---|---|---|---|
-| Fächerliste | Alle Fächer, / jedes mit Schnitt | `faecher-liste.jpg` | Die Fächerliste in Studytab, jedes Fach mit seinem Notenschnitt |
-| Fach anlegen | Name, Farbe, / fertig | `fach-anlegen.jpg` | Ein neues Fach wird in Studytab angelegt |
+| Fächerliste | Alle Fächer, / jedes mit Schnitt | `faecher-liste.webp` | Die Fächerliste in Studytab, jedes Fach mit seinem Notenschnitt |
+| Fach anlegen | Name, Farbe, / fertig | `fach-anlegen.webp` | Ein neues Fach wird in Studytab angelegt |
 
 ### 3.2 · Mitschriften
 
-**Beschriftung**
+**Menüpunkt im Kopf**
 
 > Mitschriften
 
@@ -147,12 +147,12 @@ der Seite.
 
 | Titel | Beschriftung | Datei | Alt-Text |
 |---|---|---|---|
-| Aufnehmen | Seite abfotografieren / oder Foto auswählen | `scannen.jpg` | Eine Heftseite wird in Studytab aufgenommen |
-| Einordnen | Benennen und / einem Fach zuweisen | `fach-zuweisen.jpg` | Eine aufgenommene Mitschrift wird in Studytab einem Fach zugewiesen |
+| Aufnehmen | Seite abfotografieren / oder Foto auswählen | `scannen.webp` | Eine Heftseite wird in Studytab aufgenommen |
+| Einordnen | Benennen und / einem Fach zuweisen | `fach-zuweisen.webp` | Eine aufgenommene Mitschrift wird in Studytab einem Fach zugewiesen |
 
 ### 3.3 · Lernen
 
-**Beschriftung**
+**Menüpunkt im Kopf**
 
 > Lernen
 
@@ -168,14 +168,14 @@ der Seite.
 
 | Titel | Beschriftung | Datei | Alt-Text |
 |---|---|---|---|
-| Fokus | Laufende Session, / Unterbrechungen gezählt | `fokus.jpg` | Eine laufende Lernsession in Studytab mit gezählten Unterbrechungen |
-| Track | Wochenbalken und / Verlauf | `track.jpg` | Der Track-Tab in Studytab mit Wochenbalken der Lernzeit |
-| Karteikarten | Sets anlegen / und lernen | `lernen.jpg` | Der Karteikarten-Lernmodus in Studytab |
-| Streak | Serie, Bestwert / und Kalender | `streak.jpg` | Die Streak-Übersicht in Studytab mit laufender Serie und Kalender |
+| Fokus | Laufende Session, / Unterbrechungen gezählt | `fokus.webp` | Eine laufende Lernsession in Studytab mit gezählten Unterbrechungen |
+| Track | Wochenbalken und / Verlauf | `track-tab.webp` | Der Track-Tab in Studytab mit Wochenbalken der Lernzeit |
+| Karteikarten | Sets anlegen / und lernen | `lernen.webp` | Der Karteikarten-Lernmodus in Studytab |
+| Streak | Serie, Bestwert / und Kalender | `streak.webp` | Die Streak-Übersicht in Studytab mit laufender Serie und Kalender |
 
 ### 3.4 · Noten
 
-**Beschriftung**
+**Menüpunkt im Kopf**
 
 > Noten
 
@@ -191,8 +191,8 @@ der Seite.
 
 | Titel | Beschriftung | Datei | Alt-Text |
 |---|---|---|---|
-| Noten im Fach | Notenliste und / aktueller Schnitt | `fach-noten.jpg` | Die Notenliste eines Fachs in Studytab mit dem aktuellen Schnitt |
-| Note eintragen | Schularbeit oder / Mitarbeit, gewichtet | `note-eintragen.jpg` | Eine neue Note wird in Studytab eingetragen |
+| Noten im Fach | Notenliste und / aktueller Schnitt | `fach-noten.webp` | Die Notenliste eines Fachs in Studytab mit dem aktuellen Schnitt |
+| Note eintragen | Schularbeit oder / Mitarbeit, gewichtet | `note-eintragen.webp` | Eine neue Note wird in Studytab eingetragen |
 
 Unter jedem Bildplatz, solange kein echtes Bild da ist:
 
@@ -234,10 +234,6 @@ Darunter, in kleiner Schrift:
 > hier nicht widersprechen — wer ihn ändert, ändert ihn an beiden Stellen.
 
 ## 5 · Wer dahintersteckt
-
-`site.team.kicker`
-
-> Wer dahintersteckt
 
 `site.team.title`
 

@@ -44,7 +44,6 @@ export default function Team() {
       </div>
 
       <div className="band__body" data-reveal="text">
-        <p className="band__kicker">{team.kicker}</p>
         <h2 className="band__title display" id="team">
           {team.title}
         </h2>

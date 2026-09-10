@@ -102,7 +102,7 @@ p("`featureSections` in `lib/site.ts`. Reihenfolge hier = Reihenfolge auf");
 p("der Seite.", "");
 for (const [i, s] of featureSections.entries()) {
   p(`### 3.${i + 1} · ${s.kicker}`, "");
-  p("**Beschriftung**", "");
+  p("**Menüpunkt im Kopf**", "");
   p("> " + s.kicker, "");
   p("**Titel**", "");
   p("> " + s.title, "");
@@ -138,7 +138,6 @@ p("> hier nicht widersprechen — wer ihn ändert, ändert ihn an beiden Stellen
 
 /* -------------------------------------------------------------- Team ---- */
 p("## 5 · Wer dahintersteckt", "");
-eintrag("site.team.kicker", site.team.kicker);
 eintrag("site.team.title", site.team.title);
 eintrag("site.team.text", site.team.text);
 eintrag("site.team.names", site.team.names);

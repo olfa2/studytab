@@ -50,7 +50,12 @@ export default function Hero() {
       </div>
 
       <div className="band__visual hero__shot">
-        <ScreenshotSlot screen={heroShot} index={0} />
+        {/* Die Breiten stehen bei .hero__shot in app/globals.css */}
+        <ScreenshotSlot
+          screen={heroShot}
+          index={0}
+          sizes="(min-width: 1024px) 365px, 304px"
+        />
       </div>
     </section>
   );

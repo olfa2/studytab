@@ -50,7 +50,6 @@ export default function FeatureBand({ section }: { section: FeatureSection }) {
       aria-labelledby={section.id}
     >
       <div className="band__body" data-reveal="text">
-        <p className="band__kicker">{section.kicker}</p>
         <h2 className="band__title display" id={section.id}>
           {section.title}
         </h2>
