@@ -103,30 +103,13 @@
   --card-back: #0b6d9e;
 
   /*
-   * Die Farben des Einstiegs, aus dem Entwurf studytab-hero.html.
-   * Alle vier sind Aufhellungen des Ozeans und der Aktionsfarbe — es
-   * kommt kein Ton dazu, den das Farbsystem nicht schon kennt.
+   * Die zwei Farben des Einstiegs, aus dem Entwurf studytab-hero.html:
+   * der Lichtschein hinter der Schlagzeile und der Punkt in der
+   * Release-Marke. Beide sind Aufhellungen des Ozeans — es kommt kein
+   * Ton dazu, den das Farbsystem nicht schon kennt.
    */
   --schein: #ddeff9;
   --punkt: #1c8fc4;
-  --kreis-a: #c0e2f4;
-  --kreis-b: #e6eefe;
-  --ring: rgba(11, 109, 158, .22);
-
-  /*
-   * Das Maskottchen. Alle sechs Werte sind aus public/studytab-logo.jpg
-   * abgetastet — Icon und Zeichnung auf der Seite können damit nicht
-   * auseinanderlaufen. Wer das Icon neu macht, tastet hier nach.
-   */
-  --fell: #cb8c45;
-  --fell-ohr: #a46f37;
-  --fell-ohr-innen: #8a5a29;
-  --auge: #fefefe;
-  --pupille: #474747;
-  --schnauze: #a16d34;
-  --zug: #4d3823;
-
-  /* Gerätefassung und Platzhalter */
   --frame: #0f1115;
   --ph-a: #e8ebf0;
   --ph-b: #e0e4ea;
@@ -1895,154 +1878,25 @@ button:focus-visible {
   flex: none;
 }
 
-/* --------------------------------------------------------- Die Bühne -- */
+/* --------------------------------------------- Das Bild im Einstieg -- */
 
-.einstieg__buehne {
-  position: relative;
+/*
+ * Der Screenshot der Startseite. Hier standen Maskottchen, Farbkreis und
+ * zwei schwebende Karten mit erfundenen Werten — mit dem Tausch steht auf
+ * der Seite keine Zahl mehr, die nicht aus der App kommt.
+ *
+ * Mittig, nicht linksbündig: Der Einstieg hat zwei gleich breite Spalten,
+ * und ein Gerät am linken Rand seiner Spalte sähe aus, als wäre es
+ * dorthin gerutscht.
+ */
+.hero__shot {
   display: flex;
   justify-content: center;
-  /*
-   * Mittig statt am Boden. Die Figur ist seit der Zeichnung ein Kopf und
-   * keine ganze Gestalt mehr — eine Gestalt steht auf dem Boden des
-   * Kreises, ein Kopf gehört in seine Mitte.
-   */
   align-items: center;
   min-width: 0;
 }
 
-/*
- * Kreis und Ring liegen deckungsgleich hinter der Figur. Beide sind
- * quadratisch über `aspect-ratio`, damit sie bei jeder Breite rund
- * bleiben, statt zu Ellipsen zu werden.
- */
-.einstieg__kreis,
-.einstieg__ring {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: min(430px, 100%);
-  aspect-ratio: 1;
-  border-radius: 50%;
-}
-
-.einstieg__kreis { background: linear-gradient(160deg, var(--kreis-a), var(--kreis-b)); }
-
-.einstieg__ring { border: 1.5px dashed var(--ring); }
-
-.einstieg__figur {
-  position: relative;
-  width: min(300px, 70%);
-  height: auto;
-  display: block;
-  overflow: visible;
-  /*
-   * `drop-shadow` statt `box-shadow`: Die Figur ist freigestellt, ein
-   * Kastenschatten läge als Rechteck darunter. `drop-shadow` folgt der
-   * Silhouette.
-   */
-  /*
-   * Kein Schweben mehr. Die endlose Auf-und-ab-Bewegung war das
-   * Auffälligste am Einstieg und genau das, woran man erzeugte Seiten
-   * erkennt — sie bewegt sich, ohne etwas zu zeigen. Die Figur steht
-   * jetzt. Die Bildfolge dafür ist gelöscht, nicht nur abgeschaltet.
-   */
-  filter: drop-shadow(0 18px 28px rgba(6, 69, 101, .18));
-}
-
-/* -------------------------------------------------- Die zwei Karten -- */
-
-.einstieg__karte {
-  position: absolute;
-  background: var(--surface);
-  border: 1px solid var(--line);
-  border-radius: 18px;
-  box-shadow: 0 14px 30px rgba(28, 31, 41, .10);
-}
-
-.einstieg__karte--schnitt {
-  top: 6%;
-  left: -2%;
-  padding: 12px 16px;
-  transform: rotate(-3deg);
-}
-
-.einstieg__karte--serie {
-  bottom: 16%;
-  right: -2%;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 11px 16px;
-  transform: rotate(3deg);
-}
-
-.einstieg__karte-label {
-  display: block;
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: .08em;
-  text-transform: uppercase;
-  color: var(--soft);
-}
-
-.einstieg__karte-zahl {
-  display: block;
-  font-size: 28px;
-  font-weight: 800;
-  letter-spacing: -.03em;
-  line-height: 1.1;
-  color: var(--card-back);
-  font-variant-numeric: tabular-nums;
-}
-
-.einstieg__flamme {
-  width: 30px;
-  height: 30px;
-  object-fit: contain;
-  display: block;
-  flex: none;
-}
-
-.einstieg__karte-wert {
-  display: block;
-  font-size: 16px;
-  font-weight: 800;
-  letter-spacing: -.02em;
-  color: var(--ink);
-}
-
-.einstieg__karte-unter {
-  display: block;
-  font-size: 12px;
-  font-weight: 600;
-  color: var(--soft);
-}
-
-/* ------------------------------------------------- Enge Fenster -- */
-
-/*
- * Unter 560px rücken die Karten in die Bühne hinein statt über ihre
- * Kanten hinaus. Bei -2% Versatz ragten sie sonst aus der Spalte, und
- * genau daran hat sich die Seite schon einmal seitlich verschieben
- * lassen.
- */
-@media (max-width: 1023px) {
-  /*
-   * Die beiden Karten stehen im Entwurf 2% über die Kanten der Bühne
-   * hinaus. Ab 1024px hat die Bühne dafür Platz; darunter ragten sie bis
-   * an den Fensterrand und wurden dort angeschnitten. Hier sitzen sie
-   * deshalb bündig.
-   */
-  .einstieg__karte--schnitt { left: 0; top: 2%; }
-  .einstieg__karte--serie { right: 0; bottom: 10%; }
-}
-
-@media (max-width: 559px) {
-  .einstieg__karte-zahl { font-size: 24px; }
-  .einstieg__figur { width: min(300px, 80%); }
-}
-
+.hero__shot .phone { flex: 0 1 250px; }
 
 /* ---------------------------------------------- Enge Fenster: Drehungen -- */
 
@@ -2390,6 +2244,8 @@ button:focus-visible {
     min-height: calc(100vh - 78px);
     min-height: calc(100svh - 78px);
   }
+
+  .hero__shot .phone { flex: 0 1 300px; }
 
   .abschluss__body { max-width: 36rem; }
 

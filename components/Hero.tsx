@@ -1,31 +1,22 @@
-import Image from "next/image";
-import { site } from "@/lib/site";
+import { heroShot, site } from "@/lib/site";
 import DownloadCta from "./DownloadCta";
-import Maskottchen from "./Maskottchen";
+import ScreenshotSlot from "./ScreenshotSlot";
 
 /**
  * Der Einstieg.
  *
- * Nach dem Entwurf `studytab-hero.html`: heller Grund mit einem weichen
- * Lichtschein statt der ganzflächigen Ozean-Farbe, links der Text, rechts
- * das Maskottchen in einem Farbkreis, dazu zwei schwebende Karten.
+ * Aus dem Entwurf `studytab-hero.html` sind der helle Grund mit dem
+ * weichen Lichtschein geblieben, die Release-Marke über der Schlagzeile,
+ * die Zusicherungen als Marken und die abgerundeten Ecken an Feld und
+ * Knopf.
  *
- * WAS SICH DAMIT ÄNDERT
+ * Was der Entwurf rechts hatte — Maskottchen im Farbkreis, dazu zwei
+ * schwebende Karten mit "Semesterschnitt 1,4" und "12 Tage Lernserie" —
+ * ist wieder entfallen. Dort steht jetzt der Screenshot der Startseite.
  *
- * Vorher stand rechts der Screenshot der Startseite. Das Maskottchen ist
- * das, was man nach einer Sekunde wiedererkennt — genau das fehlte der
- * Seite (Markenidentität 4 von 10 im Prüfbericht). Die zehn übrigen
- * Screenshots stehen weiterhin in den vier Abschnitten darunter; dort
- * zeigen sie etwas, das man auch verstehen kann.
- *
- * Der Abschluss-Block bleibt Ozean. Die Klammer aus zwei farbigen Flächen
- * ist damit einseitig geworden — dafür trägt der Einstieg jetzt eine
- * Figur, und die trägt weiter.
- *
- * Texte kommen wie überall aus lib/site.ts. Der Entwurf brachte zwei
- * Sätze mit, die vor Kurzem bewusst entfernt wurden (der Semester-Satz im
- * Vorspann und "genau einmal" unter dem Feld) — sie sind hier absichtlich
- * NICHT übernommen.
+ * Der Tausch hat einen Nebeneffekt, der zählt: Auf der Seite steht damit
+ * keine erfundene Zahl mehr. Die beiden Karten waren die einzige Stelle,
+ * an der eine Angabe nicht aus der App kam.
  */
 export default function Hero() {
   return (
@@ -49,11 +40,6 @@ export default function Hero() {
 
         <DownloadCta />
 
-        {/*
-         * Die drei Zusicherungen, im Entwurf als weiße Marken statt als
-         * Zeile mit Trennpunkten. Dieselben drei Wörter, dieselbe Stelle —
-         * nur lesen sie sich als einzelne Zusagen statt als Aufzählung.
-         */}
         <ul className="zusagen">
           {site.zusicherungen.map((zusage) => (
             <li className="zusagen__punkt" key={zusage}>
@@ -63,41 +49,8 @@ export default function Hero() {
         </ul>
       </div>
 
-      <div className="band__visual einstieg__buehne">
-        {/*
-         * Kreis und gestrichelter Ring liegen hinter der Figur und tragen
-         * keine Bedeutung — deshalb `aria-hidden` und keine Beschriftung.
-         */}
-        <span className="einstieg__kreis" aria-hidden="true" />
-        <span className="einstieg__ring" aria-hidden="true" />
-
-        <Maskottchen className="einstieg__figur" />
-
-        {/*
-         * Die zwei schwebenden Karten. Ihre Zahlen sind Beispielwerte —
-         * die einzige Stelle der Seite, an der eine Zahl steht, die nicht
-         * aus der App kommt. So entschieden; wer es ändert, ändert es in
-         * lib/site.ts unter `hero`.
-         */}
-        <div className="einstieg__karte einstieg__karte--schnitt">
-          <span className="einstieg__karte-label">{site.hero.schnittLabel}</span>
-          <span className="einstieg__karte-zahl">{site.hero.schnittWert}</span>
-        </div>
-
-        <div className="einstieg__karte einstieg__karte--serie">
-          <Image
-            className="einstieg__flamme"
-            src={site.hero.flamme}
-            alt=""
-            width={595}
-            height={863}
-            sizes="30px"
-          />
-          <span>
-            <span className="einstieg__karte-wert">{site.hero.serieWert}</span>
-            <span className="einstieg__karte-unter">{site.hero.serieLabel}</span>
-          </span>
-        </div>
+      <div className="band__visual hero__shot">
+        <ScreenshotSlot screen={heroShot} index={0} />
       </div>
     </section>
   );

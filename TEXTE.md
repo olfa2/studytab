@@ -94,19 +94,14 @@ aus `featureSections` — sie stehen nicht doppelt im Code.
 „Auch offline" steht in `Store/AppStore.swift`, „Kein Tracking" in
 `Package.resolved`.*
 
-### Das Maskottchen daneben
+### Das Bild daneben
 
-Hier stand der Screenshot der Startseite. Seit dem Umbau des Einstiegs
-steht dort das Maskottchen — als flache Zeichnung in
-components/Maskottchen.tsx, nicht als Bilddatei. Daneben zwei Karten.
-
-| Was | Text | Pfad |
-|---|---|---|
-| Karte oben | Semesterschnitt · 1,4 | `site.hero.schnittLabel` / `schnittWert` |
-| Karte unten | 12 Tage · Lernserie | `site.hero.serieWert` / `serieLabel` |
-
-🔴 **Die beiden Zahlen sind Beispielwerte.** Es ist die einzige Stelle
-der Seite, an der eine Zahl steht, die nicht aus der App kommt.
+| | |
+|---|---|
+| Titel | Startseite |
+| Beschriftung | Schnitt, Suche, / neueste Mitschriften |
+| Datei | `public/screenshots/start.jpg` |
+| Alt-Text | Die Startseite von Studytab mit Suche, den neuesten Mitschriften und den Fächern |
 
 ## 3 · Die vier Funktionsabschnitte
 
